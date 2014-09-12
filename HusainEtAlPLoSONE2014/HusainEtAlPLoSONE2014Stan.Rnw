@@ -1,0 +1,336 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+
+\title{Stan code for Husain et al paper, PLoS ONE 2014}
+\author{Shravan Vasishth}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\maketitle
+
+\section{Paper reference}
+
+This code is for the paper:
+
+Samar Husain, Shravan Vasishth, and Narayanan Srinivasan. Strong Expectations Cancel Locality Effects: Evidence from Hindi. PLoS ONE, 9(7):1-14, 2014.
+
+Available from: http://tinyurl.com/pnaykvs.
+
+\section{Abstract}
+
+\textit{Expectation-driven facilitation (Hale, 2001; Levy, 2008) and locality-driven retrieval difficulty (Gibson, 1998, 2000; Lewis \& Vasishth, 2005) are widely recognized to be two critical factors in incremental sentence processing; there is accumulating evidence that both can influence processing difficulty. However, it is unclear whether and how expectations and memory interact. We first confirm a key prediction of the expectation account: a Hindi self-paced reading study shows that when an expectation for an upcoming part of speech is dashed, building a rarer structure consumes more processing time than building a less rare structure. This is a strong validation of the expectation-based account. In a second study, we show that when expectation is strong, i.e., when a particular verb is predicted, strong facilitation effects are seen when the appearance of the verb is delayed; however, when expectation is weak, i.e., when only the part of speech “verb” is predicted but a particular verb is not predicted, the facilitation disappears and a tendency towards a locality effect is seen. The interaction seen between expectation strength and distance shows that strong expectations cancel locality effects, and that weak expectations allow locality effects to emerge.}
+
+\section{Session Info}
+
+<<results=tex,echo=FALSE>>=
+library(rstan)
+toLatex(sessionInfo(package="rstan"))
+@
+
+
+\section{Experiment 1}
+
+\subsection{Data preparation}
+
+Load data and format for Stan:
+
+<<>>=
+RC1<-read.table("expt1critdata.txt",header=T)
+
+e1data <- list(mu_prior=c(0,0,0,0),
+             subj=sort(as.integer(factor(RC1$subj))),
+             item=sort(as.integer(factor(RC1$item))),
+             lrt=RC1$lrt,
+             dist = RC1$dist,
+             rctype = RC1$RCType,
+             interaction = RC1$int,
+             N = nrow(RC1),
+             I = length(unique(RC1$subj)),
+             K = length(unique(RC1$item))
+)  
+@
+
+\subsection{Define model (method 1)}
+
+<<>>=
+expt1_code <- 
+'data {
+int<lower=1> N;
+real lrt[N];                     //outcome
+real<lower=-1,upper=1> dist[N];  //predictor
+real rctype[N];                  //predictor
+real interaction[N];             //predictor
+int<lower=1> I;                  //number of subjects
+int<lower=1> K;                  //number of items
+int<lower=1, upper=I> subj[N];   //subject id
+int<lower=1, upper=K> item[N];   //item id
+vector[4] mu_prior;              //vector of zeros passed in from R
+}
+transformed data {
+real ZERO;                      // like #define ZERO 0 in C/C++
+ZERO <- 0.0;
+}
+parameters {
+vector[4] beta;                 // intercept and slope
+vector[4] u[I];                 // random intercept and slopes subj
+vector[4] w[K];
+real<lower=0> sigma_e;          // residual sd
+vector<lower=0>[4] sigma_u;     // subj sd
+vector<lower=0>[4] sigma_w;     // item sd
+corr_matrix[4] Omega_u;           // correlation matrix for random intercepts and slopes subj
+corr_matrix[4] Omega_w;           // correlation matrix for random intercepts and slopes item
+}
+transformed parameters {
+matrix[4,4] D_u;
+matrix[4,4] D_w;
+D_u <- diag_matrix(sigma_u);
+D_w <- diag_matrix(sigma_w);
+}
+model {
+matrix[4,4] L_u;
+matrix[4,4] DL_u;
+matrix[4,4] L_w;
+matrix[4,4] DL_w;
+real mu[N]; // mu for likelihood
+//priors:
+beta ~ normal(0,10);
+sigma_e ~ normal(0,10);
+sigma_u ~ normal(0,10);
+sigma_w ~ normal(0,10);
+Omega_u ~ lkj_corr(4.0);
+Omega_w ~ lkj_corr(4.0);
+L_u <- cholesky_decompose(Omega_u);
+L_w <- cholesky_decompose(Omega_w);
+for (m in 1:4) {
+for (n in 1:m) {
+DL_u[m,n] <- L_u[m,n] * sigma_u[m];
+}
+}
+for (m in 1:4){
+for (n in (m+1):4){
+DL_u[m,n] <- ZERO;
+}
+}
+for (m in 1:4){
+for (n in 1:m){
+DL_w[m,n] <- L_w[m,n] * sigma_w[m];
+}
+}
+for (m in 1:4){
+for (n in (m+1):4){
+DL_w[m,n] <- ZERO;
+}
+}
+for (i in 1:I)                  // loop for subj random effects
+u[i] ~ multi_normal_cholesky(mu_prior, DL_u);
+for (k in 1:K)                  // loop for item random effects
+w[k] ~ multi_normal_cholesky(mu_prior, DL_w);    
+for (n in 1:N) {
+mu[n] <- beta[1] + beta[2]*dist[n] + beta[3]*rctype[n] + beta[4]*interaction[n] + u[subj[n], 1] + u[subj[n], 2]*dist[n] + u[subj[n], 3]*rctype[n] + u[subj[n], 4]*interaction[n] + w[item[n], 1] + w[item[n], 2]*dist[n] + w[item[n], 3]*rctype[n] + w[item[n], 4]*interaction[n];
+}
+lrt ~ normal(mu,sigma_e);        // likelihood
+}
+generated quantities {
+cov_matrix[4] Sigma_u;
+cov_matrix[4] Sigma_w;
+Sigma_u <- D_u * Omega_u * D_u;
+Sigma_w <- D_w * Omega_w * D_w;
+}
+'
+@
+
+Fit data:
+
+<<print=FALSE,echo=TRUE>>=
+set_cppo('fast')
+fit <- stan(model_code = expt1_code, data = e1data, 
+            iter = 500, chains = 4)
+## not run, too verbose:
+#print(fit)
+@
+
+Plot the posterior distributions of the three coefficients of interest:
+
+<<fig=TRUE,echo=FALSE>>=
+mcmcChains<-as.matrix(fit)
+op<-par(mfrow=c(1,3),pty="s")
+hist(mcmcChains[,2],main="Distance")
+hist(mcmcChains[,3],main="Expectation")
+hist(mcmcChains[,4],main="Interaction")
+@
+
+\subsection{Run model (Method 2)}
+
+<<>>=
+library(parallel)
+## uncomment to save results to a file:
+#sink("expt1resultsrun2.txt")
+
+## the model is defined in a separate file:
+e1.sm <- stan_model("expt1subjitem.stan", model_name = "e1subjitem")
+sflist <- mclapply(1:4, mc.cores = detectCores(),
+                   function(i) sampling(e1.sm, data = e1data,
+                                        chains = 1, chain_id = i, 
+                                        seed = 12345))
+e1.sf <- sflist2stanfit(sflist)
+#print(e1.sf,digits=4)
+@
+
+Comparison with lmer:
+
+<<>>=
+library(lme4)
+m1<-lmer(lrt~dist+RCType+int+(1+dist+RCType+int|subj)+(1+dist+RCType+int|item),RC1)
+summary(m1)
+@
+
+\section{Experiment 2}
+
+\subsection{Data preparation}
+
+Load data:
+
+<<>>=
+CP1<-read.table("expt2critdata.txt",header=T)
+
+e2data <- list(mu_prior=c(0,0,0,0),
+               subj=sort(as.integer(factor(CP1$subj))),
+               item=sort(as.integer(factor(CP1$item))),
+               lrt = log(CP1$rt),
+               dist = CP1$dist,
+               expectation = CP1$exp,
+               interaction = CP1$int,
+               N = nrow(CP1),
+               I = length(unique(CP1$subj)),
+               K = length(unique(CP1$item))
+)  
+@
+
+
+\subsection{Define model}
+
+<<>>=
+expt2_code <-'
+data {
+    int<lower=0> N;
+    real lrt[N];                     //outcome
+real dist[N];                     //predictor
+real expectation[N];                     //predictor
+real interaction[N];                     //predictor
+int<lower=1> I;                 //number of subjects
+int<lower=1> K;                 //number of items
+int<lower=1, upper=I> subj[N];    //subject id
+int<lower=1, upper=K> item[N];    //item id
+vector[4] mu_prior;             //vector of zeros passed in from R
+}
+transformed data {
+real ZERO;                      // like #define ZERO 0 in C/C++
+ZERO <- 0.0;
+}
+parameters {
+vector[4] beta;                 // intercept and slope
+vector[4] u[I];                 // random intercept and slopes subj
+vector[4] w[K];
+real<lower=0> sigma_e;          // residual sd
+vector<lower=0>[4] sigma_u;     // subj sd
+vector<lower=0>[4] sigma_w;     // item sd
+corr_matrix[4] Omega_u;           // correlation matrix for random intercepts and slopes subj
+corr_matrix[4] Omega_w;           // correlation matrix for random intercepts and slopes item
+}
+transformed parameters {
+matrix[4,4] D_u;
+matrix[4,4] D_w;
+D_u <- diag_matrix(sigma_u);
+D_w <- diag_matrix(sigma_w);
+}
+model {
+matrix[4,4] L_u;
+matrix[4,4] DL_u;
+matrix[4,4] L_w;
+matrix[4,4] DL_w;
+real mu[N]; // mu for likelihood
+//priors:
+beta ~ normal(0,10);
+sigma_e ~ normal(0,10);
+sigma_u ~ normal(0,10);
+sigma_w ~ normal(0,10);
+Omega_u ~ lkj_corr(4.0);
+Omega_w ~ lkj_corr(4.0);
+L_u <- cholesky_decompose(Omega_u);
+L_w <- cholesky_decompose(Omega_w);
+for (m in 1:4) {
+for (n in 1:m) {
+DL_u[m,n] <- L_u[m,n] * sigma_u[m];
+}
+}
+for (m in 1:4){
+for (n in (m+1):4){
+DL_u[m,n] <- ZERO;
+}
+}
+for (m in 1:4){
+for (n in 1:m){
+DL_w[m,n] <- L_w[m,n] * sigma_w[m];
+}
+}
+for (m in 1:4){
+for (n in (m+1):4){
+DL_w[m,n] <- ZERO;
+}
+}
+for (i in 1:I)                  // loop for subj random effects
+u[i] ~ multi_normal_cholesky(mu_prior, DL_u);
+for (k in 1:K)                  // loop for item random effects
+w[k] ~ multi_normal_cholesky(mu_prior, DL_w);    
+for (n in 1:N) {
+mu[n] <- beta[1] + beta[2]*dist[n] + beta[3]*expectation[n] + beta[4]*interaction[n] 
++ u[subj[n], 1] + u[subj[n], 2]*dist[n] + u[subj[n], 3]*expectation[n] + u[subj[n], 4]*interaction[n]+ w[item[n], 1] + w[item[n], 2]*dist[n] + w[item[n], 3]*expectation[n] + w[item[n], 4]*interaction[n];
+}
+lrt ~ normal(mu,sigma_e);        // likelihood
+}
+generated quantities {
+cov_matrix[4] Sigma_u;
+cov_matrix[4] Sigma_w;
+Sigma_u <- D_u * Omega_u * D_u;
+Sigma_w <- D_w * Omega_w * D_w;
+}
+'
+@
+
+\subsection{Run model (Method 1)}
+
+<<>>=
+set_cppo('fast')
+fit <- stan(model_code = expt2_code, data = e2data, 
+            iter = 500, chains = 2)
+@
+
+Plot posterior distributions:
+
+<<fig=TRUE,echo=FALSE>>=
+mcmcChains<-as.matrix(fit)
+op<-par(mfrow=c(1,3),pty="s")
+hist(mcmcChains[,2],main="Distance")
+hist(mcmcChains[,3],main="Expectation")
+hist(mcmcChains[,4],main="Interaction")
+@
+
+
+\subsection{Run model (Method 2)}
+
+<<>>=
+#sink("expt2resultsrun2.txt")
+
+e2.sm <- stan_model("expt2subjitem.stan", model_name = "e2subjitem")
+sflist <- mclapply(1:4, mc.cores = detectCores(),
+                   function(i) sampling(e2.sm, data = e2data,chains = 1, chain_id = i, seed = 12345))
+e2.sf <- sflist2stanfit(sflist)
+#print(e2.sf,digits=4)
+#sink()
+@
+
+
+
+\end{document}
