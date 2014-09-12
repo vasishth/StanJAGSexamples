@@ -1,6 +1,8 @@
 StanJAGSexamples
 ================
 
+**HusainEtAlPLoSONE2014**
+
 Example code using Stan and JAGS for psycholinguistic data. The published paper corresponding to this code is:
 
 http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0100986
