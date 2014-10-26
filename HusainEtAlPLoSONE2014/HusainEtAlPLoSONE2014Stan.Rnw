@@ -40,8 +40,8 @@ Load data and format for Stan:
 RC1<-read.table("expt1critdata.txt",header=T)
 
 e1data <- list(mu_prior=c(0,0,0,0),
-             subj=sort(as.integer(factor(RC1$subj))),
-             item=sort(as.integer(factor(RC1$item))),
+             subj=as.integer(factor(RC1$subj)),
+             item=as.integer(factor(RC1$item)),
              lrt=RC1$lrt,
              dist = RC1$dist,
              rctype = RC1$RCType,
@@ -196,8 +196,8 @@ Load data:
 CP1<-read.table("expt2critdata.txt",header=T)
 
 e2data <- list(mu_prior=c(0,0,0,0),
-               subj=sort(as.integer(factor(CP1$subj))),
-               item=sort(as.integer(factor(CP1$item))),
+               subj=as.integer(factor(CP1$subj)),
+               item=as.integer(factor(CP1$item)),
                lrt = log(CP1$rt),
                dist = CP1$dist,
                expectation = CP1$exp,
