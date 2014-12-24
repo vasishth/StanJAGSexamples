@@ -1,0 +1,21 @@
+set MaskJoins  1
+set MaskSpaces 1
+set BreakInterval 12
+set Experiment selfPacedReading
+set TextFont     "-family {Arial} -size -18 -weight bold"
+set MaxChars     150
+set MaskColor    white
+
+set RightShift   200
+
+# The key to see the next word:
+set GoKey        space
+# The key to respond no:
+set NoKey        n
+# The key to respond yes:
+set YesKey       y
+set QuestionKeys "\"[string toupper $YesKey]\" for yes.    \"[string toupper $NoKey]\" for no."
+
+
+# The delay (in msec) before presenting each sentence:
+set PreDelay     1000

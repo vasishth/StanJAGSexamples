@@ -1,0 +1,3462 @@
+for (i in imposters) {#
+	if ( dat$wpos[i] != (dat$wpos[i+1]-1) ) {#
+	  getout <- c(getout,i)#
+	}#
+}
+rm(list=ls())
+dat <- read.table("col1to44.rt",header=T)#
+#
+dat$flags <- NULL#
+dat$flags.1 <- NULL#
+dat$region <- NULL#
+dat$correct <- NULL#
+#
+dat$rt <- dat$rt.ms.#
+#
+dat$rt.ms. <- NULL#
+dat$correct[dat$event.1=="1040"] <- 1#
+dat$correct[dat$event.1=="2064"] <- 0#
+dat$correct[dat$event.1=="1025"] <- 0#
+dat$correct[dat$event.1=="1024"] <- 1#
+ addsubj <- function(dat, item.name='item1') {#
+    dat <- data.frame(item = dat[[item.name]])#
+    subj <- c() #
+   s <- 1#
+   subj <- matrix(0,nrow= nrow(dat), ncol=1, dimnames=list(1:nrow(dat), paste("subj")))#
+    for(i in 1:(nrow(dat)-1)) {#
+             if (dat$item[i] < dat$item[i+1]){#
+	       subj[i] <- s#
+	     }#
+             if (dat$item[i] > dat$item[i+1]) {#
+		subj[i] <- s#
+                 s <- s + 1#
+		 }#
+    }#
+    return(subj)#
+}#
+dat$subj <- addsubj(dat)#
+#
+dat <- subset(dat,subj!=0)#
+#
+dat$cond <- NULL#
+dat$cond[dat$event > 1000 & dat$event < 2000] <- "NO NO"#
+dat$cond[dat$event > 2000 & dat$event < 3000] <- "COLOR NO"#
+dat$cond[dat$event > 3000 & dat$event < 4000] <- "NO COLOR"#
+dat$cond[dat$event > 4000 & dat$event < 5000] <- "COLOR COLOR"#
+#
+dat$item <- as.numeric(sapply(1:nrow(dat),FUN=function(i){substr(dat$event[i],regexpr("[0-9][0-9]$",dat$event[i])[1],regexpr("[0-9][0-9]$",dat$event[i])[1]+attr(regexpr("[0-9][0-9]$",dat$event[i]),"match.length"))}))#
+dat$expt[dat$event > 5000] <- "filler"#
+dat$expt[dat$event < 5000] <- "color"#
+orig <- which(dat$event==666|dat$event==777)#
+#
+dat$cond[dat$event > 5000] <- "NA"#
+#
+dat$item[orig] <- dat$item[orig-1]#
+dat$expt[orig] <- dat$expt[orig-1]#
+dat$cond[orig] <- dat$cond[orig-1]#
+# corrects for subj number 9#
+dat$subj[dat$subj==10] <- 9#
+dat$cond <- as.factor(dat$cond)#
+dat$wpos[(dat$bin==85) & dat$expt=="filler"] <- 1#
+dat$wpos[(dat$bin==86) & dat$expt=="filler"] <- 2#
+dat$wpos[(dat$bin==87) & dat$expt=="filler"] <- 3#
+dat$wpos[(dat$bin==88) & dat$expt=="filler"] <- 4#
+dat$wpos[(dat$bin==89) & dat$expt=="filler"] <- 5#
+dat$wpos[(dat$bin==90) & dat$expt=="filler"] <- 6#
+dat$wpos[(dat$bin==91) & dat$expt=="filler"] <- 7#
+dat$wpos[(dat$bin==92) & dat$expt=="filler"] <- 8#
+dat$wpos[(dat$bin==93) & dat$expt=="filler"] <- 9#
+dat$wpos[(dat$bin==94) & dat$expt=="filler"] <- 10#
+dat$wpos[(dat$bin==95) & dat$expt=="filler"] <- 11#
+dat$wpos[(dat$bin==96) & dat$expt=="filler"] <- 12#
+dat$wpos[(dat$bin==97) & dat$expt=="filler"] <- 13#
+dat$wpos[(dat$bin==98) & dat$expt=="filler"] <- 14#
+dat$wpos[(dat$bin==99) & dat$expt=="filler"] <- 15#
+dat$wpos[(dat$bin==100) & dat$expt=="filler"] <- 16#
+dat$wpos[(dat$bin==101) & dat$expt=="filler"] <- 17#
+dat$wpos[(dat$bin==102) & dat$expt=="filler"] <- 18#
+dat$wpos[(dat$bin==103) & dat$expt=="filler"] <- 19#
+#
+dat$region[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$region[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==104|dat$bin==8)] <- 2#
+dat$region[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$region[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$region[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$region[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$region[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$region[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$region[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$region[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$region[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$region[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$region[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$region[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$region[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$region[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$region[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+#
+dat$wpos[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$wpos[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==8|dat$bin==104)] <- 2#
+dat$wpos[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$wpos[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$wpos[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$wpos[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$wpos[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$wpos[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$wpos[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$wpos[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$wpos[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$wpos[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$wpos[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$wpos[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$wpos[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$wpos[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$wpos[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+#
+imposters <- which(dat$event==1024 & dat$event.1==1024 & dat$bin==1)#
+#
+getout <- c()#
+#
+for (i in imposters) {#
+	if ( dat$wpos[i] != (dat$wpos[i+1]-1) ) {#
+	  getout <- c(getout,i)#
+	}#
+}#
+#
+dat <- dat[-getout,]#
+qst <- subset(dat,event==666|event==777)#
+dat <- subset(dat,event!=666 & event!=777)
+table(dat$bin,dat$subj)
+ls()
+summary(qst)
+summary(as.factor(qst$subj))
+ls()
+rm(list=ls())
+dat <- read.table("col1to44.rt",header=T)#
+#
+dat$flags <- NULL#
+dat$flags.1 <- NULL#
+dat$region <- NULL#
+dat$correct <- NULL#
+#
+dat$rt <- dat$rt.ms.#
+#
+dat$rt.ms. <- NULL#
+dat$correct[dat$event.1=="1040"] <- 1#
+dat$correct[dat$event.1=="2064"] <- 0#
+dat$correct[dat$event.1=="1025"] <- 0#
+dat$correct[dat$event.1=="1024"] <- 1#
+ addsubj <- function(dat, item.name='item1') {#
+    dat <- data.frame(item = dat[[item.name]])#
+    subj <- c() #
+   s <- 1#
+   subj <- matrix(0,nrow= nrow(dat), ncol=1, dimnames=list(1:nrow(dat), paste("subj")))#
+    for(i in 1:(nrow(dat)-1)) {#
+             if (dat$item[i] < dat$item[i+1]){#
+	       subj[i] <- s#
+	     }#
+             if (dat$item[i] > dat$item[i+1]) {#
+		subj[i] <- s#
+                 s <- s + 1#
+		 }#
+    }#
+    return(subj)#
+}#
+dat$subj <- addsubj(dat)#
+#
+dat <- subset(dat,subj!=0)#
+#
+dat$cond <- NULL#
+dat$cond[dat$event > 1000 & dat$event < 2000] <- "NO NO"#
+dat$cond[dat$event > 2000 & dat$event < 3000] <- "COLOR NO"#
+dat$cond[dat$event > 3000 & dat$event < 4000] <- "NO COLOR"#
+dat$cond[dat$event > 4000 & dat$event < 5000] <- "COLOR COLOR"#
+#
+dat$item <- as.numeric(sapply(1:nrow(dat),FUN=function(i){substr(dat$event[i],regexpr("[0-9][0-9]$",dat$event[i])[1],regexpr("[0-9][0-9]$",dat$event[i])[1]+attr(regexpr("[0-9][0-9]$",dat$event[i]),"match.length"))}))#
+dat$expt[dat$event > 5000] <- "filler"#
+dat$expt[dat$event < 5000] <- "color"
+ls(0)
+table(dat$bin,dat$subj)
+rm(list=ls())
+dat <- read.table("col1to44.rt",header=T)#
+#
+dat$flags <- NULL#
+dat$flags.1 <- NULL#
+dat$region <- NULL#
+dat$correct <- NULL#
+#
+dat$rt <- dat$rt.ms.#
+#
+dat$rt.ms. <- NULL#
+dat$correct[dat$event.1=="1040"] <- 1#
+dat$correct[dat$event.1=="2064"] <- 0#
+dat$correct[dat$event.1=="1025"] <- 0#
+dat$correct[dat$event.1=="1024"] <- 1#
+ addsubj <- function(dat, item.name='item1') {#
+    dat <- data.frame(item = dat[[item.name]])#
+    subj <- c() #
+   s <- 1#
+   subj <- matrix(0,nrow= nrow(dat), ncol=1, dimnames=list(1:nrow(dat), paste("subj")))#
+    for(i in 1:(nrow(dat)-1)) {#
+             if (dat$item[i] < dat$item[i+1]){#
+	       subj[i] <- s#
+	     }#
+             if (dat$item[i] > dat$item[i+1]) {#
+		subj[i] <- s#
+                 s <- s + 1#
+		 }#
+    }#
+    return(subj)#
+}#
+dat$subj <- addsubj(dat)
+table(dat$bin,dat$subj)
+s1 <- subset(dat,subj==1)
+s1
+dat <- subset(dat,subj!=0)#
+#
+dat$cond <- NULL#
+dat$cond[dat$event > 1000 & dat$event < 2000] <- "NO NO"#
+dat$cond[dat$event > 2000 & dat$event < 3000] <- "COLOR NO"#
+dat$cond[dat$event > 3000 & dat$event < 4000] <- "NO COLOR"#
+dat$cond[dat$event > 4000 & dat$event < 5000] <- "COLOR COLOR"#
+#
+dat$item <- as.numeric(sapply(1:nrow(dat),FUN=function(i){substr(dat$event[i],regexpr("[0-9][0-9]$",dat$event[i])[1],regexpr("[0-9][0-9]$",dat$event[i])[1]+attr(regexpr("[0-9][0-9]$",dat$event[i]),"match.length"))}))#
+dat$expt[dat$event > 5000] <- "filler"#
+dat$expt[dat$event < 5000] <- "color"#
+orig <- which(dat$event==666|dat$event==777)#
+#
+dat$cond[dat$event > 5000] <- "NA"#
+#
+dat$item[orig] <- dat$item[orig-1]#
+dat$expt[orig] <- dat$expt[orig-1]#
+dat$cond[orig] <- dat$cond[orig-1]#
+# corrects for subj number 9#
+dat$subj[dat$subj==10] <- 9#
+dat$cond <- as.factor(dat$cond)#
+dat$wpos[(dat$bin==85) & dat$expt=="filler"] <- 1#
+dat$wpos[(dat$bin==86) & dat$expt=="filler"] <- 2#
+dat$wpos[(dat$bin==87) & dat$expt=="filler"] <- 3#
+dat$wpos[(dat$bin==88) & dat$expt=="filler"] <- 4#
+dat$wpos[(dat$bin==89) & dat$expt=="filler"] <- 5#
+dat$wpos[(dat$bin==90) & dat$expt=="filler"] <- 6#
+dat$wpos[(dat$bin==91) & dat$expt=="filler"] <- 7#
+dat$wpos[(dat$bin==92) & dat$expt=="filler"] <- 8#
+dat$wpos[(dat$bin==93) & dat$expt=="filler"] <- 9#
+dat$wpos[(dat$bin==94) & dat$expt=="filler"] <- 10#
+dat$wpos[(dat$bin==95) & dat$expt=="filler"] <- 11#
+dat$wpos[(dat$bin==96) & dat$expt=="filler"] <- 12#
+dat$wpos[(dat$bin==97) & dat$expt=="filler"] <- 13#
+dat$wpos[(dat$bin==98) & dat$expt=="filler"] <- 14#
+dat$wpos[(dat$bin==99) & dat$expt=="filler"] <- 15#
+dat$wpos[(dat$bin==100) & dat$expt=="filler"] <- 16#
+dat$wpos[(dat$bin==101) & dat$expt=="filler"] <- 17#
+dat$wpos[(dat$bin==102) & dat$expt=="filler"] <- 18#
+dat$wpos[(dat$bin==103) & dat$expt=="filler"] <- 19#
+#
+dat$region[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$region[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==104|dat$bin==8)] <- 2#
+dat$region[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$region[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$region[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$region[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$region[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$region[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$region[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$region[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$region[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$region[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$region[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$region[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$region[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$region[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$region[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+#
+dat$wpos[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$wpos[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==8|dat$bin==104)] <- 2#
+dat$wpos[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$wpos[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$wpos[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$wpos[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$wpos[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$wpos[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$wpos[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$wpos[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$wpos[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$wpos[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$wpos[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$wpos[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$wpos[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$wpos[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$wpos[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+#
+imposters <- which(dat$event==1024 & dat$event.1==1024 & dat$bin==1)#
+#
+getout <- c()#
+#
+for (i in imposters) {#
+	if ( dat$wpos[i] != (dat$wpos[i+1]-1) ) {#
+	  getout <- c(getout,i)#
+	}#
+}#
+#
+dat <- dat[-getout,]
+s1 <- subset(dat,subj==1)
+summary(s1)
+s1
+table(subj1$bin)
+ls()
+table(s1$bin)
+table(dat$bin,dat$subj)
+table(dat$subj,dat$bin)
+bin1 <- subset(dat,bin==1)
+biin1
+bin1
+table(dat$subj,dat$bin)
+bin1 <- subset(dat,bin==1 & (subj==25 | subj==28))
+bin1
+rm(list=ls())
+dat <- read.table("col1to44.rt",header=T)#
+#
+dat$flags <- NULL#
+dat$flags.1 <- NULL#
+dat$region <- NULL#
+dat$correct <- NULL#
+#
+dat$rt <- dat$rt.ms.#
+#
+dat$rt.ms. <- NULL#
+dat$correct[dat$event.1=="1040"] <- 1#
+dat$correct[dat$event.1=="2064"] <- 0#
+dat$correct[dat$event.1=="1025"] <- 0#
+dat$correct[dat$event.1=="1024"] <- 1#
+ addsubj <- function(dat, item.name='item1') {#
+    dat <- data.frame(item = dat[[item.name]])#
+    subj <- c() #
+   s <- 1#
+   subj <- matrix(0,nrow= nrow(dat), ncol=1, dimnames=list(1:nrow(dat), paste("subj")))#
+    for(i in 1:(nrow(dat)-1)) {#
+             if (dat$item[i] < dat$item[i+1]){#
+	       subj[i] <- s#
+	     }#
+             if (dat$item[i] > dat$item[i+1]) {#
+		subj[i] <- s#
+                 s <- s + 1#
+		 }#
+    }#
+    return(subj)#
+}#
+dat$subj <- addsubj(dat)#
+#
+dat <- subset(dat,subj!=0)#
+#
+dat$cond <- NULL#
+dat$cond[dat$event > 1000 & dat$event < 2000] <- "NO NO"#
+dat$cond[dat$event > 2000 & dat$event < 3000] <- "COLOR NO"#
+dat$cond[dat$event > 3000 & dat$event < 4000] <- "NO COLOR"#
+dat$cond[dat$event > 4000 & dat$event < 5000] <- "COLOR COLOR"#
+#
+dat$item <- as.numeric(sapply(1:nrow(dat),FUN=function(i){substr(dat$event[i],regexpr("[0-9][0-9]$",dat$event[i])[1],regexpr("[0-9][0-9]$",dat$event[i])[1]+attr(regexpr("[0-9][0-9]$",dat$event[i]),"match.length"))}))#
+dat$expt[dat$event > 5000] <- "filler"#
+dat$expt[dat$event < 5000] <- "color"#
+orig <- which(dat$event==666|dat$event==777)#
+#
+dat$cond[dat$event > 5000] <- "NA"#
+#
+dat$item[orig] <- dat$item[orig-1]#
+dat$expt[orig] <- dat$expt[orig-1]#
+dat$cond[orig] <- dat$cond[orig-1]#
+# corrects for subj number 9#
+dat$subj[dat$subj==10] <- 9#
+dat$cond <- as.factor(dat$cond)#
+dat$wpos[(dat$bin==85) & dat$expt=="filler"] <- 1#
+dat$wpos[(dat$bin==86) & dat$expt=="filler"] <- 2#
+dat$wpos[(dat$bin==87) & dat$expt=="filler"] <- 3#
+dat$wpos[(dat$bin==88) & dat$expt=="filler"] <- 4#
+dat$wpos[(dat$bin==89) & dat$expt=="filler"] <- 5#
+dat$wpos[(dat$bin==90) & dat$expt=="filler"] <- 6#
+dat$wpos[(dat$bin==91) & dat$expt=="filler"] <- 7#
+dat$wpos[(dat$bin==92) & dat$expt=="filler"] <- 8#
+dat$wpos[(dat$bin==93) & dat$expt=="filler"] <- 9#
+dat$wpos[(dat$bin==94) & dat$expt=="filler"] <- 10#
+dat$wpos[(dat$bin==95) & dat$expt=="filler"] <- 11#
+dat$wpos[(dat$bin==96) & dat$expt=="filler"] <- 12#
+dat$wpos[(dat$bin==97) & dat$expt=="filler"] <- 13#
+dat$wpos[(dat$bin==98) & dat$expt=="filler"] <- 14#
+dat$wpos[(dat$bin==99) & dat$expt=="filler"] <- 15#
+dat$wpos[(dat$bin==100) & dat$expt=="filler"] <- 16#
+dat$wpos[(dat$bin==101) & dat$expt=="filler"] <- 17#
+dat$wpos[(dat$bin==102) & dat$expt=="filler"] <- 18#
+dat$wpos[(dat$bin==103) & dat$expt=="filler"] <- 19#
+#
+dat$region[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$region[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==104|dat$bin==8)] <- 2#
+dat$region[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$region[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$region[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$region[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$region[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$region[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$region[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$region[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$region[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$region[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$region[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$region[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$region[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$region[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$region[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+#
+dat$wpos[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$wpos[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==8|dat$bin==104)] <- 2#
+dat$wpos[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$wpos[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$wpos[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$wpos[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$wpos[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$wpos[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$wpos[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$wpos[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$wpos[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$wpos[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$wpos[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$wpos[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$wpos[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$wpos[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$wpos[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17
+imposters <- which(((dat$event==1024 & dat$event.1==1024) | (dat$event==1025 & dat$event.1==1025)) & dat$bin==1)
+imposters
+imposters <- which(((dat$event==1024 & dat$event.1==1024) | (dat$event==1025 & dat$event.1==1025)) & dat$bin==1)#
+#
+getout <- c()#
+#
+for (i in imposters) {#
+	if ( dat$wpos[i] != (dat$wpos[i+1]-1) ) {#
+	  getout <- c(getout,i)#
+	}#
+}#
+#
+dat <- dat[-getout,]
+table(dat$subj,dat$bin)
+bin1 <- subset(dat,subj==27 | subj==31)
+bin1
+bin1 <- subset(dat,(subj==27 | subj==31) & bin==1)
+bin1
+table(dat$subj,dat$bin)
+bin1 <- subset(dat,(subj==28 | subj==37) & bin==1)
+bin1
+dat[41634,]
+dat[41600,]
+dat[41598,]
+dat[41590,]
+dat[41589,]
+dat[41588,]
+dat[41587,]
+dat[41586,]
+dat[41587,]
+dat[41588,]
+dat[41589,]
+dat[41630,]
+dat[41625,]
+dat[41624,]
+dat[41625,]
+dat[41626,]
+rm(list=ls())
+dat <- read.table("col1to44.rt",header=T)#
+#
+dat$flags <- NULL#
+dat$flags.1 <- NULL#
+dat$region <- NULL#
+dat$correct <- NULL#
+#
+dat$rt <- dat$rt.ms.#
+#
+dat$rt.ms. <- NULL#
+dat$correct[dat$event.1=="1040"] <- 1#
+dat$correct[dat$event.1=="2064"] <- 0#
+dat$correct[dat$event.1=="1025"] <- 0#
+dat$correct[dat$event.1=="1024"] <- 1#
+ addsubj <- function(dat, item.name='item1') {#
+    dat <- data.frame(item = dat[[item.name]])#
+    subj <- c() #
+   s <- 1#
+   subj <- matrix(0,nrow= nrow(dat), ncol=1, dimnames=list(1:nrow(dat), paste("subj")))#
+    for(i in 1:(nrow(dat)-1)) {#
+             if (dat$item[i] < dat$item[i+1]){#
+	       subj[i] <- s#
+	     }#
+             if (dat$item[i] > dat$item[i+1]) {#
+		subj[i] <- s#
+                 s <- s + 1#
+		 }#
+    }#
+    return(subj)#
+}#
+dat$subj <- addsubj(dat)#
+#
+dat <- subset(dat,subj!=0)#
+#
+dat$cond <- NULL#
+dat$cond[dat$event > 1000 & dat$event < 2000] <- "NO NO"#
+dat$cond[dat$event > 2000 & dat$event < 3000] <- "COLOR NO"#
+dat$cond[dat$event > 3000 & dat$event < 4000] <- "NO COLOR"#
+dat$cond[dat$event > 4000 & dat$event < 5000] <- "COLOR COLOR"#
+#
+dat$item <- as.numeric(sapply(1:nrow(dat),FUN=function(i){substr(dat$event[i],regexpr("[0-9][0-9]$",dat$event[i])[1],regexpr("[0-9][0-9]$",dat$event[i])[1]+attr(regexpr("[0-9][0-9]$",dat$event[i]),"match.length"))}))#
+dat$expt[dat$event > 5000] <- "filler"#
+dat$expt[dat$event < 5000] <- "color"#
+orig <- which(dat$event==666|dat$event==777)#
+#
+dat$cond[dat$event > 5000] <- "NA"#
+#
+dat$item[orig] <- dat$item[orig-1]#
+dat$expt[orig] <- dat$expt[orig-1]#
+dat$cond[orig] <- dat$cond[orig-1]#
+# corrects for subj number 9#
+dat$subj[dat$subj==10] <- 9#
+dat$cond <- as.factor(dat$cond)#
+dat$wpos[(dat$bin==85) & dat$expt=="filler"] <- 1#
+dat$wpos[(dat$bin==86) & dat$expt=="filler"] <- 2#
+dat$wpos[(dat$bin==87) & dat$expt=="filler"] <- 3#
+dat$wpos[(dat$bin==88) & dat$expt=="filler"] <- 4#
+dat$wpos[(dat$bin==89) & dat$expt=="filler"] <- 5#
+dat$wpos[(dat$bin==90) & dat$expt=="filler"] <- 6#
+dat$wpos[(dat$bin==91) & dat$expt=="filler"] <- 7#
+dat$wpos[(dat$bin==92) & dat$expt=="filler"] <- 8#
+dat$wpos[(dat$bin==93) & dat$expt=="filler"] <- 9#
+dat$wpos[(dat$bin==94) & dat$expt=="filler"] <- 10#
+dat$wpos[(dat$bin==95) & dat$expt=="filler"] <- 11#
+dat$wpos[(dat$bin==96) & dat$expt=="filler"] <- 12#
+dat$wpos[(dat$bin==97) & dat$expt=="filler"] <- 13#
+dat$wpos[(dat$bin==98) & dat$expt=="filler"] <- 14#
+dat$wpos[(dat$bin==99) & dat$expt=="filler"] <- 15#
+dat$wpos[(dat$bin==100) & dat$expt=="filler"] <- 16#
+dat$wpos[(dat$bin==101) & dat$expt=="filler"] <- 17#
+dat$wpos[(dat$bin==102) & dat$expt=="filler"] <- 18#
+dat$wpos[(dat$bin==103) & dat$expt=="filler"] <- 19#
+#
+dat$region[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$region[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==104|dat$bin==8)] <- 2#
+dat$region[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$region[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$region[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$region[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$region[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$region[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$region[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$region[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$region[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$region[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$region[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$region[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$region[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$region[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$region[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+#
+dat$wpos[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$wpos[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==8|dat$bin==104)] <- 2#
+dat$wpos[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$wpos[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$wpos[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$wpos[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$wpos[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$wpos[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$wpos[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$wpos[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$wpos[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$wpos[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$wpos[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$wpos[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$wpos[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$wpos[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$wpos[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+### gets rid of pre-emptive button presses #
+#
+imposters <- which(((dat$event==1024 & dat$event.1==1024) | (dat$event==1025 & dat$event.1==1025) | (dat$event==1025 & dat$event.1==1024) | (dat$event==1024 & dat$event.1==1025) ) & dat$bin==1)#
+#
+getout <- c()#
+#
+for (i in imposters) {#
+	if ( dat$wpos[i] != (dat$wpos[i+1]-1) ) {#
+	  getout <- c(getout,i)#
+	}#
+}#
+#
+dat <- dat[-getout,]
+table(dat$subj,dat$bin)
+qst <- subset(dat,event==666|event==777)#
+dat <- subset(dat,event!=666 & event!=777)#
+first.cut <- function(dat, rt.name='rt', lower=100, upper=5000) {#
+    rt <- dat[[rt.name]]#
+    num.too.low <- length(rt[rt < lower])#
+    num.too.high <- length(rt[rt > upper])#
+    cat('There are', num.too.low, 'RTs under', lower, 'and',#
+        num.too.high, 'over', upper, '.\n')#
+    return(rt < lower | rt > upper)#
+}#
+to.remove <- first.cut(dat,rt.name="rt",upper=5000,lower=100)#
+dat$rt[to.remove=='TRUE'] <- NA#
+dat$logRT <- log(dat$rt)#
+dat$logRT[to.remove=='TRUE'] <- NA#
+cutout <- dat[which(is.na(dat$logRT)), ]#
+cutout$logRTresidual <- NA#
+dat <- dat[which(!is.na(dat$logRT)), ]#
+#
+ dat <- subset(dat,wpos!="NA")#
+library(Design)
+ls()
+summary(as.factor(qst$subj))
+pos <- function(dat,  subj.name='subj',item.name='item',expt.name='expt') {#
+    dat <- data.frame(subj = dat[[subj.name]], item = dat[[item.name]],expt=dat[[expt.name]])#
+    k <- 0    ## subj number#
+    m <- 0    ## item number#
+    ipos <- c() #
+    for(i in 1:nrow(dat)) {#
+    	   if (dat$subj[i] != k) #
+	   # if the subject number is different than the last start counter over#
+	      	 {#
+		  k <- dat$subj[i]#
+		 counter <- 1#
+		  ipos[i] <- counter#
+		  }#
+          else if ((dat$item[i] != dat$item[i-1]) || (dat$expt[i] != dat$expt[i-1]) ) {#
+	   ## if either the item number or expt name is different,#
+	   ####    	   increment the counter#
+            m <- dat$item[i]#
+            counter <- counter + 1#
+	    ipos[i] <- counter#
+	         }#
+	  else #
+	       {#
+                 ipos[i] <- counter#
+	      } #
+}#
+    return(ipos)#
+}#
+#
+dat$Lpos <- NA#
+dat$Lpos <- pos(dat)
+summary(dat)
+spr <- subset(dat,expt=="color")
+summary(spr)
+spr$region <- as.factor(spr$region)
+internal function to get standard errors#
+se <- function(x,na.rm=F) {#
+    if(na.rm) x <- subset(x,! is.na(x))#
+    sqrt(var(x)/length(x))#
+}#
+#
+ dat$COND <- as.factor(dat$COND)#
+dat$region <- as.factor(dat$region)#
+dat <- subset(dat,region!="NA" & region!="0")#
+summary(dat$region)#
+#
+dat$region <- dat$region[drop=TRUE]#
+# plots rts/res.rts with error bars#
+plot.rts <- function(dat, rt.name='rt', region.name='region',#
+                     cond.name='joint.cond', lty.function=NULL, pch.function=NULL, col.function=NULL,bg.function=NULL,lty=1:6,col=1.657,pch=1:8,bg=col,...) {#
+    dat <- data.frame(region = dat[[region.name]], cond = dat[[cond.name]],#
+                      rt = dat[[rt.name]])#
+    # find appropriate range for graph with errors bars#
+    reg <- levels(dat$region)[1]#
+    con <- levels(dat$cond)[1]#
+    con.dat <- subset(dat, region==reg & cond==con)#
+    graph.min <- graph.max <- mean(con.dat$rt)#
+    for (reg in levels(dat$region)){#
+        for (con in levels(dat$cond)) {#
+            con.dat <- subset(dat, region==reg & cond==con)#
+            # only if this pair of condition and region has data#
+            if (length(con.dat[,1]) > 0) {#
+              word.mean <- mean(con.dat$rt)#
+              word.se <- se(con.dat$rt, na.rm=T)#
+              yplus<-word.mean+word.se#
+              yminus<-word.mean-word.se#
+              if(yplus>graph.max){graph.max <- yplus}#
+              if(yminus<graph.min){graph.min <- yminus}#
+            }#
+         }#
+    }	#
+    cat("### levels are",class(levels(dat$cond)), ":\n")#
+    print(levels(dat$cond))#
+	print(levels(dat$region))#
+#
+    if(! is.null(lty.function)) {#
+      lty <- sapply(levels(dat$cond), lty.function)#
+      cat("### Assigning special lty...\n")#
+    }#
+    if(! is.null(col.function)) {#
+      col <- sapply(levels(dat$cond), col.function)#
+      cat("### Assigning special col...\n")#
+    }#
+    if(! is.null(pch.function)) {#
+      pch <- sapply(levels(dat$cond), pch.function)#
+      cat("### Assigning special pch...\n")#
+    }#
+    if(! is.null(bg.function)) {#
+      bg <- sapply(levels(dat$cond), bg.function)#
+      cat("### Assigning special bg...\n")#
+    }#
+	colors <- rainbow(max(as.numeric(dat$cond)))#
+    # Plot graph#
+#
+    with(dat, interaction.plot(region,cond, rt, type='b',#
+                               ylim=c(graph.min, graph.max + .1), xlab="Region",#
+                               col=col, lty=lty, pch=pch, bg=bg,fixed=TRUE,leg.bg="gray",bty='o',#
+                               ylab='Log normalized reading time', ...))#
+    # plot error bars#
+    i <- 1 # x value of current word#
+    for (reg in levels(dat$region)){#
+        for (con in levels(dat$cond)) {#
+          con.dat <- subset(dat, region==reg & cond==con)#
+            # only if this pair of condition and region has data#
+            if (length(con.dat[,1]) > 0) {          #
+              word.mean <- mean(con.dat$rt)#
+              word.se <- se(con.dat$rt, na.rm=T)#
+              yplus<-word.mean+word.se#
+              yminus<-word.mean-word.se#
+              arrows(x0=i, y0=word.mean, x1=i, y1=yplus, angle=90, length=0.1)#
+              arrows(x0=i, y0=word.mean, x1=i, y1=yminus, angle=90, length=0.1)#
+            }#
+        }#
+        i <- i + 1#
+    }                                 #
+}
+ls()
+plot.rts(spr,cond.name="cond",region.name="region")
+plot.rts(spr,cond.name="cond",region.name="region",col=1:4,lwd=2)
+summary(spr)
+plot.rts(spr,cond.name="cond",region.name="region",col=1:4,lwd=2,rt.name="logRT")
+tapply(qst$corr,qst$subj)
+tapply(qst$corr,qst$subj,mean)
+qst$corr[qst$event==777 & qst$event.1==1024] <- 1#
+qst$corr[qst$event==777 & qst$event.1==1025] <- 0#
+qst$corr[qst$event==666 & qst$event.1==1025] <- 1#
+qst$corr[qst$event==666 & qst$event.1==1024] <- 0
+tapply(qst$corr,qst$subj,mean)
+mean(qst$corr)
+table(qst$corr,qst$subj)
+table(qst$subj)
+table(spr$region,spr$subj)
+table(spr$subj,spr$region)
+rm(list=ls())
+dat <- read.table("col1to44.rt",header=T)#
+#
+dat$flags <- NULL#
+dat$flags.1 <- NULL#
+dat$region <- NULL#
+dat$correct <- NULL#
+#
+dat$rt <- dat$rt.ms.#
+#
+dat$rt.ms. <- NULL#
+dat$correct[dat$event.1=="1040"] <- 1#
+dat$correct[dat$event.1=="2064"] <- 0#
+dat$correct[dat$event.1=="1025"] <- 0#
+dat$correct[dat$event.1=="1024"] <- 1#
+ addsubj <- function(dat, item.name='item1') {#
+    dat <- data.frame(item = dat[[item.name]])#
+    subj <- c() #
+   s <- 1#
+   subj <- matrix(0,nrow= nrow(dat), ncol=1, dimnames=list(1:nrow(dat), paste("subj")))#
+    for(i in 1:(nrow(dat)-1)) {#
+             if (dat$item[i] < dat$item[i+1]){#
+	       subj[i] <- s#
+	     }#
+             if (dat$item[i] > dat$item[i+1]) {#
+		subj[i] <- s#
+                 s <- s + 1#
+		 }#
+    }#
+    return(subj)#
+}#
+dat$subj <- addsubj(dat)#
+#
+dat <- subset(dat,subj!=0)#
+#
+dat$cond <- NULL#
+dat$cond[dat$event > 1000 & dat$event < 2000] <- "NO NO"#
+dat$cond[dat$event > 2000 & dat$event < 3000] <- "COLOR NO"#
+dat$cond[dat$event > 3000 & dat$event < 4000] <- "NO COLOR"#
+dat$cond[dat$event > 4000 & dat$event < 5000] <- "COLOR COLOR"#
+#
+dat$item <- as.numeric(sapply(1:nrow(dat),FUN=function(i){substr(dat$event[i],regexpr("[0-9][0-9]$",dat$event[i])[1],regexpr("[0-9][0-9]$",dat$event[i])[1]+attr(regexpr("[0-9][0-9]$",dat$event[i]),"match.length"))}))#
+dat$expt[dat$event > 5000] <- "filler"#
+dat$expt[dat$event < 5000] <- "color"#
+orig <- which(dat$event==666|dat$event==777)#
+#
+dat$cond[dat$event > 5000] <- "NA"#
+#
+dat$item[orig] <- dat$item[orig-1]#
+dat$expt[orig] <- dat$expt[orig-1]#
+dat$cond[orig] <- dat$cond[orig-1]#
+# corrects for subj number 9#
+dat$subj[dat$subj==10] <- 9#
+dat$cond <- as.factor(dat$cond)#
+dat$wpos[(dat$bin==85) & dat$expt=="filler"] <- 1#
+dat$wpos[(dat$bin==86) & dat$expt=="filler"] <- 2#
+dat$wpos[(dat$bin==87) & dat$expt=="filler"] <- 3#
+dat$wpos[(dat$bin==88) & dat$expt=="filler"] <- 4#
+dat$wpos[(dat$bin==89) & dat$expt=="filler"] <- 5#
+dat$wpos[(dat$bin==90) & dat$expt=="filler"] <- 6#
+dat$wpos[(dat$bin==91) & dat$expt=="filler"] <- 7#
+dat$wpos[(dat$bin==92) & dat$expt=="filler"] <- 8#
+dat$wpos[(dat$bin==93) & dat$expt=="filler"] <- 9#
+dat$wpos[(dat$bin==94) & dat$expt=="filler"] <- 10#
+dat$wpos[(dat$bin==95) & dat$expt=="filler"] <- 11#
+dat$wpos[(dat$bin==96) & dat$expt=="filler"] <- 12#
+dat$wpos[(dat$bin==97) & dat$expt=="filler"] <- 13#
+dat$wpos[(dat$bin==98) & dat$expt=="filler"] <- 14#
+dat$wpos[(dat$bin==99) & dat$expt=="filler"] <- 15#
+dat$wpos[(dat$bin==100) & dat$expt=="filler"] <- 16#
+dat$wpos[(dat$bin==101) & dat$expt=="filler"] <- 17#
+dat$wpos[(dat$bin==102) & dat$expt=="filler"] <- 18#
+dat$wpos[(dat$bin==103) & dat$expt=="filler"] <- 19#
+#
+dat$region[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$region[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==104|dat$bin==8)] <- 2#
+dat$region[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$region[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$region[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$region[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$region[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$region[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$region[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$region[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$region[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$region[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$region[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$region[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$region[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$region[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$region[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+#
+dat$wpos[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$wpos[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==8|dat$bin==104)] <- 2#
+dat$wpos[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$wpos[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$wpos[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$wpos[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$wpos[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$wpos[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$wpos[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$wpos[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$wpos[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$wpos[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$wpos[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$wpos[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$wpos[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$wpos[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$wpos[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+### gets rid of pre-emptive button presses #
+#
+imposters <- which(((dat$event==1024 & dat$event.1==1024) | (dat$event==1025 & dat$event.1==1025) | (dat$event==1025 & dat$event.1==1024) | (dat$event==1024 & dat$event.1==1025) ) & dat$bin==1)#
+#
+getout <- c()#
+#
+for (i in imposters) {#
+	if ( dat$wpos[i] != (dat$wpos[i+1]-1) ) {#
+	  getout <- c(getout,i)#
+	}#
+}#
+#
+dat <- dat[-getout,]#
+qst <- subset(dat,event==666|event==777)#
+dat <- subset(dat,event!=666 & event!=777)
+table(spr$subj,spr$region)
+spr <- subset(dat,expt=="color")
+table(spr$subj,spr$region)
+table(ans$subj)
+table(qst$subj)
+16 + 12 + 11 + 9
+2 + 5 + 9 + 2
+2 + 5 + 2
+4 + 8 + 6 + 7 + 5 + 1 + 4
+35 + 57
+ls()
+csqst <- subset(qst,expt=="color")
+table(cqst$subj)
+table(csqst$subj)
+fqst <- subset(qst,expt=="filler")
+table(fqst$subj)
+head(fqst)
+s28 <- subset(fqst,subj==28)
+s28
+16 + 2 + 12 + 5+ 11 + 9 + 2 + 1 + 2
+table(fqst$subj)
+11 + 8 + 10 + 7  + 8 + 3 + 4 + 7 + 2
+table(csqst$subj)
+rm(list=ls())
+dat <- read.table("col1to44.rt",header=T)#
+#
+dat$flags <- NULL#
+dat$flags.1 <- NULL#
+dat$region <- NULL#
+dat$correct <- NULL#
+#
+dat$rt <- dat$rt.ms.#
+#
+dat$rt.ms. <- NULL#
+dat$correct[dat$event.1=="1040"] <- 1#
+dat$correct[dat$event.1=="2064"] <- 0#
+dat$correct[dat$event.1=="1025"] <- 0#
+dat$correct[dat$event.1=="1024"] <- 1#
+ addsubj <- function(dat, item.name='item1') {#
+    dat <- data.frame(item = dat[[item.name]])#
+    subj <- c() #
+   s <- 1#
+   subj <- matrix(0,nrow= nrow(dat), ncol=1, dimnames=list(1:nrow(dat), paste("subj")))#
+    for(i in 1:(nrow(dat)-1)) {#
+             if (dat$item[i] < dat$item[i+1]){#
+	       subj[i] <- s#
+	     }#
+             if (dat$item[i] > dat$item[i+1]) {#
+		subj[i] <- s#
+                 s <- s + 1#
+		 }#
+    }#
+    return(subj)#
+}#
+dat$subj <- addsubj(dat)#
+#
+dat <- subset(dat,subj!=0)#
+#
+dat$cond <- NULL#
+dat$cond[dat$event > 1000 & dat$event < 2000] <- "NO NO"#
+dat$cond[dat$event > 2000 & dat$event < 3000] <- "COLOR NO"#
+dat$cond[dat$event > 3000 & dat$event < 4000] <- "NO COLOR"#
+dat$cond[dat$event > 4000 & dat$event < 5000] <- "COLOR COLOR"#
+#
+dat$item <- as.numeric(sapply(1:nrow(dat),FUN=function(i){substr(dat$event[i],regexpr("[0-9][0-9]$",dat$event[i])[1],regexpr("[0-9][0-9]$",dat$event[i])[1]+attr(regexpr("[0-9][0-9]$",dat$event[i]),"match.length"))}))#
+dat$expt[dat$event > 5000] <- "filler"#
+dat$expt[dat$event < 5000] <- "color"#
+orig <- which(dat$event==666|dat$event==777)#
+#
+dat$cond[dat$event > 5000] <- "NA"#
+#
+dat$item[orig] <- dat$item[orig-1]#
+dat$expt[orig] <- dat$expt[orig-1]#
+dat$cond[orig] <- dat$cond[orig-1]#
+# corrects for subj number 9#
+dat$subj[dat$subj==10] <- 9#
+dat$cond <- as.factor(dat$cond)#
+dat$wpos[(dat$bin==85) & dat$expt=="filler"] <- 1#
+dat$wpos[(dat$bin==86) & dat$expt=="filler"] <- 2#
+dat$wpos[(dat$bin==87) & dat$expt=="filler"] <- 3#
+dat$wpos[(dat$bin==88) & dat$expt=="filler"] <- 4#
+dat$wpos[(dat$bin==89) & dat$expt=="filler"] <- 5#
+dat$wpos[(dat$bin==90) & dat$expt=="filler"] <- 6#
+dat$wpos[(dat$bin==91) & dat$expt=="filler"] <- 7#
+dat$wpos[(dat$bin==92) & dat$expt=="filler"] <- 8#
+dat$wpos[(dat$bin==93) & dat$expt=="filler"] <- 9#
+dat$wpos[(dat$bin==94) & dat$expt=="filler"] <- 10#
+dat$wpos[(dat$bin==95) & dat$expt=="filler"] <- 11#
+dat$wpos[(dat$bin==96) & dat$expt=="filler"] <- 12#
+dat$wpos[(dat$bin==97) & dat$expt=="filler"] <- 13#
+dat$wpos[(dat$bin==98) & dat$expt=="filler"] <- 14#
+dat$wpos[(dat$bin==99) & dat$expt=="filler"] <- 15#
+dat$wpos[(dat$bin==100) & dat$expt=="filler"] <- 16#
+dat$wpos[(dat$bin==101) & dat$expt=="filler"] <- 17#
+dat$wpos[(dat$bin==102) & dat$expt=="filler"] <- 18#
+dat$wpos[(dat$bin==103) & dat$expt=="filler"] <- 19#
+#
+dat$region[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$region[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==104|dat$bin==8)] <- 2#
+dat$region[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$region[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$region[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$region[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$region[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$region[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$region[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$region[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$region[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$region[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$region[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$region[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$region[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$region[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$region[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+#
+dat$wpos[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$wpos[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==8|dat$bin==104)] <- 2#
+dat$wpos[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$wpos[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$wpos[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$wpos[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$wpos[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$wpos[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$wpos[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$wpos[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$wpos[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$wpos[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$wpos[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$wpos[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$wpos[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$wpos[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$wpos[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+### gets rid of pre-emptive button presses #
+#
+imposters <- which(((dat$event==1024 & dat$event.1==1024) | (dat$event==1025 & dat$event.1==1025) | (dat$event==1025 & dat$event.1==1024) | (dat$event==1024 & dat$event.1==1025) ) & dat$bin==1)#
+#
+getout <- c()#
+#
+for (i in imposters) {#
+	if ( dat$wpos[i] != (dat$wpos[i+1]-1) ) {#
+	  getout <- c(getout,i)#
+	}#
+}#
+#
+dat <- dat[-getout,]
+dat <- read.table("col1to44.rt",header=T)
+summary(dat)
+rm(list=ls())
+dat <- read.table("col1to44.rt",header=T)
+dat$flags <- NULL#
+dat$flags.1 <- NULL#
+dat$region <- NULL#
+dat$correct <- NULL#
+#
+dat$rt <- dat$rt.ms.#
+#
+dat$rt.ms. <- NULL#
+dat$correct[dat$event.1=="1040"] <- 1#
+dat$correct[dat$event.1=="2064"] <- 0#
+dat$correct[dat$event.1=="1025"] <- 0#
+dat$correct[dat$event.1=="1024"] <- 1#
+ addsubj <- function(dat, item.name='item1') {#
+    dat <- data.frame(item = dat[[item.name]])#
+    subj <- c() #
+   s <- 1#
+   subj <- matrix(0,nrow= nrow(dat), ncol=1, dimnames=list(1:nrow(dat), paste("subj")))#
+    for(i in 1:(nrow(dat)-1)) {#
+             if (dat$item[i] < dat$item[i+1]){#
+	       subj[i] <- s#
+	     }#
+             if (dat$item[i] > dat$item[i+1]) {#
+		subj[i] <- s#
+                 s <- s + 1#
+		 }#
+    }#
+    return(subj)#
+}#
+dat$subj <- addsubj(dat)#
+#
+dat <- subset(dat,subj!=0)#
+#
+dat$cond <- NULL#
+dat$cond[dat$event > 1000 & dat$event < 2000] <- "NO NO"#
+dat$cond[dat$event > 2000 & dat$event < 3000] <- "COLOR NO"#
+dat$cond[dat$event > 3000 & dat$event < 4000] <- "NO COLOR"#
+dat$cond[dat$event > 4000 & dat$event < 5000] <- "COLOR COLOR"#
+#
+dat$item <- as.numeric(sapply(1:nrow(dat),FUN=function(i){substr(dat$event[i],regexpr("[0-9][0-9]$",dat$event[i])[1],regexpr("[0-9][0-9]$",dat$event[i])[1]+attr(regexpr("[0-9][0-9]$",dat$event[i]),"match.length"))}))#
+dat$expt[dat$event > 5000] <- "filler"#
+dat$expt[dat$event < 5000] <- "color"#
+orig <- which(dat$event==666|dat$event==777)#
+#
+dat$cond[dat$event > 5000] <- "NA"#
+#
+dat$item[orig] <- dat$item[orig-1]#
+dat$expt[orig] <- dat$expt[orig-1]#
+dat$cond[orig] <- dat$cond[orig-1]#
+# corrects for subj number 9#
+dat$subj[dat$subj==10] <- 9#
+dat$cond <- as.factor(dat$cond)#
+dat$wpos[(dat$bin==85) & dat$expt=="filler"] <- 1#
+dat$wpos[(dat$bin==86) & dat$expt=="filler"] <- 2#
+dat$wpos[(dat$bin==87) & dat$expt=="filler"] <- 3#
+dat$wpos[(dat$bin==88) & dat$expt=="filler"] <- 4#
+dat$wpos[(dat$bin==89) & dat$expt=="filler"] <- 5#
+dat$wpos[(dat$bin==90) & dat$expt=="filler"] <- 6#
+dat$wpos[(dat$bin==91) & dat$expt=="filler"] <- 7#
+dat$wpos[(dat$bin==92) & dat$expt=="filler"] <- 8#
+dat$wpos[(dat$bin==93) & dat$expt=="filler"] <- 9#
+dat$wpos[(dat$bin==94) & dat$expt=="filler"] <- 10#
+dat$wpos[(dat$bin==95) & dat$expt=="filler"] <- 11#
+dat$wpos[(dat$bin==96) & dat$expt=="filler"] <- 12#
+dat$wpos[(dat$bin==97) & dat$expt=="filler"] <- 13#
+dat$wpos[(dat$bin==98) & dat$expt=="filler"] <- 14#
+dat$wpos[(dat$bin==99) & dat$expt=="filler"] <- 15#
+dat$wpos[(dat$bin==100) & dat$expt=="filler"] <- 16#
+dat$wpos[(dat$bin==101) & dat$expt=="filler"] <- 17#
+dat$wpos[(dat$bin==102) & dat$expt=="filler"] <- 18#
+dat$wpos[(dat$bin==103) & dat$expt=="filler"] <- 19#
+#
+dat$region[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$region[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==104|dat$bin==8)] <- 2#
+dat$region[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$region[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$region[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$region[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$region[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$region[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$region[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$region[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$region[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$region[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$region[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$region[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$region[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$region[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$region[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+#
+dat$wpos[(dat$bin==1|dat$bin==3|dat$bin==2|dat$bin==4)] <- 1#
+dat$wpos[(dat$bin==5|dat$bin==7|dat$bin==6|dat$bin==8|dat$bin==104)] <- 2#
+dat$wpos[(dat$bin==9|dat$bin==11|dat$bin==10|dat$bin==12|dat$bin==105|dat$bin==106)] <- 3#
+dat$wpos[(dat$bin==13|dat$bin==15|dat$bin==14|dat$bin==16|dat$bin==107|dat$bin==108)] <- 4#
+dat$wpos[(dat$bin==17|dat$bin==19|dat$bin==18|dat$bin==20)] <- 5#
+dat$wpos[(dat$bin==21|dat$bin==23|dat$bin==22|dat$bin==24|dat$bin==109)] <- 6#
+dat$wpos[(dat$bin==25|dat$bin==27|dat$bin==26|dat$bin==28)] <- 7#
+dat$wpos[(dat$bin==29|dat$bin==31|dat$bin==30|dat$bin==32)] <- 8#
+dat$wpos[(dat$bin==33|dat$bin==35|dat$bin==34|dat$bin==36)] <- 9#
+dat$wpos[(dat$bin==37|dat$bin==39|dat$bin==38|dat$bin==40|dat$bin==110)] <- 10#
+dat$wpos[(dat$bin==41|dat$bin==43|dat$bin==42|dat$bin==44|dat$bin==111)] <- 11#
+dat$wpos[(dat$bin==45|dat$bin==47|dat$bin==46|dat$bin==48)] <- 12#
+dat$wpos[(dat$bin==49|dat$bin==51|dat$bin==50|dat$bin==52)] <- 13#
+dat$wpos[(dat$bin==53|dat$bin==55|dat$bin==54|dat$bin==56)] <- 14#
+dat$wpos[(dat$bin==57|dat$bin==59|dat$bin==58|dat$bin==60)] <- 15#
+dat$wpos[(dat$bin==61|dat$bin==63|dat$bin==62|dat$bin==64)] <- 16#
+dat$wpos[(dat$bin==65|dat$bin==67|dat$bin==66|dat$bin==68)] <- 17#
+### gets rid of pre-emptive button presses #
+#
+imposters <- which(((dat$event==1024 & dat$event.1==1024) | (dat$event==1025 & dat$event.1==1025) | (dat$event==1025 & dat$event.1==1024) | (dat$event==1024 & dat$event.1==1025) ) & dat$bin==1)#
+#
+getout <- c()#
+#
+for (i in imposters) {#
+	if ( dat$wpos[i] != (dat$wpos[i+1]-1) ) {#
+	  getout <- c(getout,i)#
+	}#
+}#
+#
+dat <- dat[-getout,]#
+qst <- subset(dat,event==666|event==777)#
+dat <- subset(dat,event!=666 & event!=777)
+table(qst$subj)
+tapply(qst$corr,qst$subj,mean)
+summary(qst)
+qst$corr[qst$event==777 & qst$event.1==1024] <- 1#
+qst$corr[qst$event==777 & qst$event.1==1025] <- 0#
+qst$corr[qst$event==666 & qst$event.1==1025] <- 1#
+qst$corr[qst$event==666 & qst$event.1==1024] <- 0
+tapply(qst$corr,qst$subj,mean)
+dat <- subset(dat,subj!=14 & subj!=32)#
+#
+first.cut <- function(dat, rt.name='rt', lower=100, upper=5000) {#
+    rt <- dat[[rt.name]]#
+    num.too.low <- length(rt[rt < lower])#
+    num.too.high <- length(rt[rt > upper])#
+    cat('There are', num.too.low, 'RTs under', lower, 'and',#
+        num.too.high, 'over', upper, '.\n')#
+    return(rt < lower | rt > upper)#
+}#
+to.remove <- first.cut(dat,rt.name="rt",upper=5000,lower=100)#
+dat$rt[to.remove=='TRUE'] <- NA#
+dat$logRT <- log(dat$rt)#
+dat$logRT[to.remove=='TRUE'] <- NA#
+cutout <- dat[which(is.na(dat$logRT)), ]#
+cutout$logRTresidual <- NA#
+dat <- dat[which(!is.na(dat$logRT)), ]#
+#
+ dat <- subset(dat,wpos!="NA")
+dat$word[dat$item==1 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==1 & dat$wpos==2 & dat$expt=="filler"] <- "architect" #
+dat$word[dat$item==1 & dat$wpos==3 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==1 & dat$wpos==4 & dat$expt=="filler"] <- "met" #
+dat$word[dat$item==1 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==1 & dat$wpos==6 & dat$expt=="filler"] <- "landscaper" #
+dat$word[dat$item==1 & dat$wpos==7 & dat$expt=="filler"] <- "was" #
+dat$word[dat$item==1 & dat$wpos==8 & dat$expt=="filler"] <- "hired" #
+dat$word[dat$item==1 & dat$wpos==9 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==1 & dat$wpos==10 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==1 & dat$wpos==11 & dat$expt=="filler"] <- "big" #
+dat$word[dat$item==1 & dat$wpos==12 & dat$expt=="filler"] <- "project" #
+dat$word[dat$item==1 & dat$wpos==13 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==1 & dat$wpos==14 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==1 & dat$wpos==15 & dat$expt=="filler"] <- "rich" #
+dat$word[dat$item==1 & dat$wpos==16 & dat$expt=="filler"] <- "suburbs" #
+dat$word[dat$item==1 & dat$wpos==17 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==1 & dat$wpos==18 & dat$expt=="filler"] <- "Boston." #
+dat$word[dat$item==2 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==2 & dat$wpos==2 & dat$expt=="filler"] <- "doting" #
+dat$word[dat$item==2 & dat$wpos==3 & dat$expt=="filler"] <- "aunt" #
+dat$word[dat$item==2 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==2 & dat$wpos==5 & dat$expt=="filler"] <- "amused" #
+dat$word[dat$item==2 & dat$wpos==6 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==2 & dat$wpos==7 & dat$expt=="filler"] <- "child" #
+dat$word[dat$item==2 & dat$wpos==8 & dat$expt=="filler"] <- "made" #
+dat$word[dat$item==2 & dat$wpos==9 & dat$expt=="filler"] <- "paper" #
+dat$word[dat$item==2 & dat$wpos==10 & dat$expt=="filler"] <- "dolls" #
+dat$word[dat$item==2 & dat$wpos==11 & dat$expt=="filler"] <- "out" #
+dat$word[dat$item==2 & dat$wpos==12 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==2 & dat$wpos==13 & dat$expt=="filler"] <- "newspaper" #
+dat$word[dat$item==2 & dat$wpos==14 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==2 & dat$wpos==15 & dat$expt=="filler"] <- "her" #
+dat$word[dat$item==2 & dat$wpos==16 & dat$expt=="filler"] <- "spare" #
+dat$word[dat$item==2 & dat$wpos==17 & dat$expt=="filler"] <- "time." #
+dat$word[dat$item==3 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==3 & dat$wpos==2 & dat$expt=="filler"] <- "tailor" #
+dat$word[dat$item==3 & dat$wpos==3 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==3 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==3 & dat$wpos==5 & dat$expt=="filler"] <- "customer" #
+dat$word[dat$item==3 & dat$wpos==6 & dat$expt=="filler"] <- "described" #
+dat$word[dat$item==3 & dat$wpos==7 & dat$expt=="filler"] <- "worked" #
+dat$word[dat$item==3 & dat$wpos==8 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==3 & dat$wpos==9 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==3 & dat$wpos==10 & dat$expt=="filler"] <- "small" #
+dat$word[dat$item==3 & dat$wpos==11 & dat$expt=="filler"] <- "office" #
+dat$word[dat$item==3 & dat$wpos==12 & dat$expt=="filler"] <- "building." #
+dat$word[dat$item==4 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==4 & dat$wpos==2 & dat$expt=="filler"] <- "licensed" #
+dat$word[dat$item==4 & dat$wpos==3 & dat$expt=="filler"] <- "plumber" #
+dat$word[dat$item==4 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==4 & dat$wpos==5 & dat$expt=="filler"] <- "called" #
+dat$word[dat$item==4 & dat$wpos==6 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==4 & dat$wpos==7 & dat$expt=="filler"] <- "electrician" #
+dat$word[dat$item==4 & dat$wpos==8 & dat$expt=="filler"] <- "drove" #
+dat$word[dat$item==4 & dat$wpos==9 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==4 & dat$wpos==10 & dat$expt=="filler"] <- "battered" #
+dat$word[dat$item==4 & dat$wpos==11 & dat$expt=="filler"] <- "old" #
+dat$word[dat$item==4 & dat$wpos==12 & dat$expt=="filler"] <- "pickup" #
+dat$word[dat$item==4 & dat$wpos==13 & dat$expt=="filler"] <- "truck." #
+dat$word[dat$item==5 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==5 & dat$wpos==2 & dat$expt=="filler"] <- "meticulous" #
+dat$word[dat$item==5 & dat$wpos==3 & dat$expt=="filler"] <- "gardener" #
+dat$word[dat$item==5 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==5 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==5 & dat$wpos==6 & dat$expt=="filler"] <- "homeowner" #
+dat$word[dat$item==5 & dat$wpos==7 & dat$expt=="filler"] <- "envied" #
+dat$word[dat$item==5 & dat$wpos==8 & dat$expt=="filler"] <- "was" #
+dat$word[dat$item==5 & dat$wpos==9 & dat$expt=="filler"] <- "very" #
+dat$word[dat$item==5 & dat$wpos==10 & dat$expt=="filler"] <- "friendly" #
+dat$word[dat$item==5 & dat$wpos==11 & dat$expt=="filler"] <- "and" #
+dat$word[dat$item==5 & dat$wpos==12 & dat$expt=="filler"] <- "always" #
+dat$word[dat$item==5 & dat$wpos==13 & dat$expt=="filler"] <- "hardworking." #
+dat$word[dat$item==6 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==6 & dat$wpos==2 & dat$expt=="filler"] <- "biologist" #
+dat$word[dat$item==6 & dat$wpos==3 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==6 & dat$wpos==4 & dat$expt=="filler"] <- "invited" #
+dat$word[dat$item==6 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==6 & dat$wpos==6 & dat$expt=="filler"] <- "chemist" #
+dat$word[dat$item==6 & dat$wpos==7 & dat$expt=="filler"] <- "and" #
+dat$word[dat$item==6 & dat$wpos==8 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==6 & dat$wpos==9 & dat$expt=="filler"] <- "won" #
+dat$word[dat$item==6 & dat$wpos==10 & dat$expt=="filler"] <- "an" #
+dat$word[dat$item==6 & dat$wpos==11 & dat$expt=="filler"] <- "award" #
+dat$word[dat$item==6 & dat$wpos==12 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==6 & dat$wpos==13 & dat$expt=="filler"] <- "innovative" #
+dat$word[dat$item==6 & dat$wpos==14 & dat$expt=="filler"] <- "research" #
+dat$word[dat$item==6 & dat$wpos==15 & dat$expt=="filler"] <- "at" #
+dat$word[dat$item==6 & dat$wpos==16 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==6 & dat$wpos==17 & dat$expt=="filler"] <- "private" #
+dat$word[dat$item==6 & dat$wpos==18 & dat$expt=="filler"] <- "institute" #
+dat$word[dat$item==6 & dat$wpos==19 & dat$expt=="filler"] <- "designed" #
+dat$word[dat$item==6 & dat$wpos==20 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==6 & dat$wpos==21 & dat$expt=="filler"] <- "new" #
+dat$word[dat$item==6 & dat$wpos==22 & dat$expt=="filler"] <- "experiment." #
+dat$word[dat$item==7 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==7 & dat$wpos==2 & dat$expt=="filler"] <- "convicted" #
+dat$word[dat$item==7 & dat$wpos==3 & dat$expt=="filler"] <- "robber" #
+dat$word[dat$item==7 & dat$wpos==4 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==7 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==7 & dat$wpos==6 & dat$expt=="filler"] <- "mailman" #
+dat$word[dat$item==7 & dat$wpos==7 & dat$expt=="filler"] <- "insulted" #
+dat$word[dat$item==7 & dat$wpos==8 & dat$expt=="filler"] <- "read" #
+dat$word[dat$item==7 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==7 & dat$wpos==10 & dat$expt=="filler"] <- "article" #
+dat$word[dat$item==7 & dat$wpos==11 & dat$expt=="filler"] <- "about" #
+dat$word[dat$item==7 & dat$wpos==12 & dat$expt=="filler"] <- "prison" #
+dat$word[dat$item==7 & dat$wpos==13 & dat$expt=="filler"] <- "reform." #
+dat$word[dat$item==8 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==8 & dat$wpos==2 & dat$expt=="filler"] <- "driver" #
+dat$word[dat$item==8 & dat$wpos==3 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==8 & dat$wpos==4 & dat$expt=="filler"] <- "was" #
+dat$word[dat$item==8 & dat$wpos==5 & dat$expt=="filler"] <- "friends" #
+dat$word[dat$item==8 & dat$wpos==6 & dat$expt=="filler"] <- "with" #
+dat$word[dat$item==8 & dat$wpos==7 & dat$expt=="filler"] <- "Jill" #
+dat$word[dat$item==8 & dat$wpos==8 & dat$expt=="filler"] <- "came" #
+dat$word[dat$item==8 & dat$wpos==9 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==8 & dat$wpos==10 & dat$expt=="filler"] <- "first" #
+dat$word[dat$item==8 & dat$wpos==11 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==8 & dat$wpos==12 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==8 & dat$wpos==13 & dat$expt=="filler"] <- "2005" #
+dat$word[dat$item==8 & dat$wpos==14 & dat$expt=="filler"] <- "NASCAR" #
+dat$word[dat$item==8 & dat$wpos==15 & dat$expt=="filler"] <- "race" #
+dat$word[dat$item==8 & dat$wpos==16 & dat$expt=="filler"] <- "but" #
+dat$word[dat$item==8 & dat$wpos==17 & dat$expt=="filler"] <- "finished" #
+dat$word[dat$item==8 & dat$wpos==18 & dat$expt=="filler"] <- "last" #
+dat$word[dat$item==8 & dat$wpos==19 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==8 & dat$wpos==20 & dat$expt=="filler"] <- "previous" #
+dat$word[dat$item==8 & dat$wpos==21 & dat$expt=="filler"] <- "year." #
+dat$word[dat$item==9 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==9 & dat$wpos==2 & dat$expt=="filler"] <- "acrobat" #
+dat$word[dat$item==9 & dat$wpos==3 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==9 & dat$wpos==4 & dat$expt=="filler"] <- "was" #
+dat$word[dat$item==9 & dat$wpos==5 & dat$expt=="filler"] <- "slightly" #
+dat$word[dat$item==9 & dat$wpos==6 & dat$expt=="filler"] <- "injured" #
+dat$word[dat$item==9 & dat$wpos==7 & dat$expt=="filler"] <- "during" #
+dat$word[dat$item==9 & dat$wpos==8 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==9 & dat$wpos==9 & dat$expt=="filler"] <- "performance" #
+dat$word[dat$item==9 & dat$wpos==10 & dat$expt=="filler"] <- "practiced" #
+dat$word[dat$item==9 & dat$wpos==11 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==9 & dat$wpos==12 & dat$expt=="filler"] <- "new" #
+dat$word[dat$item==9 & dat$wpos==13 & dat$expt=="filler"] <- "trick" #
+dat$word[dat$item==9 & dat$wpos==14 & dat$expt=="filler"] <- "again," #
+dat$word[dat$item==9 & dat$wpos==15 & dat$expt=="filler"] <- "but" #
+dat$word[dat$item==9 & dat$wpos==16 & dat$expt=="filler"] <- "still" #
+dat$word[dat$item==9 & dat$wpos==17 & dat$expt=="filler"] <- "didn't" #
+dat$word[dat$item==9 & dat$wpos==18 & dat$expt=="filler"] <- "feel" #
+dat$word[dat$item==9 & dat$wpos==19 & dat$expt=="filler"] <- "confident." #
+dat$word[dat$item==10 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==10 & dat$wpos==2 & dat$expt=="filler"] <- "waiter" #
+dat$word[dat$item==10 & dat$wpos==3 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==10 & dat$wpos==4 & dat$expt=="filler"] <- "was" #
+dat$word[dat$item==10 & dat$wpos==5 & dat$expt=="filler"] <- "preoccupied" #
+dat$word[dat$item==10 & dat$wpos==6 & dat$expt=="filler"] <- "with" #
+dat$word[dat$item==10 & dat$wpos==7 & dat$expt=="filler"] <- "some" #
+dat$word[dat$item==10 & dat$wpos==8 & dat$expt=="filler"] <- "personal" #
+dat$word[dat$item==10 & dat$wpos==9 & dat$expt=="filler"] <- "issues" #
+dat$word[dat$item==10 & dat$wpos==10 & dat$expt=="filler"] <- "forgot" #
+dat$word[dat$item==10 & dat$wpos==11 & dat$expt=="filler"] <- "about" #
+dat$word[dat$item==10 & dat$wpos==12 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==10 & dat$wpos==13 & dat$expt=="filler"] <- "dessert" #
+dat$word[dat$item==10 & dat$wpos==14 & dat$expt=="filler"] <- "ordered" #
+dat$word[dat$item==10 & dat$wpos==15 & dat$expt=="filler"] <- "over" #
+dat$word[dat$item==10 & dat$wpos==16 & dat$expt=="filler"] <- "an" #
+dat$word[dat$item==10 & dat$wpos==17 & dat$expt=="filler"] <- "hour" #
+dat$word[dat$item==10 & dat$wpos==18 & dat$expt=="filler"] <- "ago." #
+dat$word[dat$item==11 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==11 & dat$wpos==2 & dat$expt=="filler"] <- "teacher" #
+dat$word[dat$item==11 & dat$wpos==3 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==11 & dat$wpos==4 & dat$expt=="filler"] <- "has" #
+dat$word[dat$item==11 & dat$wpos==5 & dat$expt=="filler"] <- "been" #
+dat$word[dat$item==11 & dat$wpos==6 & dat$expt=="filler"] <- "worried" #
+dat$word[dat$item==11 & dat$wpos==7 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==11 & dat$wpos==8 & dat$expt=="filler"] <- "many" #
+dat$word[dat$item==11 & dat$wpos==9 & dat$expt=="filler"] <- "months" #
+dat$word[dat$item==11 & dat$wpos==10 & dat$expt=="filler"] <- "offered" #
+dat$word[dat$item==11 & dat$wpos==11 & dat$expt=="filler"] <- "tutoring" #
+dat$word[dat$item==11 & dat$wpos==12 & dat$expt=="filler"] <- "help" #
+dat$word[dat$item==11 & dat$wpos==13 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==11 & dat$wpos==14 & dat$expt=="filler"] <- "any" #
+dat$word[dat$item==11 & dat$wpos==15 & dat$expt=="filler"] <- "student" #
+dat$word[dat$item==11 & dat$wpos==16 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==11 & dat$wpos==17 & dat$expt=="filler"] <- "struggled" #
+dat$word[dat$item==11 & dat$wpos==18 & dat$expt=="filler"] <- "with" #
+dat$word[dat$item==11 & dat$wpos==19 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==11 & dat$wpos==20 & dat$expt=="filler"] <- "material." #
+dat$word[dat$item==12 & dat$wpos==1 & dat$expt=="filler"] <- "After" #
+dat$word[dat$item==12 & dat$wpos==2 & dat$expt=="filler"] <- "examining" #
+dat$word[dat$item==12 & dat$wpos==3 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==12 & dat$wpos==4 & dat$expt=="filler"] <- "numbers," #
+dat$word[dat$item==12 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==12 & dat$wpos==6 & dat$expt=="filler"] <- "analyst" #
+dat$word[dat$item==12 & dat$wpos==7 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==12 & dat$wpos==8 & dat$expt=="filler"] <- "confronted" #
+dat$word[dat$item==12 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==12 & dat$wpos==10 & dat$expt=="filler"] <- "statistician" #
+dat$word[dat$item==12 & dat$wpos==11 & dat$expt=="filler"] <- "decided" #
+dat$word[dat$item==12 & dat$wpos==12 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==12 & dat$wpos==13 & dat$expt=="filler"] <- "postpone" #
+dat$word[dat$item==12 & dat$wpos==14 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==12 & dat$wpos==15 & dat$expt=="filler"] <- "trip" #
+dat$word[dat$item==12 & dat$wpos==16 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==12 & dat$wpos==17 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==12 & dat$wpos==18 & dat$expt=="filler"] <- "headquarters" #
+dat$word[dat$item==12 & dat$wpos==19 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==12 & dat$wpos==20 & dat$expt=="filler"] <- "NY." #
+dat$word[dat$item==13 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==13 & dat$wpos==2 & dat$expt=="filler"] <- "firemen" #
+dat$word[dat$item==13 & dat$wpos==3 & dat$expt=="filler"] <- "from" #
+dat$word[dat$item==13 & dat$wpos==4 & dat$expt=="filler"] <- "company" #
+dat$word[dat$item==13 & dat$wpos==5 & dat$expt=="filler"] <- "8" #
+dat$word[dat$item==13 & dat$wpos==6 & dat$expt=="filler"] <- "believed" #
+dat$word[dat$item==13 & dat$wpos==7 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==13 & dat$wpos==8 & dat$expt=="filler"] <- "warehouse" #
+dat$word[dat$item==13 & dat$wpos==9 & dat$expt=="filler"] <- "on" #
+dat$word[dat$item==13 & dat$wpos==10 & dat$expt=="filler"] <- "6th" #
+dat$word[dat$item==13 & dat$wpos==11 & dat$expt=="filler"] <- "St." #
+dat$word[dat$item==13 & dat$wpos==12 & dat$expt=="filler"] <- "had" #
+dat$word[dat$item==13 & dat$wpos==13 & dat$expt=="filler"] <- "suffered" #
+dat$word[dat$item==13 & dat$wpos==14 & dat$expt=="filler"] <- "too" #
+dat$word[dat$item==13 & dat$wpos==15 & dat$expt=="filler"] <- "much" #
+dat$word[dat$item==13 & dat$wpos==16 & dat$expt=="filler"] <- "structural" #
+dat$word[dat$item==13 & dat$wpos==17 & dat$expt=="filler"] <- "damage." #
+dat$word[dat$item==14 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==14 & dat$wpos==2 & dat$expt=="filler"] <- "investigators" #
+dat$word[dat$item==14 & dat$wpos==3 & dat$expt=="filler"] <- "figured" #
+dat$word[dat$item==14 & dat$wpos==4 & dat$expt=="filler"] <- "out" #
+dat$word[dat$item==14 & dat$wpos==5 & dat$expt=="filler"] <- "whether" #
+dat$word[dat$item==14 & dat$wpos==6 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==14 & dat$wpos==7 & dat$expt=="filler"] <- "lobbyist" #
+dat$word[dat$item==14 & dat$wpos==8 & dat$expt=="filler"] <- "from" #
+dat$word[dat$item==14 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==14 & dat$wpos==10 & dat$expt=="filler"] <- "pharmaceutical" #
+dat$word[dat$item==14 & dat$wpos==11 & dat$expt=="filler"] <- "company" #
+dat$word[dat$item==14 & dat$wpos==12 & dat$expt=="filler"] <- "met" #
+dat$word[dat$item==14 & dat$wpos==13 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==14 & dat$wpos==14 & dat$expt=="filler"] <- "senator." #
+dat$word[dat$item==15 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==15 & dat$wpos==2 & dat$expt=="filler"] <- "press" #
+dat$word[dat$item==15 & dat$wpos==3 & dat$expt=="filler"] <- "published" #
+dat$word[dat$item==15 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==15 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==15 & dat$wpos==6 & dat$expt=="filler"] <- "photographer" #
+dat$word[dat$item==15 & dat$wpos==7 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==15 & dat$wpos==8 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==15 & dat$wpos==9 & dat$expt=="filler"] <- "tabloid" #
+dat$word[dat$item==15 & dat$wpos==10 & dat$expt=="filler"] <- "website" #
+dat$word[dat$item==15 & dat$wpos==11 & dat$expt=="filler"] <- "lied" #
+dat$word[dat$item==15 & dat$wpos==12 & dat$expt=="filler"] <- "about" #
+dat$word[dat$item==15 & dat$wpos==13 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==15 & dat$wpos==14 & dat$expt=="filler"] <- "astronaut" #
+dat$word[dat$item==15 & dat$wpos==15 & dat$expt=="filler"] <- "being" #
+dat$word[dat$item==15 & dat$wpos==16 & dat$expt=="filler"] <- "depressed." #
+dat$word[dat$item==16 & dat$wpos==1 & dat$expt=="filler"] <- "A" #
+dat$word[dat$item==16 & dat$wpos==2 & dat$expt=="filler"] <- "ballerina" #
+dat$word[dat$item==16 & dat$wpos==3 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==16 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==16 & dat$wpos==5 & dat$expt=="filler"] <- "others" #
+dat$word[dat$item==16 & dat$wpos==6 & dat$expt=="filler"] <- "discovered" #
+dat$word[dat$item==16 & dat$wpos==7 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==16 & dat$wpos==8 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==16 & dat$wpos==9 & dat$expt=="filler"] <- "leader" #
+dat$word[dat$item==16 & dat$wpos==10 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==16 & dat$wpos==11 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==16 & dat$wpos==12 & dat$expt=="filler"] <- "dance" #
+dat$word[dat$item==16 & dat$wpos==13 & dat$expt=="filler"] <- "troupe" #
+dat$word[dat$item==16 & dat$wpos==14 & dat$expt=="filler"] <- "pleaded" #
+dat$word[dat$item==16 & dat$wpos==15 & dat$expt=="filler"] <- "with" #
+dat$word[dat$item==16 & dat$wpos==16 & dat$expt=="filler"] <- "her" #
+dat$word[dat$item==16 & dat$wpos==17 & dat$expt=="filler"] <- "failed" #
+dat$word[dat$item==16 & dat$wpos==18 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==16 & dat$wpos==19 & dat$expt=="filler"] <- "appear" #
+dat$word[dat$item==16 & dat$wpos==20 & dat$expt=="filler"] <- "at" #
+dat$word[dat$item==16 & dat$wpos==21 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==16 & dat$wpos==22 & dat$expt=="filler"] <- "perfomance." #
+dat$word[dat$item==17 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==17 & dat$wpos==2 & dat$expt=="filler"] <- "IRS" #
+dat$word[dat$item==17 & dat$wpos==3 & dat$expt=="filler"] <- "determined" #
+dat$word[dat$item==17 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==17 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==17 & dat$wpos==6 & dat$expt=="filler"] <- "nominee" #
+dat$word[dat$item==17 & dat$wpos==7 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==17 & dat$wpos==8 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==17 & dat$wpos==9 & dat$expt=="filler"] <- "cabinet" #
+dat$word[dat$item==17 & dat$wpos==10 & dat$expt=="filler"] <- "position" #
+dat$word[dat$item==17 & dat$wpos==11 & dat$expt=="filler"] <- "cheated" #
+dat$word[dat$item==17 & dat$wpos==12 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==17 & dat$wpos==13 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==17 & dat$wpos==14 & dat$expt=="filler"] <- "past" #
+dat$word[dat$item==17 & dat$wpos==15 & dat$expt=="filler"] <- "couple" #
+dat$word[dat$item==17 & dat$wpos==16 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==17 & dat$wpos==17 & dat$expt=="filler"] <- "years" #
+dat$word[dat$item==17 & dat$wpos==18 & dat$expt=="filler"] <- "on" #
+dat$word[dat$item==17 & dat$wpos==19 & dat$expt=="filler"] <- "his" #
+dat$word[dat$item==17 & dat$wpos==20 & dat$expt=="filler"] <- "taxes." #
+dat$word[dat$item==18 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==18 & dat$wpos==2 & dat$expt=="filler"] <- "troops" #
+dat$word[dat$item==18 & dat$wpos==3 & dat$expt=="filler"] <- "verified" #
+dat$word[dat$item==18 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==18 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==18 & dat$wpos==6 & dat$expt=="filler"] <- "lieutenant" #
+dat$word[dat$item==18 & dat$wpos==7 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==18 & dat$wpos==8 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==18 & dat$wpos==9 & dat$expt=="filler"] <- "Marines" #
+dat$word[dat$item==18 & dat$wpos==10 & dat$expt=="filler"] <- "demonstrated" #
+dat$word[dat$item==18 & dat$wpos==11 & dat$expt=="filler"] <- "extreme" #
+dat$word[dat$item==18 & dat$wpos==12 & dat$expt=="filler"] <- "bravery" #
+dat$word[dat$item==18 & dat$wpos==13 & dat$expt=="filler"] <- "on" #
+dat$word[dat$item==18 & dat$wpos==14 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==18 & dat$wpos==15 & dat$expt=="filler"] <- "battlefield." #
+dat$word[dat$item==19 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==19 & dat$wpos==2 & dat$expt=="filler"] <- "panel" #
+dat$word[dat$item==19 & dat$wpos==3 & dat$expt=="filler"] <- "alleged" #
+dat$word[dat$item==19 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==19 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==19 & dat$wpos==6 & dat$expt=="filler"] <- "English" #
+dat$word[dat$item==19 & dat$wpos==7 & dat$expt=="filler"] <- "instructor" #
+dat$word[dat$item==19 & dat$wpos==8 & dat$expt=="filler"] <- "plagiarized" #
+dat$word[dat$item==19 & dat$wpos==9 & dat$expt=="filler"] <- "some" #
+dat$word[dat$item==19 & dat$wpos==10 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==19 & dat$wpos==11 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==19 & dat$wpos==12 & dat$expt=="filler"] <- "students" #
+dat$word[dat$item==19 & dat$wpos==13 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==19 & dat$wpos==14 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==19 & dat$wpos==15 & dat$expt=="filler"] <- "class." #
+dat$word[dat$item==20 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==20 & dat$wpos==2 & dat$expt=="filler"] <- "committee" #
+dat$word[dat$item==20 & dat$wpos==3 & dat$expt=="filler"] <- "decided" #
+dat$word[dat$item==20 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==20 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==20 & dat$wpos==6 & dat$expt=="filler"] <- "engineer" #
+dat$word[dat$item==20 & dat$wpos==7 & dat$expt=="filler"] <- "they" #
+dat$word[dat$item==20 & dat$wpos==8 & dat$expt=="filler"] <- "contracted" #
+dat$word[dat$item==20 & dat$wpos==9 & dat$expt=="filler"] <- "failed" #
+dat$word[dat$item==20 & dat$wpos==10 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==20 & dat$wpos==11 & dat$expt=="filler"] <- "follow" #
+dat$word[dat$item==20 & dat$wpos==12 & dat$expt=="filler"] <- "safety" #
+dat$word[dat$item==20 & dat$wpos==13 & dat$expt=="filler"] <- "regulations." #
+dat$word[dat$item==21 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==21 & dat$wpos==2 & dat$expt=="filler"] <- "judges" #
+dat$word[dat$item==21 & dat$wpos==3 & dat$expt=="filler"] <- "ruled" #
+dat$word[dat$item==21 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==21 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==21 & dat$wpos==6 & dat$expt=="filler"] <- "stunt" #
+dat$word[dat$item==21 & dat$wpos==7 & dat$expt=="filler"] <- "performer" #
+dat$word[dat$item==21 & dat$wpos==8 & dat$expt=="filler"] <- "broke" #
+dat$word[dat$item==21 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==21 & dat$wpos==10 & dat$expt=="filler"] <- "record" #
+dat$word[dat$item==21 & dat$wpos==11 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==21 & dat$wpos==12 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==21 & dat$wpos==13 & dat$expt=="filler"] <- "motorbike" #
+dat$word[dat$item==21 & dat$wpos==14 & dat$expt=="filler"] <- "jump." #
+dat$word[dat$item==22 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==22 & dat$wpos==2 & dat$expt=="filler"] <- "board" #
+dat$word[dat$item==22 & dat$wpos==3 & dat$expt=="filler"] <- "discovered" #
+dat$word[dat$item==22 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==22 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==22 & dat$wpos==6 & dat$expt=="filler"] <- "junior" #
+dat$word[dat$item==22 & dat$wpos==7 & dat$expt=="filler"] <- "account" #
+dat$word[dat$item==22 & dat$wpos==8 & dat$expt=="filler"] <- "executive" #
+dat$word[dat$item==22 & dat$wpos==9 & dat$expt=="filler"] <- "lied" #
+dat$word[dat$item==22 & dat$wpos==10 & dat$expt=="filler"] <- "about" #
+dat$word[dat$item==22 & dat$wpos==11 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==22 & dat$wpos==12 & dat$expt=="filler"] <- "projections" #
+dat$word[dat$item==22 & dat$wpos==13 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==22 & dat$wpos==14 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==22 & dat$wpos==15 & dat$expt=="filler"] <- "upcoming" #
+dat$word[dat$item==22 & dat$wpos==16 & dat$expt=="filler"] <- "year." #
+dat$word[dat$item==23 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==23 & dat$wpos==2 & dat$expt=="filler"] <- "guests" #
+dat$word[dat$item==23 & dat$wpos==3 & dat$expt=="filler"] <- "said" #
+dat$word[dat$item==23 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==23 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==23 & dat$wpos==6 & dat$expt=="filler"] <- "random" #
+dat$word[dat$item==23 & dat$wpos==7 & dat$expt=="filler"] <- "passerby" #
+dat$word[dat$item==23 & dat$wpos==8 & dat$expt=="filler"] <- "extinguished" #
+dat$word[dat$item==23 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==23 & dat$wpos==10 & dat$expt=="filler"] <- "fire" #
+dat$word[dat$item==23 & dat$wpos==11 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==23 & dat$wpos==12 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==23 & dat$wpos==13 & dat$expt=="filler"] <- "parking" #
+dat$word[dat$item==23 & dat$wpos==14 & dat$expt=="filler"] <- "lot." #
+dat$word[dat$item==24 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==24 & dat$wpos==2 & dat$expt=="filler"] <- "council" #
+dat$word[dat$item==24 & dat$wpos==3 & dat$expt=="filler"] <- "concluded" #
+dat$word[dat$item==24 & dat$wpos==4 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==24 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==24 & dat$wpos==6 & dat$expt=="filler"] <- "competitor" #
+dat$word[dat$item==24 & dat$wpos==7 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==24 & dat$wpos==8 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==24 & dat$wpos==9 & dat$expt=="filler"] <- "martial" #
+dat$word[dat$item==24 & dat$wpos==10 & dat$expt=="filler"] <- "arts" #
+dat$word[dat$item==24 & dat$wpos==11 & dat$expt=="filler"] <- "event" #
+dat$word[dat$item==24 & dat$wpos==12 & dat$expt=="filler"] <- "violated" #
+dat$word[dat$item==24 & dat$wpos==13 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==24 & dat$wpos==14 & dat$expt=="filler"] <- "rules" #
+dat$word[dat$item==24 & dat$wpos==15 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==24 & dat$wpos==16 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==24 & dat$wpos==17 & dat$expt=="filler"] <- "game." #
+dat$word[dat$item==25 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==25 & dat$wpos==2 & dat$expt=="filler"] <- "passenger" #
+dat$word[dat$item==25 & dat$wpos==3 & dat$expt=="filler"] <- "on" #
+dat$word[dat$item==25 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==25 & dat$wpos==5 & dat$expt=="filler"] <- "train" #
+dat$word[dat$item==25 & dat$wpos==6 & dat$expt=="filler"] <- "alerted" #
+dat$word[dat$item==25 & dat$wpos==7 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==25 & dat$wpos==8 & dat$expt=="filler"] <- "attendant" #
+dat$word[dat$item==25 & dat$wpos==9 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==25 & dat$wpos==10 & dat$expt=="filler"] <- "some" #
+dat$word[dat$item==25 & dat$wpos==11 & dat$expt=="filler"] <- "suspicious" #
+dat$word[dat$item==25 & dat$wpos==12 & dat$expt=="filler"] <- "activity." #
+dat$word[dat$item==26 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==26 & dat$wpos==2 & dat$expt=="filler"] <- "demonstrator" #
+dat$word[dat$item==26 & dat$wpos==3 & dat$expt=="filler"] <- "assaulted" #
+dat$word[dat$item==26 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==26 & dat$wpos==5 & dat$expt=="filler"] <- "annoying" #
+dat$word[dat$item==26 & dat$wpos==6 & dat$expt=="filler"] <- "reporter" #
+dat$word[dat$item==26 & dat$wpos==7 & dat$expt=="filler"] <- "from" #
+dat$word[dat$item==26 & dat$wpos==8 & dat$expt=="filler"] <- "Washington" #
+dat$word[dat$item==26 & dat$wpos==9 & dat$expt=="filler"] <- "DC" #
+dat$word[dat$item==26 & dat$wpos==10 & dat$expt=="filler"] <- "after" #
+dat$word[dat$item==26 & dat$wpos==11 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==26 & dat$wpos==12 & dat$expt=="filler"] <- "anti" #
+dat$word[dat$item==26 & dat$wpos==13 & dat$expt=="filler"] <- "war" #
+dat$word[dat$item==26 & dat$wpos==14 & dat$expt=="filler"] <- "rally." #
+dat$word[dat$item==27 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==27 & dat$wpos==2 & dat$expt=="filler"] <- "model" #
+dat$word[dat$item==27 & dat$wpos==3 & dat$expt=="filler"] <- "slapped" #
+dat$word[dat$item==27 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==27 & dat$wpos==5 & dat$expt=="filler"] <- "insensitive" #
+dat$word[dat$item==27 & dat$wpos==6 & dat$expt=="filler"] <- "photographer" #
+dat$word[dat$item==27 & dat$wpos==7 & dat$expt=="filler"] <- "due" #
+dat$word[dat$item==27 & dat$wpos==8 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==27 & dat$wpos==9 & dat$expt=="filler"] <- "constant" #
+dat$word[dat$item==27 & dat$wpos==10 & dat$expt=="filler"] <- "harrassment." #
+dat$word[dat$item==28 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==28 & dat$wpos==2 & dat$expt=="filler"] <- "playwright" #
+dat$word[dat$item==28 & dat$wpos==3 & dat$expt=="filler"] <- "coached" #
+dat$word[dat$item==28 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==28 & dat$wpos==5 & dat$expt=="filler"] <- "actress" #
+dat$word[dat$item==28 & dat$wpos==6 & dat$expt=="filler"] <- "with" #
+dat$word[dat$item==28 & dat$wpos==7 & dat$expt=="filler"] <- "stage" #
+dat$word[dat$item==28 & dat$wpos==8 & dat$expt=="filler"] <- "fright" #
+dat$word[dat$item==28 & dat$wpos==9 & dat$expt=="filler"] <- "on" #
+dat$word[dat$item==28 & dat$wpos==10 & dat$expt=="filler"] <- "how" #
+dat$word[dat$item==28 & dat$wpos==11 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==28 & dat$wpos==12 & dat$expt=="filler"] <- "deliver" #
+dat$word[dat$item==28 & dat$wpos==13 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==28 & dat$wpos==14 & dat$expt=="filler"] <- "lines." #
+dat$word[dat$item==29 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==29 & dat$wpos==2 & dat$expt=="filler"] <- "auditor" #
+dat$word[dat$item==29 & dat$wpos==3 & dat$expt=="filler"] <- "called" #
+dat$word[dat$item==29 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==29 & dat$wpos==5 & dat$expt=="filler"] <- "attorney" #
+dat$word[dat$item==29 & dat$wpos==6 & dat$expt=="filler"] <- "and" #
+dat$word[dat$item==29 & dat$wpos==7 & dat$expt=="filler"] <- "complained" #
+dat$word[dat$item==29 & dat$wpos==8 & dat$expt=="filler"] <- "about" #
+dat$word[dat$item==29 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==29 & dat$wpos==10 & dat$expt=="filler"] <- "missing" #
+dat$word[dat$item==29 & dat$wpos==11 & dat$expt=="filler"] <- "documents." #
+dat$word[dat$item==30 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==30 & dat$wpos==2 & dat$expt=="filler"] <- "mechanic" #
+dat$word[dat$item==30 & dat$wpos==3 & dat$expt=="filler"] <- "criticized" #
+dat$word[dat$item==30 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==30 & dat$wpos==5 & dat$expt=="filler"] <- "designer" #
+dat$word[dat$item==30 & dat$wpos==6 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==30 & dat$wpos==7 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==30 & dat$wpos==8 & dat$expt=="filler"] <- "vehicle" #
+dat$word[dat$item==30 & dat$wpos==9 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==30 & dat$wpos==10 & dat$expt=="filler"] <- "putting" #
+dat$word[dat$item==30 & dat$wpos==11 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==30 & dat$wpos==12 & dat$expt=="filler"] <- "gearbox" #
+dat$word[dat$item==30 & dat$wpos==13 & dat$expt=="filler"] <- "near" #
+dat$word[dat$item==30 & dat$wpos==14 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==30 & dat$wpos==15 & dat$expt=="filler"] <- "fan" #
+dat$word[dat$item==30 & dat$wpos==16 & dat$expt=="filler"] <- "blades." #
+dat$word[dat$item==31 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==31 & dat$wpos==2 & dat$expt=="filler"] <- "aviator" #
+dat$word[dat$item==31 & dat$wpos==3 & dat$expt=="filler"] <- "radioed" #
+dat$word[dat$item==31 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==31 & dat$wpos==5 & dat$expt=="filler"] <- "inattentive" #
+dat$word[dat$item==31 & dat$wpos==6 & dat$expt=="filler"] <- "operator" #
+dat$word[dat$item==31 & dat$wpos==7 & dat$expt=="filler"] <- "without" #
+dat$word[dat$item==31 & dat$wpos==8 & dat$expt=="filler"] <- "enough" #
+dat$word[dat$item==31 & dat$wpos==9 & dat$expt=="filler"] <- "sleep" #
+dat$word[dat$item==31 & dat$wpos==10 & dat$expt=="filler"] <- "at" #
+dat$word[dat$item==31 & dat$wpos==11 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==31 & dat$wpos==12 & dat$expt=="filler"] <- "base." #
+dat$word[dat$item==32 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==32 & dat$wpos==2 & dat$expt=="filler"] <- "Russian" #
+dat$word[dat$item==32 & dat$wpos==3 & dat$expt=="filler"] <- "sold" #
+dat$word[dat$item==32 & dat$wpos==4 & dat$expt=="filler"] <- "some" #
+dat$word[dat$item==32 & dat$wpos==5 & dat$expt=="filler"] <- "fake" #
+dat$word[dat$item==32 & dat$wpos==6 & dat$expt=="filler"] <- "diamonds" #
+dat$word[dat$item==32 & dat$wpos==7 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==32 & dat$wpos==8 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==32 & dat$wpos==9 & dat$expt=="filler"] <- "smuggler" #
+dat$word[dat$item==32 & dat$wpos==10 & dat$expt=="filler"] <- "known" #
+dat$word[dat$item==32 & dat$wpos==11 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==32 & dat$wpos==12 & dat$expt=="filler"] <- "making" #
+dat$word[dat$item==32 & dat$wpos==13 & dat$expt=="filler"] <- "bribes." #
+dat$word[dat$item==33 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==33 & dat$wpos==2 & dat$expt=="filler"] <- "robot" #
+dat$word[dat$item==33 & dat$wpos==3 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==33 & dat$wpos==4 & dat$expt=="filler"] <- "was" #
+dat$word[dat$item==33 & dat$wpos==5 & dat$expt=="filler"] <- "malfunctioning" #
+dat$word[dat$item==33 & dat$wpos==6 & dat$expt=="filler"] <- "protected" #
+dat$word[dat$item==33 & dat$wpos==7 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==33 & dat$wpos==8 & dat$expt=="filler"] <- "wailing" #
+dat$word[dat$item==33 & dat$wpos==9 & dat$expt=="filler"] <- "infant" #
+dat$word[dat$item==33 & dat$wpos==10 & dat$expt=="filler"] <- "from" #
+dat$word[dat$item==33 & dat$wpos==11 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==33 & dat$wpos==12 & dat$expt=="filler"] <- "falling" #
+dat$word[dat$item==33 & dat$wpos==13 & dat$expt=="filler"] <- "rafters." #
+dat$word[dat$item==34 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==34 & dat$wpos==2 & dat$expt=="filler"] <- "war" #
+dat$word[dat$item==34 & dat$wpos==3 & dat$expt=="filler"] <- "hero" #
+dat$word[dat$item==34 & dat$wpos==4 & dat$expt=="filler"] <- "trusted" #
+dat$word[dat$item==34 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==34 & dat$wpos==6 & dat$expt=="filler"] <- "president" #
+dat$word[dat$item==34 & dat$wpos==7 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==34 & dat$wpos==8 & dat$expt=="filler"] <- "make" #
+dat$word[dat$item==34 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==34 & dat$wpos==10 & dat$expt=="filler"] <- "right" #
+dat$word[dat$item==34 & dat$wpos==11 & dat$expt=="filler"] <- "decision." #
+dat$word[dat$item==35 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==35 & dat$wpos==2 & dat$expt=="filler"] <- "architectural" #
+dat$word[dat$item==35 & dat$wpos==3 & dat$expt=="filler"] <- "firm" #
+dat$word[dat$item==35 & dat$wpos==4 & dat$expt=="filler"] <- "contracted" #
+dat$word[dat$item==35 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==35 & dat$wpos==6 & dat$expt=="filler"] <- "civil" #
+dat$word[dat$item==35 & dat$wpos==7 & dat$expt=="filler"] <- "engineer" #
+dat$word[dat$item==35 & dat$wpos==8 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==35 & dat$wpos==9 & dat$expt=="filler"] <- "redesign" #
+dat$word[dat$item==35 & dat$wpos==10 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==35 & dat$wpos==11 & dat$expt=="filler"] <- "waterworks" #
+dat$word[dat$item==35 & dat$wpos==12 & dat$expt=="filler"] <- "system." #
+dat$word[dat$item==36 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==36 & dat$wpos==2 & dat$expt=="filler"] <- "magician" #
+dat$word[dat$item==36 & dat$wpos==3 & dat$expt=="filler"] <- "smashed" #
+dat$word[dat$item==36 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==36 & dat$wpos==5 & dat$expt=="filler"] <- "leaking" #
+dat$word[dat$item==36 & dat$wpos==6 & dat$expt=="filler"] <- "oil" #
+dat$word[dat$item==36 & dat$wpos==7 & dat$expt=="filler"] <- "lamp" #
+dat$word[dat$item==36 & dat$wpos==8 & dat$expt=="filler"] <- "causing" #
+dat$word[dat$item==36 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==36 & dat$wpos==10 & dat$expt=="filler"] <- "curtains" #
+dat$word[dat$item==36 & dat$wpos==11 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==36 & dat$wpos==12 & dat$expt=="filler"] <- "ignite." #
+dat$word[dat$item==37 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==37 & dat$wpos==2 & dat$expt=="filler"] <- "coroner" #
+dat$word[dat$item==37 & dat$wpos==3 & dat$expt=="filler"] <- "studied" #
+dat$word[dat$item==37 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==37 & dat$wpos==5 & dat$expt=="filler"] <- "unidentified" #
+dat$word[dat$item==37 & dat$wpos==6 & dat$expt=="filler"] <- "murder" #
+dat$word[dat$item==37 & dat$wpos==7 & dat$expt=="filler"] <- "victim" #
+dat$word[dat$item==37 & dat$wpos==8 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==37 & dat$wpos==9 & dat$expt=="filler"] <- "was" #
+dat$word[dat$item==37 & dat$wpos==10 & dat$expt=="filler"] <- "lying" #
+dat$word[dat$item==37 & dat$wpos==11 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==37 & dat$wpos==12 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==37 & dat$wpos==13 & dat$expt=="filler"] <- "morgue" #
+dat$word[dat$item==37 & dat$wpos==14 & dat$expt=="filler"] <- "without" #
+dat$word[dat$item==37 & dat$wpos==15 & dat$expt=="filler"] <- "coming" #
+dat$word[dat$item==37 & dat$wpos==16 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==37 & dat$wpos==17 & dat$expt=="filler"] <- "any" #
+dat$word[dat$item==37 & dat$wpos==18 & dat$expt=="filler"] <- "conclusions." #
+dat$word[dat$item==38 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==38 & dat$wpos==2 & dat$expt=="filler"] <- "onlookers" #
+dat$word[dat$item==38 & dat$wpos==3 & dat$expt=="filler"] <- "consoled" #
+dat$word[dat$item==38 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==38 & dat$wpos==5 & dat$expt=="filler"] <- "angry" #
+dat$word[dat$item==38 & dat$wpos==6 & dat$expt=="filler"] <- "participant" #
+dat$word[dat$item==38 & dat$wpos==7 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==38 & dat$wpos==8 & dat$expt=="filler"] <- "violated" #
+dat$word[dat$item==38 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==38 & dat$wpos==10 & dat$expt=="filler"] <- "rules" #
+dat$word[dat$item==38 & dat$wpos==11 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==38 & dat$wpos==12 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==38 & dat$wpos==13 & dat$expt=="filler"] <- "game." #
+dat$word[dat$item==39 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==39 & dat$wpos==2 & dat$expt=="filler"] <- "staff" #
+dat$word[dat$item==39 & dat$wpos==3 & dat$expt=="filler"] <- "contacted" #
+dat$word[dat$item==39 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==39 & dat$wpos==5 & dat$expt=="filler"] <- "applicant" #
+dat$word[dat$item==39 & dat$wpos==6 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==39 & dat$wpos==7 & dat$expt=="filler"] <- "offered" #
+dat$word[dat$item==39 & dat$wpos==8 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==39 & dat$wpos==9 & dat$expt=="filler"] <- "most" #
+dat$word[dat$item==39 & dat$wpos==10 & dat$expt=="filler"] <- "benefits" #
+dat$word[dat$item==39 & dat$wpos==11 & dat$expt=="filler"] <- "overall." #
+dat$word[dat$item==40 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==40 & dat$wpos==2 & dat$expt=="filler"] <- "management" #
+dat$word[dat$item==40 & dat$wpos==3 & dat$expt=="filler"] <- "praised" #
+dat$word[dat$item==40 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==40 & dat$wpos==5 & dat$expt=="filler"] <- "loyal" #
+dat$word[dat$item==40 & dat$wpos==6 & dat$expt=="filler"] <- "doorman" #
+dat$word[dat$item==40 & dat$wpos==7 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==40 & dat$wpos==8 & dat$expt=="filler"] <- "broke" #
+dat$word[dat$item==40 & dat$wpos==9 & dat$expt=="filler"] <- "up" #
+dat$word[dat$item==40 & dat$wpos==10 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==40 & dat$wpos==11 & dat$expt=="filler"] <- "fight" #
+dat$word[dat$item==40 & dat$wpos==12 & dat$expt=="filler"] <- "in" #
+dat$word[dat$item==40 & dat$wpos==13 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==40 & dat$wpos==14 & dat$expt=="filler"] <- "stairway." #
+dat$word[dat$item==41 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==41 & dat$wpos==2 & dat$expt=="filler"] <- "conservatory" #
+dat$word[dat$item==41 & dat$wpos==3 & dat$expt=="filler"] <- "sacked" #
+dat$word[dat$item==41 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==41 & dat$wpos==5 & dat$expt=="filler"] <- "conductor" #
+dat$word[dat$item==41 & dat$wpos==6 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==41 & dat$wpos==7 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==41 & dat$wpos==8 & dat$expt=="filler"] <- "choir" #
+dat$word[dat$item==41 & dat$wpos==9 & dat$expt=="filler"] <- "complained" #
+dat$word[dat$item==41 & dat$wpos==10 & dat$expt=="filler"] <- "he" #
+dat$word[dat$item==41 & dat$wpos==11 & dat$expt=="filler"] <- "possessed" #
+dat$word[dat$item==41 & dat$wpos==12 & dat$expt=="filler"] <- "no" #
+dat$word[dat$item==41 & dat$wpos==13 & dat$expt=="filler"] <- "sense" #
+dat$word[dat$item==41 & dat$wpos==14 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==41 & dat$wpos==15 & dat$expt=="filler"] <- "rhythm." #
+dat$word[dat$item==42 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==42 & dat$wpos==2 & dat$expt=="filler"] <- "rancher" #
+dat$word[dat$item==42 & dat$wpos==3 & dat$expt=="filler"] <- "confronted" #
+dat$word[dat$item==42 & dat$wpos==4 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==42 & dat$wpos==5 & dat$expt=="filler"] <- "scared" #
+dat$word[dat$item==42 & dat$wpos==6 & dat$expt=="filler"] <- "and" #
+dat$word[dat$item==42 & dat$wpos==7 & dat$expt=="filler"] <- "confused" #
+dat$word[dat$item==42 & dat$wpos==8 & dat$expt=="filler"] <- "trespasser" #
+dat$word[dat$item==42 & dat$wpos==9 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==42 & dat$wpos==10 & dat$expt=="filler"] <- "was" #
+dat$word[dat$item==42 & dat$wpos==11 & dat$expt=="filler"] <- "sleeping" #
+dat$word[dat$item==42 & dat$wpos==12 & dat$expt=="filler"] <- "on" #
+dat$word[dat$item==42 & dat$wpos==13 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==42 & dat$wpos==14 & dat$expt=="filler"] <- "property." #
+dat$word[dat$item==43 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==43 & dat$wpos==2 & dat$expt=="filler"] <- "hairdresser" #
+dat$word[dat$item==43 & dat$wpos==3 & dat$expt=="filler"] <- "welcomed" #
+dat$word[dat$item==43 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==43 & dat$wpos==5 & dat$expt=="filler"] <- "client" #
+dat$word[dat$item==43 & dat$wpos==6 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==43 & dat$wpos==7 & dat$expt=="filler"] <- "arrived" #
+dat$word[dat$item==43 & dat$wpos==8 & dat$expt=="filler"] <- "thirty" #
+dat$word[dat$item==43 & dat$wpos==9 & dat$expt=="filler"] <- "minutes" #
+dat$word[dat$item==43 & dat$wpos==10 & dat$expt=="filler"] <- "later" #
+dat$word[dat$item==43 & dat$wpos==11 & dat$expt=="filler"] <- "than" #
+dat$word[dat$item==43 & dat$wpos==12 & dat$expt=="filler"] <- "scheduled." #
+dat$word[dat$item==44 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==44 & dat$wpos==2 & dat$expt=="filler"] <- "physicist" #
+dat$word[dat$item==44 & dat$wpos==3 & dat$expt=="filler"] <- "assisted" #
+dat$word[dat$item==44 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==44 & dat$wpos==5 & dat$expt=="filler"] <- "technician" #
+dat$word[dat$item==44 & dat$wpos==6 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==44 & dat$wpos==7 & dat$expt=="filler"] <- "was" #
+dat$word[dat$item==44 & dat$wpos==8 & dat$expt=="filler"] <- "trying" #
+dat$word[dat$item==44 & dat$wpos==9 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==44 & dat$wpos==10 & dat$expt=="filler"] <- "turn" #
+dat$word[dat$item==44 & dat$wpos==11 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==44 & dat$wpos==12 & dat$expt=="filler"] <- "machine" #
+dat$word[dat$item==44 & dat$wpos==13 & dat$expt=="filler"] <- "on." #
+dat$word[dat$item==45 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==45 & dat$wpos==2 & dat$expt=="filler"] <- "board" #
+dat$word[dat$item==45 & dat$wpos==3 & dat$expt=="filler"] <- "members" #
+dat$word[dat$item==45 & dat$wpos==4 & dat$expt=="filler"] <- "blamed" #
+dat$word[dat$item==45 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==45 & dat$wpos==6 & dat$expt=="filler"] <- "executive" #
+dat$word[dat$item==45 & dat$wpos==7 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==45 & dat$wpos==8 & dat$expt=="filler"] <- "thanked" #
+dat$word[dat$item==45 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==45 & dat$wpos==10 & dat$expt=="filler"] <- "shareholder" #
+dat$word[dat$item==45 & dat$wpos==11 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==45 & dat$wpos==12 & dat$expt=="filler"] <- "his" #
+dat$word[dat$item==45 & dat$wpos==13 & dat$expt=="filler"] <- "support." #
+dat$word[dat$item==46 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==46 & dat$wpos==2 & dat$expt=="filler"] <- "security" #
+dat$word[dat$item==46 & dat$wpos==3 & dat$expt=="filler"] <- "guard" #
+dat$word[dat$item==46 & dat$wpos==4 & dat$expt=="filler"] <- "observed" #
+dat$word[dat$item==46 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==46 & dat$wpos==6 & dat$expt=="filler"] <- "two" #
+dat$word[dat$item==46 & dat$wpos==7 & dat$expt=="filler"] <- "well-dressed" #
+dat$word[dat$item==46 & dat$wpos==8 & dat$expt=="filler"] <- "men" #
+dat$word[dat$item==46 & dat$wpos==9 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==46 & dat$wpos==10 & dat$expt=="filler"] <- "carried" #
+dat$word[dat$item==46 & dat$wpos==11 & dat$expt=="filler"] <- "suspicious" #
+dat$word[dat$item==46 & dat$wpos==12 & dat$expt=="filler"] <- "briefcases" #
+dat$word[dat$item==46 & dat$wpos==13 & dat$expt=="filler"] <- "into" #
+dat$word[dat$item==46 & dat$wpos==14 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==46 & dat$wpos==15 & dat$expt=="filler"] <- "open" #
+dat$word[dat$item==46 & dat$wpos==16 & dat$expt=="filler"] <- "house" #
+dat$word[dat$item==46 & dat$wpos==17 & dat$expt=="filler"] <- "exhibit." #
+dat$word[dat$item==47 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==47 & dat$wpos==2 & dat$expt=="filler"] <- "government" #
+dat$word[dat$item==47 & dat$wpos==3 & dat$expt=="filler"] <- "representatives" #
+dat$word[dat$item==47 & dat$wpos==4 & dat$expt=="filler"] <- "tricked" #
+dat$word[dat$item==47 & dat$wpos==5 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==47 & dat$wpos==6 & dat$expt=="filler"] <- "farmer" #
+dat$word[dat$item==47 & dat$wpos==7 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==47 & dat$wpos==8 & dat$expt=="filler"] <- "sold" #
+dat$word[dat$item==47 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==47 & dat$wpos==10 & dat$expt=="filler"] <- "prime" #
+dat$word[dat$item==47 & dat$wpos==11 & dat$expt=="filler"] <- "real" #
+dat$word[dat$item==47 & dat$wpos==12 & dat$expt=="filler"] <- "estate." #
+dat$word[dat$item==48 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==48 & dat$wpos==2 & dat$expt=="filler"] <- "school" #
+dat$word[dat$item==48 & dat$wpos==3 & dat$expt=="filler"] <- "officials" #
+dat$word[dat$item==48 & dat$wpos==4 & dat$expt=="filler"] <- "reprimanded" #
+dat$word[dat$item==48 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==48 & dat$wpos==6 & dat$expt=="filler"] <- "cheerleader" #
+dat$word[dat$item==48 & dat$wpos==7 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==48 & dat$wpos==8 & dat$expt=="filler"] <- "defied" #
+dat$word[dat$item==48 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==48 & dat$wpos==10 & dat$expt=="filler"] <- "coach's" #
+dat$word[dat$item==48 & dat$wpos==11 & dat$expt=="filler"] <- "demand" #
+dat$word[dat$item==48 & dat$wpos==12 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==48 & dat$wpos==13 & dat$expt=="filler"] <- "not" #
+dat$word[dat$item==48 & dat$wpos==14 & dat$expt=="filler"] <- "stay" #
+dat$word[dat$item==48 & dat$wpos==15 & dat$expt=="filler"] <- "out" #
+dat$word[dat$item==48 & dat$wpos==16 & dat$expt=="filler"] <- "too" #
+dat$word[dat$item==48 & dat$wpos==17 & dat$expt=="filler"] <- "late" #
+dat$word[dat$item==48 & dat$wpos==18 & dat$expt=="filler"] <- "at" #
+dat$word[dat$item==48 & dat$wpos==19 & dat$expt=="filler"] <- "night." #
+dat$word[dat$item==49 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==49 & dat$wpos==2 & dat$expt=="filler"] <- "researcher" #
+dat$word[dat$item==49 & dat$wpos==3 & dat$expt=="filler"] <- "contradicted" #
+dat$word[dat$item==49 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==49 & dat$wpos==5 & dat$expt=="filler"] <- "moronic" #
+dat$word[dat$item==49 & dat$wpos==6 & dat$expt=="filler"] <- "history" #
+dat$word[dat$item==49 & dat$wpos==7 & dat$expt=="filler"] <- "professor" #
+dat$word[dat$item==49 & dat$wpos==8 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==49 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==49 & dat$wpos==10 & dat$expt=="filler"] <- "archivist" #
+dat$word[dat$item==49 & dat$wpos==11 & dat$expt=="filler"] <- "showed" #
+dat$word[dat$item==49 & dat$wpos==12 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==49 & dat$wpos==13 & dat$expt=="filler"] <- "document" #
+dat$word[dat$item==49 & dat$wpos==14 & dat$expt=="filler"] <- "that" #
+dat$word[dat$item==49 & dat$wpos==15 & dat$expt=="filler"] <- "everyone" #
+dat$word[dat$item==49 & dat$wpos==16 & dat$expt=="filler"] <- "thought" #
+dat$word[dat$item==49 & dat$wpos==17 & dat$expt=="filler"] <- "was" #
+dat$word[dat$item==49 & dat$wpos==18 & dat$expt=="filler"] <- "lost." #
+dat$word[dat$item==50 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==50 & dat$wpos==2 & dat$expt=="filler"] <- "wine" #
+dat$word[dat$item==50 & dat$wpos==3 & dat$expt=="filler"] <- "maker" #
+dat$word[dat$item==50 & dat$wpos==4 & dat$expt=="filler"] <- "embraced" #
+dat$word[dat$item==50 & dat$wpos==5 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==50 & dat$wpos==6 & dat$expt=="filler"] <- "man" #
+dat$word[dat$item==50 & dat$wpos==7 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==50 & dat$wpos==8 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==50 & dat$wpos==9 & dat$expt=="filler"] <- "chemist" #
+dat$word[dat$item==50 & dat$wpos==10 & dat$expt=="filler"] <- "blamed" #
+dat$word[dat$item==50 & dat$wpos==11 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==50 & dat$wpos==12 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==50 & dat$wpos==13 & dat$expt=="filler"] <- "disaster." #
+dat$word[dat$item==51 & dat$wpos==1 & dat$expt=="filler"] <- "A" #
+dat$word[dat$item==51 & dat$wpos==2 & dat$expt=="filler"] <- "small" #
+dat$word[dat$item==51 & dat$wpos==3 & dat$expt=="filler"] <- "boy" #
+dat$word[dat$item==51 & dat$wpos==4 & dat$expt=="filler"] <- "laughed" #
+dat$word[dat$item==51 & dat$wpos==5 & dat$expt=="filler"] <- "at" #
+dat$word[dat$item==51 & dat$wpos==6 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==51 & dat$wpos==7 & dat$expt=="filler"] <- "mannequin" #
+dat$word[dat$item==51 & dat$wpos==8 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==51 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==51 & dat$wpos==10 & dat$expt=="filler"] <- "employee" #
+dat$word[dat$item==51 & dat$wpos==11 & dat$expt=="filler"] <- "cleaning" #
+dat$word[dat$item==51 & dat$wpos==12 & dat$expt=="filler"] <- "up" #
+dat$word[dat$item==51 & dat$wpos==13 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==51 & dat$wpos==14 & dat$expt=="filler"] <- "mess" #
+dat$word[dat$item==51 & dat$wpos==15 & dat$expt=="filler"] <- "arranged" #
+dat$word[dat$item==51 & dat$wpos==16 & dat$expt=="filler"] <- "at" #
+dat$word[dat$item==51 & dat$wpos==17 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==51 & dat$wpos==18 & dat$expt=="filler"] <- "front" #
+dat$word[dat$item==51 & dat$wpos==19 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==51 & dat$wpos==20 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==51 & dat$wpos==21 & dat$expt=="filler"] <- "store." #
+dat$word[dat$item==52 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==52 & dat$wpos==2 & dat$expt=="filler"] <- "thief" #
+dat$word[dat$item==52 & dat$wpos==3 & dat$expt=="filler"] <- "underestimated" #
+dat$word[dat$item==52 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==52 & dat$wpos==5 & dat$expt=="filler"] <- "bright" #
+dat$word[dat$item==52 & dat$wpos==6 & dat$expt=="filler"] <- "town" #
+dat$word[dat$item==52 & dat$wpos==7 & dat$expt=="filler"] <- "sheriff" #
+dat$word[dat$item==52 & dat$wpos==8 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==52 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==52 & dat$wpos==10 & dat$expt=="filler"] <- "mayor" #
+dat$word[dat$item==52 & dat$wpos==11 & dat$expt=="filler"] <- "intent" #
+dat$word[dat$item==52 & dat$wpos==12 & dat$expt=="filler"] <- "on" #
+dat$word[dat$item==52 & dat$wpos==13 & dat$expt=="filler"] <- "reducing" #
+dat$word[dat$item==52 & dat$wpos==14 & dat$expt=="filler"] <- "crime" #
+dat$word[dat$item==52 & dat$wpos==15 & dat$expt=="filler"] <- "selected" #
+dat$word[dat$item==52 & dat$wpos==16 & dat$expt=="filler"] <- "last" #
+dat$word[dat$item==52 & dat$wpos==17 & dat$expt=="filler"] <- "month" #
+dat$word[dat$item==52 & dat$wpos==18 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==52 & dat$wpos==19 & dat$expt=="filler"] <- "get" #
+dat$word[dat$item==52 & dat$wpos==20 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==52 & dat$wpos==21 & dat$expt=="filler"] <- "town" #
+dat$word[dat$item==52 & dat$wpos==22 & dat$expt=="filler"] <- "under" #
+dat$word[dat$item==52 & dat$wpos==23 & dat$expt=="filler"] <- "control." #
+dat$word[dat$item==53 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==53 & dat$wpos==2 & dat$expt=="filler"] <- "housewife" #
+dat$word[dat$item==53 & dat$wpos==3 & dat$expt=="filler"] <- "visited" #
+dat$word[dat$item==53 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==53 & dat$wpos==5 & dat$expt=="filler"] <- "ordained" #
+dat$word[dat$item==53 & dat$wpos==6 & dat$expt=="filler"] <- "parish" #
+dat$word[dat$item==53 & dat$wpos==7 & dat$expt=="filler"] <- "priest" #
+dat$word[dat$item==53 & dat$wpos==8 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==53 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==53 & dat$wpos==10 & dat$expt=="filler"] <- "bishop" #
+dat$word[dat$item==53 & dat$wpos==11 & dat$expt=="filler"] <- "commended" #
+dat$word[dat$item==53 & dat$wpos==12 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==53 & dat$wpos==13 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==53 & dat$wpos==14 & dat$expt=="filler"] <- "life" #
+dat$word[dat$item==53 & dat$wpos==15 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==53 & dat$wpos==16 & dat$expt=="filler"] <- "dedication" #
+dat$word[dat$item==53 & dat$wpos==17 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==53 & dat$wpos==18 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==53 & dat$wpos==19 & dat$expt=="filler"] <- "church." #
+dat$word[dat$item==54 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==54 & dat$wpos==2 & dat$expt=="filler"] <- "commentator" #
+dat$word[dat$item==54 & dat$wpos==3 & dat$expt=="filler"] <- "complimented" #
+dat$word[dat$item==54 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==54 & dat$wpos==5 & dat$expt=="filler"] <- "relaxed" #
+dat$word[dat$item==54 & dat$wpos==6 & dat$expt=="filler"] <- "starting" #
+dat$word[dat$item==54 & dat$wpos==7 & dat$expt=="filler"] <- "quarterback" #
+dat$word[dat$item==54 & dat$wpos==8 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==54 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==54 & dat$wpos==10 & dat$expt=="filler"] <- "fullback" #
+dat$word[dat$item==54 & dat$wpos==11 & dat$expt=="filler"] <- "shielded" #
+dat$word[dat$item==54 & dat$wpos==12 & dat$expt=="filler"] <- "from" #
+dat$word[dat$item==54 & dat$wpos==13 & dat$expt=="filler"] <- "two" #
+dat$word[dat$item==54 & dat$wpos==14 & dat$expt=="filler"] <- "charging" #
+dat$word[dat$item==54 & dat$wpos==15 & dat$expt=="filler"] <- "defensive" #
+dat$word[dat$item==54 & dat$wpos==16 & dat$expt=="filler"] <- "players." #
+dat$word[dat$item==55 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==55 & dat$wpos==2 & dat$expt=="filler"] <- "customer" #
+dat$word[dat$item==55 & dat$wpos==3 & dat$expt=="filler"] <- "doubted" #
+dat$word[dat$item==55 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==55 & dat$wpos==5 & dat$expt=="filler"] <- "salesman" #
+dat$word[dat$item==55 & dat$wpos==6 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==55 & dat$wpos==7 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==55 & dat$wpos==8 & dat$expt=="filler"] <- "mechanic" #
+dat$word[dat$item==55 & dat$wpos==9 & dat$expt=="filler"] <- "repairing" #
+dat$word[dat$item==55 & dat$wpos==10 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==55 & dat$wpos==11 & dat$expt=="filler"] <- "old" #
+dat$word[dat$item==55 & dat$wpos==12 & dat$expt=="filler"] <- "truck" #
+dat$word[dat$item==55 & dat$wpos==13 & dat$expt=="filler"] <- "believed" #
+dat$word[dat$item==55 & dat$wpos==14 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==55 & dat$wpos==15 & dat$expt=="filler"] <- "be" #
+dat$word[dat$item==55 & dat$wpos==16 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==55 & dat$wpos==17 & dat$expt=="filler"] <- "deplorable" #
+dat$word[dat$item==55 & dat$wpos==18 & dat$expt=="filler"] <- "crook." #
+dat$word[dat$item==56 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==56 & dat$wpos==2 & dat$expt=="filler"] <- "passenger" #
+dat$word[dat$item==56 & dat$wpos==3 & dat$expt=="filler"] <- "warned" #
+dat$word[dat$item==56 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==56 & dat$wpos==5 & dat$expt=="filler"] <- "violent" #
+dat$word[dat$item==56 & dat$wpos==6 & dat$expt=="filler"] <- "ship" #
+dat$word[dat$item==56 & dat$wpos==7 & dat$expt=="filler"] <- "captain" #
+dat$word[dat$item==56 & dat$wpos==8 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==56 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==56 & dat$wpos==10 & dat$expt=="filler"] <- "navigator" #
+dat$word[dat$item==56 & dat$wpos==11 & dat$expt=="filler"] <- "plotting" #
+dat$word[dat$item==56 & dat$wpos==12 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==56 & dat$wpos==13 & dat$expt=="filler"] <- "cruise's" #
+dat$word[dat$item==56 & dat$wpos==14 & dat$expt=="filler"] <- "course" #
+dat$word[dat$item==56 & dat$wpos==15 & dat$expt=="filler"] <- "misinformed" #
+dat$word[dat$item==56 & dat$wpos==16 & dat$expt=="filler"] <- "about" #
+dat$word[dat$item==56 & dat$wpos==17 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==56 & dat$wpos==18 & dat$expt=="filler"] <- "location" #
+dat$word[dat$item==56 & dat$wpos==19 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==56 & dat$wpos==20 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==56 & dat$wpos==21 & dat$expt=="filler"] <- "ship." #
+dat$word[dat$item==57 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==57 & dat$wpos==2 & dat$expt=="filler"] <- "collector" #
+dat$word[dat$item==57 & dat$wpos==3 & dat$expt=="filler"] <- "liked" #
+dat$word[dat$item==57 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==57 & dat$wpos==5 & dat$expt=="filler"] <- "terrible" #
+dat$word[dat$item==57 & dat$wpos==6 & dat$expt=="filler"] <- "modernist" #
+dat$word[dat$item==57 & dat$wpos==7 & dat$expt=="filler"] <- "sculptor" #
+dat$word[dat$item==57 & dat$wpos==8 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==57 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==57 & dat$wpos==10 & dat$expt=="filler"] <- "dealer" #
+dat$word[dat$item==57 & dat$wpos==11 & dat$expt=="filler"] <- "selling" #
+dat$word[dat$item==57 & dat$wpos==12 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==57 & dat$wpos==13 & dat$expt=="filler"] <- "priceless" #
+dat$word[dat$item==57 & dat$wpos==14 & dat$expt=="filler"] <- "masterpiece" #
+dat$word[dat$item==57 & dat$wpos==15 & dat$expt=="filler"] <- "praised" #
+dat$word[dat$item==57 & dat$wpos==16 & dat$expt=="filler"] <- "for" #
+dat$word[dat$item==57 & dat$wpos==17 & dat$expt=="filler"] <- "a" #
+dat$word[dat$item==57 & dat$wpos==18 & dat$expt=="filler"] <- "completely" #
+dat$word[dat$item==57 & dat$wpos==19 & dat$expt=="filler"] <- "innovative" #
+dat$word[dat$item==57 & dat$wpos==20 & dat$expt=="filler"] <- "approach." #
+dat$word[dat$item==58 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==58 & dat$wpos==2 & dat$expt=="filler"] <- "tycoon" #
+dat$word[dat$item==58 & dat$wpos==3 & dat$expt=="filler"] <- "employed" #
+dat$word[dat$item==58 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==58 & dat$wpos==5 & dat$expt=="filler"] <- "bodyguard" #
+dat$word[dat$item==58 & dat$wpos==6 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==58 & dat$wpos==7 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==58 & dat$wpos==8 & dat$expt=="filler"] <- "maniac" #
+dat$word[dat$item==58 & dat$wpos==9 & dat$expt=="filler"] <- "attacked" #
+dat$word[dat$item==58 & dat$wpos==10 & dat$expt=="filler"] <- "towards" #
+dat$word[dat$item==58 & dat$wpos==11 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==58 & dat$wpos==12 & dat$expt=="filler"] <- "end" #
+dat$word[dat$item==58 & dat$wpos==13 & dat$expt=="filler"] <- "of" #
+dat$word[dat$item==58 & dat$wpos==14 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==58 & dat$wpos==15 & dat$expt=="filler"] <- "speech." #
+dat$word[dat$item==59 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==59 & dat$wpos==2 & dat$expt=="filler"] <- "editor" #
+dat$word[dat$item==59 & dat$wpos==3 & dat$expt=="filler"] <- "irritated" #
+dat$word[dat$item==59 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==59 & dat$wpos==5 & dat$expt=="filler"] <- "sentimental" #
+dat$word[dat$item==59 & dat$wpos==6 & dat$expt=="filler"] <- "newspaper" #
+dat$word[dat$item==59 & dat$wpos==7 & dat$expt=="filler"] <- "columnist" #
+dat$word[dat$item==59 & dat$wpos==8 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==59 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==59 & dat$wpos==10 & dat$expt=="filler"] <- "aristocrat" #
+dat$word[dat$item==59 & dat$wpos==11 & dat$expt=="filler"] <- "befriended." #
+dat$word[dat$item==60 & dat$wpos==1 & dat$expt=="filler"] <- "The" #
+dat$word[dat$item==60 & dat$wpos==2 & dat$expt=="filler"] <- "spy" #
+dat$word[dat$item==60 & dat$wpos==3 & dat$expt=="filler"] <- "escaped" #
+dat$word[dat$item==60 & dat$wpos==4 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==60 & dat$wpos==5 & dat$expt=="filler"] <- "infamous" #
+dat$word[dat$item==60 & dat$wpos==6 & dat$expt=="filler"] <- "silent" #
+dat$word[dat$item==60 & dat$wpos==7 & dat$expt=="filler"] <- "assassin" #
+dat$word[dat$item==60 & dat$wpos==8 & dat$expt=="filler"] <- "who" #
+dat$word[dat$item==60 & dat$wpos==9 & dat$expt=="filler"] <- "the" #
+dat$word[dat$item==60 & dat$wpos==10 & dat$expt=="filler"] <- "mobster" #
+dat$word[dat$item==60 & dat$wpos==11 & dat$expt=="filler"] <- "sent" #
+dat$word[dat$item==60 & dat$wpos==12 & dat$expt=="filler"] <- "to" #
+dat$word[dat$item==60 & dat$wpos==13 & dat$expt=="filler"] <- "settle" #
+dat$word[dat$item==60 & dat$wpos==14 & dat$expt=="filler"] <- "an" #
+dat$word[dat$item==60 & dat$wpos==15 & dat$expt=="filler"] <- "old" #
+dat$word[dat$item==60 & dat$wpos==16 & dat$expt=="filler"] <- "score."
+dat$word[dat$item==1 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==1 & dat$wpos==2 & dat$expt=="color"] <- "warden" #
+dat$word[dat$item==1 & dat$wpos==3 & dat$expt=="color"] <- "punished" #
+dat$word[dat$item==1 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==1 & dat$wpos==5 & dat$expt=="color"] <- "prisoner" #
+dat$word[dat$item==1 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==1 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==1 & dat$wpos==8 & dat$expt=="color"] <- "guard" #
+dat$word[dat$item==1 & dat$wpos==9 & dat$expt=="color"] <- "at" #
+dat$word[dat$item==1 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==1 & dat$wpos==11 & dat$expt=="color"] <- "federal" #
+dat$word[dat$item==1 & dat$wpos==12 & dat$expt=="color"] <- "prison" #
+dat$word[dat$item==1 & dat$wpos==13 & dat$expt=="color"] <- "supplied" #
+dat$word[dat$item==1 & dat$wpos==14 & dat$expt=="color"] <- "with" #
+dat$word[dat$item==1 & dat$wpos==15 & dat$expt=="color"] <- "illegal" #
+dat$word[dat$item==1 & dat$wpos==16 & dat$expt=="color"] <- "contraband" #
+dat$word[dat$item==1 & dat$wpos==17 & dat$expt=="color"] <- "like" #
+dat$word[dat$item==1 & dat$wpos==18 & dat$expt=="color"] <- "cigarettes." #
+dat$word[dat$item==2 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==2 & dat$wpos==2 & dat$expt=="color"] <- "client" #
+dat$word[dat$item==2 & dat$wpos==3 & dat$expt=="color"] <- "harrassed" #
+dat$word[dat$item==2 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==2 & dat$wpos==5 & dat$expt=="color"] <- "secretary" #
+dat$word[dat$item==2 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==2 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==2 & dat$wpos==8 & dat$expt=="color"] <- "coworker" #
+dat$word[dat$item==2 & dat$wpos==9 & dat$expt=="color"] <- "at" #
+dat$word[dat$item==2 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==2 & dat$wpos==11 & dat$expt=="color"] <- "giant" #
+dat$word[dat$item==2 & dat$wpos==12 & dat$expt=="color"] <- "firm" #
+dat$word[dat$item==2 & dat$wpos==13 & dat$expt=="color"] <- "noticed" #
+dat$word[dat$item==2 & dat$wpos==14 & dat$expt=="color"] <- "drinking" #
+dat$word[dat$item==2 & dat$wpos==15 & dat$expt=="color"] <- "on" #
+dat$word[dat$item==2 & dat$wpos==16 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==2 & dat$wpos==17 & dat$expt=="color"] <- "job" #
+dat$word[dat$item==2 & dat$wpos==18 & dat$expt=="color"] <- "occasionally." #
+dat$word[dat$item==3 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==3 & dat$wpos==2 & dat$expt=="color"] <- "customer" #
+dat$word[dat$item==3 & dat$wpos==3 & dat$expt=="color"] <- "doubted" #
+dat$word[dat$item==3 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==3 & dat$wpos==5 & dat$expt=="color"] <- "salesman" #
+dat$word[dat$item==3 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==3 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==3 & dat$wpos==8 & dat$expt=="color"] <- "mechanic" #
+dat$word[dat$item==3 & dat$wpos==9 & dat$expt=="color"] <- "at" #
+dat$word[dat$item==3 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==3 & dat$wpos==11 & dat$expt=="color"] <- "auto" #
+dat$word[dat$item==3 & dat$wpos==12 & dat$expt=="color"] <- "shop" #
+dat$word[dat$item==3 & dat$wpos==13 & dat$expt=="color"] <- "believed" #
+dat$word[dat$item==3 & dat$wpos==14 & dat$expt=="color"] <- "to" #
+dat$word[dat$item==3 & dat$wpos==15 & dat$expt=="color"] <- "be" #
+dat$word[dat$item==3 & dat$wpos==16 & dat$expt=="color"] <- "a" #
+dat$word[dat$item==3 & dat$wpos==17 & dat$expt=="color"] <- "deplorable" #
+dat$word[dat$item==3 & dat$wpos==18 & dat$expt=="color"] <- "crook." #
+dat$word[dat$item==4 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==4 & dat$wpos==2 & dat$expt=="color"] <- "housewife" #
+dat$word[dat$item==4 & dat$wpos==3 & dat$expt=="color"] <- "visited" #
+dat$word[dat$item==4 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==4 & dat$wpos==5 & dat$expt=="color"] <- "priest" #
+dat$word[dat$item==4 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==4 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==4 & dat$wpos==8 & dat$expt=="color"] <- "bishop" #
+dat$word[dat$item==4 & dat$wpos==9 & dat$expt=="color"] <- "with" #
+dat$word[dat$item==4 & dat$wpos==10 & dat$expt=="color"] <- "an" #
+dat$word[dat$item==4 & dat$wpos==11 & dat$expt=="color"] <- "intimidating" #
+dat$word[dat$item==4 & dat$wpos==12 & dat$expt=="color"] <- "presence" #
+dat$word[dat$item==4 & dat$wpos==13 & dat$expt=="color"] <- "commended" #
+dat$word[dat$item==4 & dat$wpos==14 & dat$expt=="color"] <- "for" #
+dat$word[dat$item==4 & dat$wpos==15 & dat$expt=="color"] <- "a" #
+dat$word[dat$item==4 & dat$wpos==16 & dat$expt=="color"] <- "life" #
+dat$word[dat$item==4 & dat$wpos==17 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==4 & dat$wpos==18 & dat$expt=="color"] <- "dedication" #
+dat$word[dat$item==4 & dat$wpos==19 & dat$expt=="color"] <- "to" #
+dat$word[dat$item==4 & dat$wpos==20 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==4 & dat$wpos==21 & dat$expt=="color"] <- "church." #
+dat$word[dat$item==5 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==5 & dat$wpos==2 & dat$expt=="color"] <- "choreographer" #
+dat$word[dat$item==5 & dat$wpos==3 & dat$expt=="color"] <- "embraced" #
+dat$word[dat$item==5 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==5 & dat$wpos==5 & dat$expt=="color"] <- "dancer" #
+dat$word[dat$item==5 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==5 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==5 & dat$wpos==8 & dat$expt=="color"] <- "admirer" #
+dat$word[dat$item==5 & dat$wpos==9 & dat$expt=="color"] <- "in" #
+dat$word[dat$item==5 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==5 & dat$wpos==11 & dat$expt=="color"] <- "front" #
+dat$word[dat$item==5 & dat$wpos==12 & dat$expt=="color"] <- "row" #
+dat$word[dat$item==5 & dat$wpos==13 & dat$expt=="color"] <- "begged" #
+dat$word[dat$item==5 & dat$wpos==14 & dat$expt=="color"] <- "for" #
+dat$word[dat$item==5 & dat$wpos==15 & dat$expt=="color"] <- "an" #
+dat$word[dat$item==5 & dat$wpos==16 & dat$expt=="color"] <- "autograph" #
+dat$word[dat$item==5 & dat$wpos==17 & dat$expt=="color"] <- "for" #
+dat$word[dat$item==5 & dat$wpos==18 & dat$expt=="color"] <- "his" #
+dat$word[dat$item==5 & dat$wpos==19 & dat$expt=="color"] <- "daughter." #
+dat$word[dat$item==6 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==6 & dat$wpos==2 & dat$expt=="color"] <- "sergeant" #
+dat$word[dat$item==6 & dat$wpos==3 & dat$expt=="color"] <- "relieved" #
+dat$word[dat$item==6 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==6 & dat$wpos==5 & dat$expt=="color"] <- "soldier" #
+dat$word[dat$item==6 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==6 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==6 & dat$wpos==8 & dat$expt=="color"] <- "commander" #
+dat$word[dat$item==6 & dat$wpos==9 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==6 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==6 & dat$wpos==11 & dat$expt=="color"] <- "army" #
+dat$word[dat$item==6 & dat$wpos==12 & dat$expt=="color"] <- "troops" #
+dat$word[dat$item==6 & dat$wpos==13 & dat$expt=="color"] <- "ordered" #
+dat$word[dat$item==6 & dat$wpos==14 & dat$expt=="color"] <- "to" #
+dat$word[dat$item==6 & dat$wpos==15 & dat$expt=="color"] <- "search" #
+dat$word[dat$item==6 & dat$wpos==16 & dat$expt=="color"] <- "every" #
+dat$word[dat$item==6 & dat$wpos==17 & dat$expt=="color"] <- "car" #
+dat$word[dat$item==6 & dat$wpos==18 & dat$expt=="color"] <- "that" #
+dat$word[dat$item==6 & dat$wpos==19 & dat$expt=="color"] <- "approached" #
+dat$word[dat$item==6 & dat$wpos==20 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==6 & dat$wpos==21 & dat$expt=="color"] <- "checkpoint." #
+dat$word[dat$item==7 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==7 & dat$wpos==2 & dat$expt=="color"] <- "drunkard" #
+dat$word[dat$item==7 & dat$wpos==3 & dat$expt=="color"] <- "heckled" #
+dat$word[dat$item==7 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==7 & dat$wpos==5 & dat$expt=="color"] <- "comedian" #
+dat$word[dat$item==7 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==7 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==7 & dat$wpos==8 & dat$expt=="color"] <- "bartender" #
+dat$word[dat$item==7 & dat$wpos==9 & dat$expt=="color"] <- "on" #
+dat$word[dat$item==7 & dat$wpos==10 & dat$expt=="color"] <- "his" #
+dat$word[dat$item==7 & dat$wpos==11 & dat$expt=="color"] <- "lunch" #
+dat$word[dat$item==7 & dat$wpos==12 & dat$expt=="color"] <- "break" #
+dat$word[dat$item==7 & dat$wpos==13 & dat$expt=="color"] <- "defended" #
+dat$word[dat$item==7 & dat$wpos==14 & dat$expt=="color"] <- "from" #
+dat$word[dat$item==7 & dat$wpos==15 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==7 & dat$wpos==16 & dat$expt=="color"] <- "back" #
+dat$word[dat$item==7 & dat$wpos==17 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==7 & dat$wpos==18 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==7 & dat$wpos==19 & dat$expt=="color"] <- "room." #
+dat$word[dat$item==8 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==8 & dat$wpos==2 & dat$expt=="color"] <- "investigator" #
+dat$word[dat$item==8 & dat$wpos==3 & dat$expt=="color"] <- "questioned" #
+dat$word[dat$item==8 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==8 & dat$wpos==5 & dat$expt=="color"] <- "survivor" #
+dat$word[dat$item==8 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==8 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==8 & dat$wpos==8 & dat$expt=="color"] <- "pilot" #
+dat$word[dat$item==8 & dat$wpos==9 & dat$expt=="color"] <- "with" #
+dat$word[dat$item==8 & dat$wpos==10 & dat$expt=="color"] <- "a" #
+dat$word[dat$item==8 & dat$wpos==11 & dat$expt=="color"] <- "broken" #
+dat$word[dat$item==8 & dat$wpos==12 & dat$expt=="color"] <- "arm" #
+dat$word[dat$item==8 & dat$wpos==13 & dat$expt=="color"] <- "pulled" #
+dat$word[dat$item==8 & dat$wpos==14 & dat$expt=="color"] <- "from" #
+dat$word[dat$item==8 & dat$wpos==15 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==8 & dat$wpos==16 & dat$expt=="color"] <- "burning" #
+dat$word[dat$item==8 & dat$wpos==17 & dat$expt=="color"] <- "fuselage." #
+dat$word[dat$item==9 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==9 & dat$wpos==2 & dat$expt=="color"] <- "policeman" #
+dat$word[dat$item==9 & dat$wpos==3 & dat$expt=="color"] <- "arrested" #
+dat$word[dat$item==9 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==9 & dat$wpos==5 & dat$expt=="color"] <- "monk" #
+dat$word[dat$item==9 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==9 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==9 & dat$wpos==8 & dat$expt=="color"] <- "councilor" #
+dat$word[dat$item==9 & dat$wpos==9 & dat$expt=="color"] <- "in" #
+dat$word[dat$item==9 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==9 & dat$wpos==11 & dat$expt=="color"] <- "capital" #
+dat$word[dat$item==9 & dat$wpos==12 & dat$expt=="color"] <- "city" #
+dat$word[dat$item==9 & dat$wpos==13 & dat$expt=="color"] <- "saved" #
+dat$word[dat$item==9 & dat$wpos==14 & dat$expt=="color"] <- "from" #
+dat$word[dat$item==9 & dat$wpos==15 & dat$expt=="color"] <- "being" #
+dat$word[dat$item==9 & dat$wpos==16 & dat$expt=="color"] <- "imprisoned" #
+dat$word[dat$item==9 & dat$wpos==17 & dat$expt=="color"] <- "and" #
+dat$word[dat$item==9 & dat$wpos==18 & dat$expt=="color"] <- "tortured." #
+dat$word[dat$item==10 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==10 & dat$wpos==2 & dat$expt=="color"] <- "congressman" #
+dat$word[dat$item==10 & dat$wpos==3 & dat$expt=="color"] <- "interrogated" #
+dat$word[dat$item==10 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==10 & dat$wpos==5 & dat$expt=="color"] <- "general" #
+dat$word[dat$item==10 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==10 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==10 & dat$wpos==8 & dat$expt=="color"] <- "lawyer" #
+dat$word[dat$item==10 & dat$wpos==9 & dat$expt=="color"] <- "for" #
+dat$word[dat$item==10 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==10 & dat$wpos==11 & dat$expt=="color"] <- "Bush" #
+dat$word[dat$item==10 & dat$wpos==12 & dat$expt=="color"] <- "administration" #
+dat$word[dat$item==10 & dat$wpos==13 & dat$expt=="color"] <- "advised" #
+dat$word[dat$item==10 & dat$wpos==14 & dat$expt=="color"] <- "to" #
+dat$word[dat$item==10 & dat$wpos==15 & dat$expt=="color"] <- "not" #
+dat$word[dat$item==10 & dat$wpos==16 & dat$expt=="color"] <- "comment" #
+dat$word[dat$item==10 & dat$wpos==17 & dat$expt=="color"] <- "on" #
+dat$word[dat$item==10 & dat$wpos==18 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==10 & dat$wpos==19 & dat$expt=="color"] <- "detainees." #
+dat$word[dat$item==11 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==11 & dat$wpos==2 & dat$expt=="color"] <- "teenager" #
+dat$word[dat$item==11 & dat$wpos==3 & dat$expt=="color"] <- "hated" #
+dat$word[dat$item==11 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==11 & dat$wpos==5 & dat$expt=="color"] <- "musician" #
+dat$word[dat$item==11 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==11 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==11 & dat$wpos==8 & dat$expt=="color"] <- "girl" #
+dat$word[dat$item==11 & dat$wpos==9 & dat$expt=="color"] <- "listening" #
+dat$word[dat$item==11 & dat$wpos==10 & dat$expt=="color"] <- "to" #
+dat$word[dat$item==11 & dat$wpos==11 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==11 & dat$wpos==12 & dat$expt=="color"] <- "song" #
+dat$word[dat$item==11 & dat$wpos==13 & dat$expt=="color"] <- "adored" #
+dat$word[dat$item==11 & dat$wpos==14 & dat$expt=="color"] <- "since" #
+dat$word[dat$item==11 & dat$wpos==15 & dat$expt=="color"] <- "she" #
+dat$word[dat$item==11 & dat$wpos==16 & dat$expt=="color"] <- "saw" #
+dat$word[dat$item==11 & dat$wpos==17 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==11 & dat$wpos==18 & dat$expt=="color"] <- "late" #
+dat$word[dat$item==11 & dat$wpos==19 & dat$expt=="color"] <- "night" #
+dat$word[dat$item==11 & dat$wpos==20 & dat$expt=="color"] <- "talk" #
+dat$word[dat$item==11 & dat$wpos==21 & dat$expt=="color"] <- "show" #
+dat$word[dat$item==11 & dat$wpos==22 & dat$expt=="color"] <- "performance." #
+dat$word[dat$item==12 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==12 & dat$wpos==2 & dat$expt=="color"] <- "accomplice" #
+dat$word[dat$item==12 & dat$wpos==3 & dat$expt=="color"] <- "misled" #
+dat$word[dat$item==12 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==12 & dat$wpos==5 & dat$expt=="color"] <- "agent" #
+dat$word[dat$item==12 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==12 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==12 & dat$wpos==8 & dat$expt=="color"] <- "witness" #
+dat$word[dat$item==12 & dat$wpos==9 & dat$expt=="color"] <- "in" #
+dat$word[dat$item==12 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==12 & dat$wpos==11 & dat$expt=="color"] <- "impeachment" #
+dat$word[dat$item==12 & dat$wpos==12 & dat$expt=="color"] <- "trial" #
+dat$word[dat$item==12 & dat$wpos==13 & dat$expt=="color"] <- "notified" #
+dat$word[dat$item==12 & dat$wpos==14 & dat$expt=="color"] <- "about" #
+dat$word[dat$item==12 & dat$wpos==15 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==12 & dat$wpos==16 & dat$expt=="color"] <- "presence" #
+dat$word[dat$item==12 & dat$wpos==17 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==12 & dat$wpos==18 & dat$expt=="color"] <- "two" #
+dat$word[dat$item==12 & dat$wpos==19 & dat$expt=="color"] <- "suspicious" #
+dat$word[dat$item==12 & dat$wpos==20 & dat$expt=="color"] <- "characters." #
+dat$word[dat$item==13 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==13 & dat$wpos==2 & dat$expt=="color"] <- "stylist" #
+dat$word[dat$item==13 & dat$wpos==3 & dat$expt=="color"] <- "offended" #
+dat$word[dat$item==13 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==13 & dat$wpos==5 & dat$expt=="color"] <- "designer" #
+dat$word[dat$item==13 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==13 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==13 & dat$wpos==8 & dat$expt=="color"] <- "interviewer" #
+dat$word[dat$item==13 & dat$wpos==9 & dat$expt=="color"] <- "at" #
+dat$word[dat$item==13 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==13 & dat$wpos==11 & dat$expt=="color"] <- "spring" #
+dat$word[dat$item==13 & dat$wpos==12 & dat$expt=="color"] <- "exhibition" #
+dat$word[dat$item==13 & dat$wpos==13 & dat$expt=="color"] <- "asked" #
+dat$word[dat$item==13 & dat$wpos==14 & dat$expt=="color"] <- "about" #
+dat$word[dat$item==13 & dat$wpos==15 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==13 & dat$wpos==16 & dat$expt=="color"] <- "likely" #
+dat$word[dat$item==13 & dat$wpos==17 & dat$expt=="color"] <- "trends" #
+dat$word[dat$item==13 & dat$wpos==18 & dat$expt=="color"] <- "for" #
+dat$word[dat$item==13 & dat$wpos==19 & dat$expt=="color"] <- "next" #
+dat$word[dat$item==13 & dat$wpos==20 & dat$expt=="color"] <- "year." #
+dat$word[dat$item==14 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==14 & dat$wpos==2 & dat$expt=="color"] <- "engineer" #
+dat$word[dat$item==14 & dat$wpos==3 & dat$expt=="color"] <- "debated" #
+dat$word[dat$item==14 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==14 & dat$wpos==5 & dat$expt=="color"] <- "programmer" #
+dat$word[dat$item==14 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==14 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==14 & dat$wpos==8 & dat$expt=="color"] <- "hacker" #
+dat$word[dat$item==14 & dat$wpos==9 & dat$expt=="color"] <- "on" #
+dat$word[dat$item==14 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==14 & dat$wpos==11 & dat$expt=="color"] <- "company" #
+dat$word[dat$item==14 & dat$wpos==12 & dat$expt=="color"] <- "network" #
+dat$word[dat$item==14 & dat$wpos==13 & dat$expt=="color"] <- "ridiculed" #
+dat$word[dat$item==14 & dat$wpos==14 & dat$expt=="color"] <- "for" #
+dat$word[dat$item==14 & dat$wpos==15 & dat$expt=="color"] <- "having" #
+dat$word[dat$item==14 & dat$wpos==16 & dat$expt=="color"] <- "pathetic" #
+dat$word[dat$item==14 & dat$wpos==17 & dat$expt=="color"] <- "security" #
+dat$word[dat$item==14 & dat$wpos==18 & dat$expt=="color"] <- "safeguards." #
+dat$word[dat$item==15 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==15 & dat$wpos==2 & dat$expt=="color"] <- "reviewer" #
+dat$word[dat$item==15 & dat$wpos==3 & dat$expt=="color"] <- "criticized" #
+dat$word[dat$item==15 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==15 & dat$wpos==5 & dat$expt=="color"] <- "actor" #
+dat$word[dat$item==15 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==15 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==15 & dat$wpos==8 & dat$expt=="color"] <- "director" #
+dat$word[dat$item==15 & dat$wpos==9 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==15 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==15 & dat$wpos==11 & dat$expt=="color"] <- "art" #
+dat$word[dat$item==15 & dat$wpos==12 & dat$expt=="color"] <- "film" #
+dat$word[dat$item==15 & dat$wpos==13 & dat$expt=="color"] <- "ignored" #
+dat$word[dat$item==15 & dat$wpos==14 & dat$expt=="color"] <- "during" #
+dat$word[dat$item==15 & dat$wpos==15 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==15 & dat$wpos==16 & dat$expt=="color"] <- "opening" #
+dat$word[dat$item==15 & dat$wpos==17 & dat$expt=="color"] <- "night" #
+dat$word[dat$item==15 & dat$wpos==18 & dat$expt=="color"] <- "festivities." #
+dat$word[dat$item==16 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==16 & dat$wpos==2 & dat$expt=="color"] <- "diplomat" #
+dat$word[dat$item==16 & dat$wpos==3 & dat$expt=="color"] <- "contacted" #
+dat$word[dat$item==16 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==16 & dat$wpos==5 & dat$expt=="color"] <- "dictator" #
+dat$word[dat$item==16 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==16 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==16 & dat$wpos==8 & dat$expt=="color"] <- "activist" #
+dat$word[dat$item==16 & dat$wpos==9 & dat$expt=="color"] <- "from" #
+dat$word[dat$item==16 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==16 & dat$wpos==11 & dat$expt=="color"] <- "United" #
+dat$word[dat$item==16 & dat$wpos==12 & dat$expt=="color"] <- "Kingdom" #
+dat$word[dat$item==16 & dat$wpos==13 & dat$expt=="color"] <- "encouraged" #
+dat$word[dat$item==16 & dat$wpos==14 & dat$expt=="color"] <- "to" #
+dat$word[dat$item==16 & dat$wpos==15 & dat$expt=="color"] <- "preserve" #
+dat$word[dat$item==16 & dat$wpos==16 & dat$expt=="color"] <- "natural" #
+dat$word[dat$item==16 & dat$wpos==17 & dat$expt=="color"] <- "habitats" #
+dat$word[dat$item==16 & dat$wpos==18 & dat$expt=="color"] <- "and" #
+dat$word[dat$item==16 & dat$wpos==19 & dat$expt=="color"] <- "resources." #
+dat$word[dat$item==17 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==17 & dat$wpos==2 & dat$expt=="color"] <- "reporter" #
+dat$word[dat$item==17 & dat$wpos==3 & dat$expt=="color"] <- "interviewed" #
+dat$word[dat$item==17 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==17 & dat$wpos==5 & dat$expt=="color"] <- "celebrity" #
+dat$word[dat$item==17 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==17 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==17 & dat$wpos==8 & dat$expt=="color"] <- "photographer" #
+dat$word[dat$item==17 & dat$wpos==9 & dat$expt=="color"] <- "for" #
+dat$word[dat$item==17 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==17 & dat$wpos==11 & dat$expt=="color"] <- "tabloid" #
+dat$word[dat$item==17 & dat$wpos==12 & dat$expt=="color"] <- "magazine" #
+dat$word[dat$item==17 & dat$wpos==13 & dat$expt=="color"] <- "embarrassed" #
+dat$word[dat$item==17 & dat$wpos==14 & dat$expt=="color"] <- "last" #
+dat$word[dat$item==17 & dat$wpos==15 & dat$expt=="color"] <- "week" #
+dat$word[dat$item==17 & dat$wpos==16 & dat$expt=="color"] <- "at" #
+dat$word[dat$item==17 & dat$wpos==17 & dat$expt=="color"] <- "a" #
+dat$word[dat$item==17 & dat$wpos==18 & dat$expt=="color"] <- "charity" #
+dat$word[dat$item==17 & dat$wpos==19 & dat$expt=="color"] <- "dinner." #
+dat$word[dat$item==18 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==18 & dat$wpos==2 & dat$expt=="color"] <- "defendant" #
+dat$word[dat$item==18 & dat$wpos==3 & dat$expt=="color"] <- "accused" #
+dat$word[dat$item==18 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==18 & dat$wpos==5 & dat$expt=="color"] <- "cop" #
+dat$word[dat$item==18 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==18 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==18 & dat$wpos==8 & dat$expt=="color"] <- "judge" #
+dat$word[dat$item==18 & dat$wpos==9 & dat$expt=="color"] <- "in" #
+dat$word[dat$item==18 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==18 & dat$wpos==11 & dat$expt=="color"] <- "murder" #
+dat$word[dat$item==18 & dat$wpos==12 & dat$expt=="color"] <- "case" #
+dat$word[dat$item==18 & dat$wpos==13 & dat$expt=="color"] <- "silenced" #
+dat$word[dat$item==18 & dat$wpos==14 & dat$expt=="color"] <- "after" #
+dat$word[dat$item==18 & dat$wpos==15 & dat$expt=="color"] <- "a" #
+dat$word[dat$item==18 & dat$wpos==16 & dat$expt=="color"] <- "disturbing" #
+dat$word[dat$item==18 & dat$wpos==17 & dat$expt=="color"] <- "courtroom" #
+dat$word[dat$item==18 & dat$wpos==18 & dat$expt=="color"] <- "outburst." #
+dat$word[dat$item==19 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==19 & dat$wpos==2 & dat$expt=="color"] <- "guard" #
+dat$word[dat$item==19 & dat$wpos==3 & dat$expt=="color"] <- "aided" #
+dat$word[dat$item==19 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==19 & dat$wpos==5 & dat$expt=="color"] <- "criminal" #
+dat$word[dat$item==19 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==19 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==19 & dat$wpos==8 & dat$expt=="color"] <- "agent" #
+dat$word[dat$item==19 & dat$wpos==9 & dat$expt=="color"] <- "from" #
+dat$word[dat$item==19 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==19 & dat$wpos==11 & dat$expt=="color"] <- "U.S." #
+dat$word[dat$item==19 & dat$wpos==12 & dat$expt=="color"] <- "marshalls" #
+dat$word[dat$item==19 & dat$wpos==13 & dat$expt=="color"] <- "apprehended" #
+dat$word[dat$item==19 & dat$wpos==14 & dat$expt=="color"] <- "following" #
+dat$word[dat$item==19 & dat$wpos==15 & dat$expt=="color"] <- "a" #
+dat$word[dat$item==19 & dat$wpos==16 & dat$expt=="color"] <- "long" #
+dat$word[dat$item==19 & dat$wpos==17 & dat$expt=="color"] <- "and" #
+dat$word[dat$item==19 & dat$wpos==18 & dat$expt=="color"] <- "tiring" #
+dat$word[dat$item==19 & dat$wpos==19 & dat$expt=="color"] <- "chase." #
+dat$word[dat$item==20 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==20 & dat$wpos==2 & dat$expt=="color"] <- "employee" #
+dat$word[dat$item==20 & dat$wpos==3 & dat$expt=="color"] <- "obeyed" #
+dat$word[dat$item==20 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==20 & dat$wpos==5 & dat$expt=="color"] <- "supervisor" #
+dat$word[dat$item==20 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==20 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==20 & dat$wpos==8 & dat$expt=="color"] <- "inspector" #
+dat$word[dat$item==20 & dat$wpos==9 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==20 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==20 & dat$wpos==11 & dat$expt=="color"] <- "safety" #
+dat$word[dat$item==20 & dat$wpos==12 & dat$expt=="color"] <- "measures" #
+dat$word[dat$item==20 & dat$wpos==13 & dat$expt=="color"] <- "cautioned" #
+dat$word[dat$item==20 & dat$wpos==14 & dat$expt=="color"] <- "about" #
+dat$word[dat$item==20 & dat$wpos==15 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==20 & dat$wpos==16 & dat$expt=="color"] <- "poor" #
+dat$word[dat$item==20 & dat$wpos==17 & dat$expt=="color"] <- "work" #
+dat$word[dat$item==20 & dat$wpos==18 & dat$expt=="color"] <- "conditions." #
+dat$word[dat$item==21 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==21 & dat$wpos==2 & dat$expt=="color"] <- "captain" #
+dat$word[dat$item==21 & dat$wpos==3 & dat$expt=="color"] <- "evaluated" #
+dat$word[dat$item==21 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==21 & dat$wpos==5 & dat$expt=="color"] <- "fireman" #
+dat$word[dat$item==21 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==21 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==21 & dat$wpos==8 & dat$expt=="color"] <- "veteran" #
+dat$word[dat$item==21 & dat$wpos==9 & dat$expt=="color"] <- "with" #
+dat$word[dat$item==21 & dat$wpos==10 & dat$expt=="color"] <- "30" #
+dat$word[dat$item==21 & dat$wpos==11 & dat$expt=="color"] <- "years'" #
+dat$word[dat$item==21 & dat$wpos==12 & dat$expt=="color"] <- "experience" #
+dat$word[dat$item==21 & dat$wpos==13 & dat$expt=="color"] <- "trained" #
+dat$word[dat$item==21 & dat$wpos==14 & dat$expt=="color"] <- "over" #
+dat$word[dat$item==21 & dat$wpos==15 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==21 & dat$wpos==16 & dat$expt=="color"] <- "course" #
+dat$word[dat$item==21 & dat$wpos==17 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==21 & dat$wpos==18 & dat$expt=="color"] <- "six" #
+dat$word[dat$item==21 & dat$wpos==19 & dat$expt=="color"] <- "months." #
+dat$word[dat$item==22 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==22 & dat$wpos==2 & dat$expt=="color"] <- "investigator" #
+dat$word[dat$item==22 & dat$wpos==3 & dat$expt=="color"] <- "summoned" #
+dat$word[dat$item==22 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==22 & dat$wpos==5 & dat$expt=="color"] <- "athlete" #
+dat$word[dat$item==22 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==22 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==22 & dat$wpos==8 & dat$expt=="color"] <- "coach" #
+dat$word[dat$item==22 & dat$wpos==9 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==22 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==22 & dat$wpos==11 & dat$expt=="color"] <- "football" #
+dat$word[dat$item==22 & dat$wpos==12 & dat$expt=="color"] <- "team" #
+dat$word[dat$item==22 & dat$wpos==13 & dat$expt=="color"] <- "invited" #
+dat$word[dat$item==22 & dat$wpos==14 & dat$expt=="color"] <- "to" #
+dat$word[dat$item==22 & dat$wpos==15 & dat$expt=="color"] <- "try" #
+dat$word[dat$item==22 & dat$wpos==16 & dat$expt=="color"] <- "out" #
+dat$word[dat$item==22 & dat$wpos==17 & dat$expt=="color"] <- "for" #
+dat$word[dat$item==22 & dat$wpos==18 & dat$expt=="color"] <- "a" #
+dat$word[dat$item==22 & dat$wpos==19 & dat$expt=="color"] <- "spot" #
+dat$word[dat$item==22 & dat$wpos==20 & dat$expt=="color"] <- "on" #
+dat$word[dat$item==22 & dat$wpos==21 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==22 & dat$wpos==22 & dat$expt=="color"] <- "team." #
+dat$word[dat$item==23 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==23 & dat$wpos==2 & dat$expt=="color"] <- "pundit" #
+dat$word[dat$item==23 & dat$wpos==3 & dat$expt=="color"] <- "ridiculed" #
+dat$word[dat$item==23 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==23 & dat$wpos==5 & dat$expt=="color"] <- "candidate" #
+dat$word[dat$item==23 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==23 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==23 & dat$wpos==8 & dat$expt=="color"] <- "leader" #
+dat$word[dat$item==23 & dat$wpos==9 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==23 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==23 & dat$wpos==11 & dat$expt=="color"] <- "political" #
+dat$word[dat$item==23 & dat$wpos==12 & dat$expt=="color"] <- "party" #
+dat$word[dat$item==23 & dat$wpos==13 & dat$expt=="color"] <- "supported" #
+dat$word[dat$item==23 & dat$wpos==14 & dat$expt=="color"] <- "despite" #
+dat$word[dat$item==23 & dat$wpos==15 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==23 & dat$wpos==16 & dat$expt=="color"] <- "misgivings" #
+dat$word[dat$item==23 & dat$wpos==17 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==23 & dat$wpos==18 & dat$expt=="color"] <- "other" #
+dat$word[dat$item==23 & dat$wpos==19 & dat$expt=="color"] <- "members." #
+dat$word[dat$item==24 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==24 & dat$wpos==2 & dat$expt=="color"] <- "interrogator" #
+dat$word[dat$item==24 & dat$wpos==3 & dat$expt=="color"] <- "questioned" #
+dat$word[dat$item==24 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==24 & dat$wpos==5 & dat$expt=="color"] <- "mercenary" #
+dat$word[dat$item==24 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==24 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==24 & dat$wpos==8 & dat$expt=="color"] <- "commander" #
+dat$word[dat$item==24 & dat$wpos==9 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==24 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==24 & dat$wpos==11 & dat$expt=="color"] <- "armed" #
+dat$word[dat$item==24 & dat$wpos==12 & dat$expt=="color"] <- "rebellion" #
+dat$word[dat$item==24 & dat$wpos==13 & dat$expt=="color"] <- "abandoned" #
+dat$word[dat$item==24 & dat$wpos==14 & dat$expt=="color"] <- "without" #
+dat$word[dat$item==24 & dat$wpos==15 & dat$expt=="color"] <- "any" #
+dat$word[dat$item==24 & dat$wpos==16 & dat$expt=="color"] <- "explanation" #
+dat$word[dat$item==24 & dat$wpos==17 & dat$expt=="color"] <- "or" #
+dat$word[dat$item==24 & dat$wpos==18 & dat$expt=="color"] <- "warning." #
+dat$word[dat$item==25 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==25 & dat$wpos==2 & dat$expt=="color"] <- "fugitive" #
+dat$word[dat$item==25 & dat$wpos==3 & dat$expt=="color"] <- "robbed" #
+dat$word[dat$item==25 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==25 & dat$wpos==5 & dat$expt=="color"] <- "tourist" #
+dat$word[dat$item==25 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==25 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==25 & dat$wpos==8 & dat$expt=="color"] <- "guide" #
+dat$word[dat$item==25 & dat$wpos==9 & dat$expt=="color"] <- "for" #
+dat$word[dat$item==25 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==25 & dat$wpos==11 & dat$expt=="color"] <- "huge" #
+dat$word[dat$item==25 & dat$wpos==12 & dat$expt=="color"] <- "group" #
+dat$word[dat$item==25 & dat$wpos==13 & dat$expt=="color"] <- "warned" #
+dat$word[dat$item==25 & dat$wpos==14 & dat$expt=="color"] <- "about" #
+dat$word[dat$item==25 & dat$wpos==15 & dat$expt=="color"] <- "straying" #
+dat$word[dat$item==25 & dat$wpos==16 & dat$expt=="color"] <- "too" #
+dat$word[dat$item==25 & dat$wpos==17 & dat$expt=="color"] <- "far" #
+dat$word[dat$item==25 & dat$wpos==18 & dat$expt=="color"] <- "from" #
+dat$word[dat$item==25 & dat$wpos==19 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==25 & dat$wpos==20 & dat$expt=="color"] <- "group." #
+dat$word[dat$item==26 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==26 & dat$wpos==2 & dat$expt=="color"] <- "industrialist" #
+dat$word[dat$item==26 & dat$wpos==3 & dat$expt=="color"] <- "threatened" #
+dat$word[dat$item==26 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==26 & dat$wpos==5 & dat$expt=="color"] <- "peasant" #
+dat$word[dat$item==26 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==26 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==26 & dat$wpos==8 & dat$expt=="color"] <- "investor" #
+dat$word[dat$item==26 & dat$wpos==9 & dat$expt=="color"] <- "from" #
+dat$word[dat$item==26 & dat$wpos==10 & dat$expt=="color"] <- "a" #
+dat$word[dat$item==26 & dat$wpos==11 & dat$expt=="color"] <- "foreign" #
+dat$word[dat$item==26 & dat$wpos==12 & dat$expt=="color"] <- "land" #
+dat$word[dat$item==26 & dat$wpos==13 & dat$expt=="color"] <- "protected" #
+dat$word[dat$item==26 & dat$wpos==14 & dat$expt=="color"] <- "without" #
+dat$word[dat$item==26 & dat$wpos==15 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==26 & dat$wpos==16 & dat$expt=="color"] <- "least" #
+dat$word[dat$item==26 & dat$wpos==17 & dat$expt=="color"] <- "bit" #
+dat$word[dat$item==26 & dat$wpos==18 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==26 & dat$wpos==19 & dat$expt=="color"] <- "hesitation." #
+dat$word[dat$item==27 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==27 & dat$wpos==2 & dat$expt=="color"] <- "executive" #
+dat$word[dat$item==27 & dat$wpos==3 & dat$expt=="color"] <- "infuriated" #
+dat$word[dat$item==27 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==27 & dat$wpos==5 & dat$expt=="color"] <- "politician" #
+dat$word[dat$item==27 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==27 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==27 & dat$wpos==8 & dat$expt=="color"] <- "lobbyist" #
+dat$word[dat$item==27 & dat$wpos==9 & dat$expt=="color"] <- "for" #
+dat$word[dat$item==27 & dat$wpos==10 & dat$expt=="color"] <- "some" #
+dat$word[dat$item==27 & dat$wpos==11 & dat$expt=="color"] <- "oil" #
+dat$word[dat$item==27 & dat$wpos==12 & dat$expt=="color"] <- "companies" #
+dat$word[dat$item==27 & dat$wpos==13 & dat$expt=="color"] <- "bribed" #
+dat$word[dat$item==27 & dat$wpos==14 & dat$expt=="color"] <- "to" #
+dat$word[dat$item==27 & dat$wpos==15 & dat$expt=="color"] <- "vote" #
+dat$word[dat$item==27 & dat$wpos==16 & dat$expt=="color"] <- "for" #
+dat$word[dat$item==27 & dat$wpos==17 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==27 & dat$wpos==18 & dat$expt=="color"] <- "upcoming" #
+dat$word[dat$item==27 & dat$wpos==19 & dat$expt=="color"] <- "bill." #
+dat$word[dat$item==28 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==28 & dat$wpos==2 & dat$expt=="color"] <- "advisor" #
+dat$word[dat$item==28 & dat$wpos==3 & dat$expt=="color"] <- "lectured" #
+dat$word[dat$item==28 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==28 & dat$wpos==5 & dat$expt=="color"] <- "prince" #
+dat$word[dat$item==28 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==28 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==28 & dat$wpos==8 & dat$expt=="color"] <- "dignitary" #
+dat$word[dat$item==28 & dat$wpos==9 & dat$expt=="color"] <- "learning" #
+dat$word[dat$item==28 & dat$wpos==10 & dat$expt=="color"] <- "to" #
+dat$word[dat$item==28 & dat$wpos==11 & dat$expt=="color"] <- "speak" #
+dat$word[dat$item==28 & dat$wpos==12 & dat$expt=="color"] <- "English" #
+dat$word[dat$item==28 & dat$wpos==13 & dat$expt=="color"] <- "thanked" #
+dat$word[dat$item==28 & dat$wpos==14 & dat$expt=="color"] <- "at" #
+dat$word[dat$item==28 & dat$wpos==15 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==28 & dat$wpos==16 & dat$expt=="color"] <- "end" #
+dat$word[dat$item==28 & dat$wpos==17 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==28 & dat$wpos==18 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==28 & dat$wpos==19 & dat$expt=="color"] <- "ceremony." #
+dat$word[dat$item==29 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==29 & dat$wpos==2 & dat$expt=="color"] <- "pedestrian" #
+dat$word[dat$item==29 & dat$wpos==3 & dat$expt=="color"] <- "dodged" #
+dat$word[dat$item==29 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==29 & dat$wpos==5 & dat$expt=="color"] <- "driver" #
+dat$word[dat$item==29 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==29 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==29 & dat$wpos==8 & dat$expt=="color"] <- "bystander" #
+dat$word[dat$item==29 & dat$wpos==9 & dat$expt=="color"] <- "near" #
+dat$word[dat$item==29 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==29 & dat$wpos==11 & dat$expt=="color"] <- "bus" #
+dat$word[dat$item==29 & dat$wpos==12 & dat$expt=="color"] <- "stop" #
+dat$word[dat$item==29 & dat$wpos==13 & dat$expt=="color"] <- "identified" #
+dat$word[dat$item==29 & dat$wpos==14 & dat$expt=="color"] <- "later" #
+dat$word[dat$item==29 & dat$wpos==15 & dat$expt=="color"] <- "on" #
+dat$word[dat$item==29 & dat$wpos==16 & dat$expt=="color"] <- "at" #
+dat$word[dat$item==29 & dat$wpos==17 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==29 & dat$wpos==18 & dat$expt=="color"] <- "police" #
+dat$word[dat$item==29 & dat$wpos==19 & dat$expt=="color"] <- "station." #
+dat$word[dat$item==30 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==30 & dat$wpos==2 & dat$expt=="color"] <- "customer" #
+dat$word[dat$item==30 & dat$wpos==3 & dat$expt=="color"] <- "offended" #
+dat$word[dat$item==30 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==30 & dat$wpos==5 & dat$expt=="color"] <- "assistant" #
+dat$word[dat$item==30 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==30 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==30 & dat$wpos==8 & dat$expt=="color"] <- "manager" #
+dat$word[dat$item==30 & dat$wpos==9 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==30 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==30 & dat$wpos==11 & dat$expt=="color"] <- "department" #
+dat$word[dat$item==30 & dat$wpos==12 & dat$expt=="color"] <- "store" #
+dat$word[dat$item==30 & dat$wpos==13 & dat$expt=="color"] <- "called" #
+dat$word[dat$item==30 & dat$wpos==14 & dat$expt=="color"] <- "into" #
+dat$word[dat$item==30 & dat$wpos==15 & dat$expt=="color"] <- "his" #
+dat$word[dat$item==30 & dat$wpos==16 & dat$expt=="color"] <- "office" #
+dat$word[dat$item==30 & dat$wpos==17 & dat$expt=="color"] <- "after" #
+dat$word[dat$item==30 & dat$wpos==18 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==30 & dat$wpos==19 & dat$expt=="color"] <- "incident." #
+dat$word[dat$item==31 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==31 & dat$wpos==2 & dat$expt=="color"] <- "nurse" #
+dat$word[dat$item==31 & dat$wpos==3 & dat$expt=="color"] <- "consoled" #
+dat$word[dat$item==31 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==31 & dat$wpos==5 & dat$expt=="color"] <- "patient" #
+dat$word[dat$item==31 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==31 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==31 & dat$wpos==8 & dat$expt=="color"] <- "doctor" #
+dat$word[dat$item==31 & dat$wpos==9 & dat$expt=="color"] <- "on" #
+dat$word[dat$item==31 & dat$wpos==10 & dat$expt=="color"] <- "a" #
+dat$word[dat$item==31 & dat$wpos==11 & dat$expt=="color"] <- "double" #
+dat$word[dat$item==31 & dat$wpos==12 & dat$expt=="color"] <- "shift" #
+dat$word[dat$item==31 & dat$wpos==13 & dat$expt=="color"] <- "forgot" #
+dat$word[dat$item==31 & dat$wpos==14 & dat$expt=="color"] <- "due" #
+dat$word[dat$item==31 & dat$wpos==15 & dat$expt=="color"] <- "to" #
+dat$word[dat$item==31 & dat$wpos==16 & dat$expt=="color"] <- "a" #
+dat$word[dat$item==31 & dat$wpos==17 & dat$expt=="color"] <- "lack" #
+dat$word[dat$item==31 & dat$wpos==18 & dat$expt=="color"] <- "of" #
+dat$word[dat$item==31 & dat$wpos==19 & dat$expt=="color"] <- "sleep." #
+dat$word[dat$item==32 & dat$wpos==1 & dat$expt=="color"] <- "The" #
+dat$word[dat$item==32 & dat$wpos==2 & dat$expt=="color"] <- "secretary" #
+dat$word[dat$item==32 & dat$wpos==3 & dat$expt=="color"] <- "aggravated" #
+dat$word[dat$item==32 & dat$wpos==4 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==32 & dat$wpos==5 & dat$expt=="color"] <- "intern" #
+dat$word[dat$item==32 & dat$wpos==6 & dat$expt=="color"] <- "who" #
+dat$word[dat$item==32 & dat$wpos==7 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==32 & dat$wpos==8 & dat$expt=="color"] <- "partner" #
+dat$word[dat$item==32 & dat$wpos==9 & dat$expt=="color"] <- "at" #
+dat$word[dat$item==32 & dat$wpos==10 & dat$expt=="color"] <- "the" #
+dat$word[dat$item==32 & dat$wpos==11 & dat$expt=="color"] <- "law" #
+dat$word[dat$item==32 & dat$wpos==12 & dat$expt=="color"] <- "firm" #
+dat$word[dat$item==32 & dat$wpos==13 & dat$expt=="color"] <- "hired" #
+dat$word[dat$item==32 & dat$wpos==14 & dat$expt=="color"] <- "less" #
+dat$word[dat$item==32 & dat$wpos==15 & dat$expt=="color"] <- "than" #
+dat$word[dat$item==32 & dat$wpos==16 & dat$expt=="color"] <- "three" #
+dat$word[dat$item==32 & dat$wpos==17 & dat$expt=="color"] <- "weeks" #
+dat$word[dat$item==32 & dat$wpos==18 & dat$expt=="color"] <- "ago."
+save.image("color2.base.R")
+ls()
+dat$Wlen <- nchar(as.character(dat$word), type="chars")#
+ pos <- function(dat,  subj.name='subj',item.name='item',expt.name='expt') {#
+    dat <- data.frame(subj = dat[[subj.name]], item = dat[[item.name]],expt=dat[[expt.name]])#
+    k <- 0    ## subj number#
+    m <- 0    ## item number#
+    ipos <- c() #
+    for(i in 1:nrow(dat)) {#
+    	   if (dat$subj[i] != k) #
+	   # if the subject number is different than the last start counter over#
+	      	 {#
+		  k <- dat$subj[i]#
+		 counter <- 1#
+		  ipos[i] <- counter#
+		  }#
+          else if ((dat$item[i] != dat$item[i-1]) || (dat$expt[i] != dat$expt[i-1]) ) {#
+	   ## if either the item number or expt name is different,#
+	   ####    	   increment the counter#
+            m <- dat$item[i]#
+            counter <- counter + 1#
+	    ipos[i] <- counter#
+	         }#
+	  else #
+	       {#
+                 ipos[i] <- counter#
+	      } #
+}#
+    return(ipos)#
+}#
+#
+dat$Lpos <- NA#
+dat$Lpos <- pos(dat)
+summary(dat)
+table(dat$subj,dat$Lpos)
+table(dat$Lpos,dat$subj)
+x <- subset(dat,Lpos==93)
+x
+which(dat$Lpos==93)
+dat[31702,]
+dat[31701,]
+dat[31703,]
+dat[31700:31710]
+dat[31700:31710,]
+head(dat,n=6000)
+dat[31700:31710,]
+dat[31690:31710,]
+x
+dat[52780:57290,]
+dat[52780:52790,]
+x
+which(dat,Lpos==93)
+which(dat$Lpos==93)
+dat[44620:44635,]
+dat <- subset(dat,Lpos!=93)
+library(lme4)
+l <- lmer(logRT ~ Lpos + Wlen  + (1 | subj), dat)#
+dat$logRTresidual <- residuals(l)
+summary(as.factor(dat$subj))
+internal function to get standard errors#
+se <- function(x,na.rm=F) {#
+    if(na.rm) x <- subset(x,! is.na(x))#
+    sqrt(var(x)/length(x))#
+}#
+#
+ dat$COND <- as.factor(dat$COND)#
+dat$region <- as.factor(dat$region)#
+#
+spr <- subset(dat,region!="NA" & region!="0")#
+summary(dat$region)#
+#
+dat$region <- dat$region[drop=TRUE]
+summary(spr)
+dat$cond <- as.factor(dat$cond)#
+dat$region <- as.factor(dat$region)#
+#
+spr <- subset(dat,region!="NA" & region!="0")#
+summary(spr$region)
+plots rts/res.rts with error bars#
+plot.rts <- function(dat, rt.name='rt', region.name='region',#
+                     cond.name='joint.cond', lty.function=NULL, pch.function=NULL, col.function=NULL,bg.function=NULL,lty=1:6,col=1.657,pch=1:8,bg=col,...) {#
+    dat <- data.frame(region = dat[[region.name]], cond = dat[[cond.name]],#
+                      rt = dat[[rt.name]])#
+    # find appropriate range for graph with errors bars#
+    reg <- levels(dat$region)[1]#
+    con <- levels(dat$cond)[1]#
+    con.dat <- subset(dat, region==reg & cond==con)#
+    graph.min <- graph.max <- mean(con.dat$rt)#
+    for (reg in levels(dat$region)){#
+        for (con in levels(dat$cond)) {#
+            con.dat <- subset(dat, region==reg & cond==con)#
+            # only if this pair of condition and region has data#
+            if (length(con.dat[,1]) > 0) {#
+              word.mean <- mean(con.dat$rt)#
+              word.se <- se(con.dat$rt, na.rm=T)#
+              yplus<-word.mean+word.se#
+              yminus<-word.mean-word.se#
+              if(yplus>graph.max){graph.max <- yplus}#
+              if(yminus<graph.min){graph.min <- yminus}#
+            }#
+         }#
+    }	#
+    cat("### levels are",class(levels(dat$cond)), ":\n")#
+    print(levels(dat$cond))#
+	print(levels(dat$region))#
+#
+    if(! is.null(lty.function)) {#
+      lty <- sapply(levels(dat$cond), lty.function)#
+      cat("### Assigning special lty...\n")#
+    }#
+    if(! is.null(col.function)) {#
+      col <- sapply(levels(dat$cond), col.function)#
+      cat("### Assigning special col...\n")#
+    }#
+    if(! is.null(pch.function)) {#
+      pch <- sapply(levels(dat$cond), pch.function)#
+      cat("### Assigning special pch...\n")#
+    }#
+    if(! is.null(bg.function)) {#
+      bg <- sapply(levels(dat$cond), bg.function)#
+      cat("### Assigning special bg...\n")#
+    }#
+	colors <- rainbow(max(as.numeric(dat$cond)))#
+    # Plot graph#
+#
+    with(dat, interaction.plot(region,cond, rt, type='b',#
+                               ylim=c(graph.min, graph.max + .1), xlab="Region",#
+                               col=col, lty=lty, pch=pch, bg=bg,fixed=TRUE,leg.bg="gray",bty='o',#
+                               ylab='Log normalized reading time', ...))#
+    # plot error bars#
+    i <- 1 # x value of current word#
+    for (reg in levels(dat$region)){#
+        for (con in levels(dat$cond)) {#
+          con.dat <- subset(dat, region==reg & cond==con)#
+            # only if this pair of condition and region has data#
+            if (length(con.dat[,1]) > 0) {          #
+              word.mean <- mean(con.dat$rt)#
+              word.se <- se(con.dat$rt, na.rm=T)#
+              yplus<-word.mean+word.se#
+              yminus<-word.mean-word.se#
+              arrows(x0=i, y0=word.mean, x1=i, y1=yplus, angle=90, length=0.1)#
+              arrows(x0=i, y0=word.mean, x1=i, y1=yminus, angle=90, length=0.1)#
+            }#
+        }#
+        i <- i + 1#
+    }                                 #
+}
+plotraw <- subset(spr,rt!="NA")#
+plotraw$cond <- plotraw$cond[drop=TRUE]#
+plotraw$cond <- as.factor(plotraw$cond)
+plot.rts(plotraw,cond.name="cond",col=1:4,region.name="region")
+plot.rts(plotraw,cond.name="cond",col=1:4,region.name="region",rt.name="logRTresidual")
+plot.rts(plotraw,cond.name="cond",col=1:4,region.name="region",rt.name="rt")
+plot.rts(plotraw,cond.name="cond",col=1:4,region.name="region",rt.name="logRTresidual")
+summary(plotraw)
+ls()
+spr$f1[spr$cond=="COLOR COLOR"] <- 1#
+spr$f1[spr$cond=="COLOR NO"] <- 1#
+spr$f1[spr$cond=="NO COLOR"] <- 0#
+spr$f1[spr$cond=="NO NO"] <- 0#
+#
+spr$f2[spr$cond=="COLOR COLOR"] <- 1#
+spr$f2[spr$cond=="COLOR NO"] <- 0#
+spr$f2[spr$cond=="NO COLOR"] <- 1#
+spr$f2[spr$cond=="NO NO"] <- 0
+summary(spr)
+ls
+ls()
+cqst <- subset(qst,expt=="color")
+test <- numeric(0)#
+#
+score <- matrix(0,nrow= nrow(spr), ncol=1, dimnames=list(1:nrow(spr), paste("score")))#
+#
+	     for(j in 1:nrow(spr)) {#
+	     	  s <- spr$subj[j]#
+		  i <- spr$item[j]#
+	           c <- cqst$corr[cqst$subj==s & cqst$item==i]#
+		     if (identical(test,c)) {c <- 0}#
+			  	      cat(sprintf('Subj and Item: %.2f %.2f %.2f\n', #
+ 				                     s,i,c))#
+		         score[j,] <- c #
+	     }
+summary(as.factor(spr$subj))
+summary(as.factor(cqst$subj))
+cqst <- subset(cqst,subj!=14 & subj!=32)
+test <- numeric(0)#
+#
+score <- matrix(0,nrow= nrow(spr), ncol=1, dimnames=list(1:nrow(spr), paste("score")))#
+#
+	     for(j in 1:nrow(spr)) {#
+	     	  s <- spr$subj[j]#
+		  i <- spr$item[j]#
+	           c <- cqst$corr[cqst$subj==s & cqst$item==i]#
+		     if (identical(test,c)) {c <- 0}#
+			  	      cat(sprintf('Subj and Item: %.2f %.2f %.2f\n', #
+ 				                     s,i,c))#
+		         score[j,] <- c #
+	     }
+s44 <- subset(cqst,subj==44)
+s44
+length(s44)
+nrow(s44)
+levels(s44$item)
+levels(as.factor(s44$item))
+cqst[cqst$bin==124 & cqst$subj==44]
+cqst$corr[cqst$bin==124 & cqst$subj==44]
+cqst$item[cqst$bin==124 & cqst$subj==44]
+cqst$item[cqst$bin==124 & cqst$subj==44] <- 4
+test <- numeric(0)#
+#
+score <- matrix(0,nrow= nrow(spr), ncol=1, dimnames=list(1:nrow(spr), paste("score")))#
+#
+	     for(j in 1:nrow(spr)) {#
+	     	  s <- spr$subj[j]#
+		  i <- spr$item[j]#
+	           c <- cqst$corr[cqst$subj==s & cqst$item==i]#
+		     if (identical(test,c)) {c <- 0}#
+			  	      cat(sprintf('Subj and Item: %.2f %.2f %.2f\n', #
+ 				                     s,i,c))#
+		         score[j,] <- c #
+	     }
+spr$corr <- score
+summary(spr)
+plotc <- subset(spr,corr==1)
+plot.rts(plotc,cond.name="cond",col=1:4,region.name="region",rt.name="logRTresidual")
+plotic <- subset(spr,corr==0)
+plot.rts(plotic,cond.name="cond",col=1:4,region.name="region",rt.name="logRTresidual")
+plotic$cond <- plotic$cond[drop=TRUE]
+plot.rts(plotic,cond.name="cond",col=1:4,region.name="region",rt.name="logRTresidual")
+plot.rts(plotraw,cond.name="cond",col=1:4,region.name="region",rt.name="logRTresidual")
+ls()
+summary(dat)
+dat$Wlen <- nchar(as.character(dat$word), type="chars")
+e <- rbind(dat,cutout)
+summary(cutout)
+cutout$word <- NA
+cutout$Wlen <- NA
+e <- rbind(dat,cutout)
+cutout
+summary(cutout)
+summary(dat)
+dat$logRTresidual <- NA
+e <- rbind(dat,cutout)
+head(cutout)
+appendspill <- function(d) {#
+# create spillover values#
+spillrange <- 1:3#
+lsr <- length(spillrange)#
+spillover <- matrix(0,nrow= nrow(d), ncol=lsr, dimnames=list(1:nrow(d),#
+             paste("SPILLOVER",spillrange, sep="_")))#
+pos <- d$Wpos#
+lrt <- d$logRTresidual#
+#
+for(i in 1:nrow(d)) {#
+  lookback <- min(lsr, pos[i] - 1)#
+  spillover[i,] <- append(lrt[i -#
+                   spillrange[seq(1,lookback, length.out=lookback)]],#
+                   rep(NA, lsr - lookback))#
+}#
+d <- cbind(d, spillover)#
+}#
+#
+e <- appendspill(e)
+head(e)
+appendspill <- function(d) {#
+# create spillover values#
+spillrange <- 1:3#
+lsr <- length(spillrange)#
+spillover <- matrix(0,nrow= nrow(d), ncol=lsr, dimnames=list(1:nrow(d),#
+             paste("SPILLOVER",spillrange, sep="_")))#
+pos <- d$wpos#
+lrt <- d$logRTresidual#
+#
+for(i in 1:nrow(d)) {#
+  lookback <- min(lsr, pos[i] - 1)#
+  spillover[i,] <- append(lrt[i -#
+                   spillrange[seq(1,lookback, length.out=lookback)]],#
+                   rep(NA, lsr - lookback))#
+}#
+d <- cbind(d, spillover)#
+}#
+#
+e <- appendspill(e)
+ls()
+summary(e)
+tail(e)
+ls(0)
+ls()
+summary(univ$region)
+cutout
+rm(list=ls())
+setwd("~/Experiments/Univ3/Results")
+d <- as.data.frame(read.delim(file="data.txt",sep=" ",col.names=c('subj','expt', 'item','cond','Wpos','word','region','rt')))#
+#
+ look at dataset and understand its structure#
+########################################################################
+str(d)#
+summary(d)#
+nrow(d)#
+#
+# exclude practice trials (because reading times on them reflect#
+# probably mostly the training itself#
+########################################################################
+d <- d[-grep("^practice", d$expt),]#
+d$logRT <- log(d$rt)#
+d$Wlen <- nchar(as.character(d$word), type="chars")#
+#
+abs(scale(unlist(lapply(split(d$logRT, as.factor(as.character(d$subj))), mean)))) < 2.5#
+#
+## remove non-natives#
+#
+d <- subset(d,subj!=2 & subj!=19)#
+#
+first.cut <- function(dat, rt.name='rt', lower=100, upper=2000) {#
+    rt <- dat[[rt.name]]#
+    num.too.low <- length(rt[rt < lower])#
+    num.too.high <- length(rt[rt > upper])#
+    cat('There are', num.too.low, 'RTs under', lower, 'and',#
+        num.too.high, 'over', upper, '.\n')#
+    return(rt < lower | rt > upper)#
+}#
+ans <- subset(d,region=="1"|region=="0")#
+ans$Wpos <- NULL#
+ans$word <- NULL#
+ans$ct <- ans$rt#
+ans$rt <- NULL#
+ans$logRT <- NULL#
+ans$Wlen <- NULL#
+ans$region <- ans$region[drop=TRUE]#
+ans$correct <- as.numeric(ans$region) - 1#
+ans$region <- NULL#
+pos <- function(dat,  subj.name='subj',item.name='item',expt.name='expt') {#
+    dat <- data.frame(subj = dat[[subj.name]], item = dat[[item.name]],expt=dat[[expt.name]])#
+     k <- 0#
+     m <- 0#
+    ipos <- matrix(0,nrow= nrow(dat), ncol=1, dimnames=list(1:nrow(dat), paste("Lpos")))#
+    ipos[1,] <- 1#
+    for(i in 1:nrow(dat)) {#
+    	   if (dat$subj[i] != k)  {  # if the subject number is different than the last start counter over#
+		k <- dat$subj[i]#
+		counter <- 1#
+		ipos[i,] <- counter }#
+          else if ((dat$item[i] != dat$item[i-1]) || (dat$expt[i] != dat$expt[i-1]) ) { ## if item number or expt name is different, increment counter#
+          	 m <- dat$item[i]#
+	    	counter <- counter + 1#
+	       ipos[i,] <- counter }#
+	  else { #
+		ipos[i,] <- counter } #
+}#
+    return(ipos)#
+}#
+d$Lpos <- NA#
+d$Lpos <- pos(d)#
+#
+d <- merge(d,ans,by=c('subj','expt','item','cond'))#
+#
+uans <- subset(ans,expt=="univ")#
+## remove low accuracy subjects, i.e. < 75% on all trials#
+#
+### d <- subset(d,subj!=8 & subj!=17 & subj!=21 & subj!=26 & subj!=28 & subj!=43 & subj!=45)#
+#
+## those who scored below 60% on the critical trials#
+#
+### d <- subset(d,subj!=8 & subj!=17 & subj!=21 & subj!=55)#
+spr <- subset(d,region=="-")#
+spr <- subset(spr,word!="+")#
+#
+spr$Wpos <- spr$Wpos[drop=TRUE]#
+spr$Wpos <- as.character(spr$Wpos)#
+spr$Wpos <- as.numeric(spr$Wpos)#
+#
+## change to 2500? #
+#
+to.remove <- first.cut(spr,rt.name="rt",upper=5000)#
+spr$rt[to.remove=='TRUE'] <- NA#
+spr$logRT[to.remove=='TRUE'] <- NA#
+#
+cutout <- spr[which(is.na(spr$logRT)), ]#
+#
+spr <- spr[which(!is.na(spr$logRT)), ]#
+#
+l <- lmer(logRT ~ Wlen + log(Lpos) +  (1 | subj), spr)#
+spr$logRTresidual <- residuals(l)#
+cutout$logRTresidual <- NA#
+e <- rbind(spr, cutout)#
+e <- e[order(as.numeric(rownames(e))),]
+tail(e)
+appendspill <- function(d) {#
+# create spillover values#
+spillrange <- 1:3#
+lsr <- length(spillrange)#
+spillover <- matrix(0,nrow= nrow(d), ncol=lsr, dimnames=list(1:nrow(d),#
+             paste("SPILLOVER",spillrange, sep="_")))#
+pos <- d$Wpos#
+lrt <- d$logRTresidual#
+#
+for(i in 1:nrow(d)) {#
+  lookback <- min(lsr, pos[i] - 1)#
+  spillover[i,] <- append(lrt[i -#
+                   spillrange[seq(1,lookback, length.out=lookback)]],#
+                   rep(NA, lsr - lookback))#
+}#
+d <- cbind(d, spillover)#
+}#
+#
+e <- appendspill(e)#
+univ <- subset(e,expt=="univ")#
+univ$expt <- univ$expt[drop=TRUE]#
+univ$cond <- univ$cond[drop=TRUE]#
+univ$Wpos <- univ$Wpos[drop=TRUE]#
+#
+univ$region <- NULL#
+#
+univ$region[univ$Wpos==7 & univ$cond=="complex_simple"] <- 0#
+univ$region[univ$Wpos==8 & univ$cond=="complex_simple"] <- 1#
+univ$region[univ$Wpos==9 & univ$cond=="complex_simple"] <- 2#
+univ$region[univ$Wpos==10 & univ$cond=="complex_simple"] <- 3#
+univ$region[univ$Wpos==11 & univ$cond=="complex_simple"] <- 4#
+univ$region[univ$Wpos==12 & univ$cond=="complex_simple"] <- 5#
+univ$region[univ$Wpos==13 & univ$cond=="complex_simple"] <- 6#
+univ$region[univ$Wpos==14 & univ$cond=="complex_simple"] <- 7#
+univ$region[univ$Wpos==15 & univ$cond=="complex_simple"] <- 8#
+univ$region[univ$Wpos==16 & univ$cond=="complex_simple"] <- 9#
+univ$region[univ$Wpos==17 & univ$cond=="complex_simple"] <- 10#
+#
+univ$region[univ$Wpos==5 & univ$cond=="simple_simple"] <- 0#
+univ$region[univ$Wpos==6 & univ$cond=="simple_simple"] <- 1#
+univ$region[univ$Wpos==7 & univ$cond=="simple_simple"] <- 2#
+univ$region[univ$Wpos==8 & univ$cond=="simple_simple"] <- 3#
+univ$region[univ$Wpos==9 & univ$cond=="simple_simple"] <- 4#
+univ$region[univ$Wpos==10 & univ$cond=="simple_simple"] <- 5#
+univ$region[univ$Wpos==11 & univ$cond=="simple_simple"] <- 6#
+univ$region[univ$Wpos==12 & univ$cond=="simple_simple"] <- 7#
+univ$region[univ$Wpos==13 & univ$cond=="simple_simple"] <- 8#
+univ$region[univ$Wpos==14 & univ$cond=="simple_simple"] <- 9#
+univ$region[univ$Wpos==15 & univ$cond=="simple_simple"] <- 10#
+#
+univ$region[univ$Wpos==9 & univ$cond=="complex_complex"] <- 0#
+univ$region[univ$Wpos==10 & univ$cond=="complex_complex"] <- 1#
+univ$region[univ$Wpos==11 & univ$cond=="complex_complex"] <- 2#
+univ$region[univ$Wpos==12 & univ$cond=="complex_complex"] <- 3#
+univ$region[univ$Wpos==13 & univ$cond=="complex_complex"] <- 4#
+univ$region[univ$Wpos==14 & univ$cond=="complex_complex"] <- 5#
+univ$region[univ$Wpos==15 & univ$cond=="complex_complex"] <- 6#
+univ$region[univ$Wpos==16 & univ$cond=="complex_complex"] <- 7#
+univ$region[univ$Wpos==17 & univ$cond=="complex_complex"] <- 8#
+univ$region[univ$Wpos==18 & univ$cond=="complex_complex"] <- 9#
+univ$region[univ$Wpos==19 & univ$cond=="complex_complex"] <- 10#
+univ$region[univ$Wpos==7 & univ$cond=="simple_complex"] <- 0#
+univ$region[univ$Wpos==8 & univ$cond=="simple_complex"] <- 1#
+univ$region[univ$Wpos==9 & univ$cond=="simple_complex"] <- 2#
+univ$region[univ$Wpos==10 & univ$cond=="simple_complex"] <- 3#
+univ$region[univ$Wpos==11 & univ$cond=="simple_complex"] <- 4#
+univ$region[univ$Wpos==12 & univ$cond=="simple_complex"] <- 5#
+univ$region[univ$Wpos==13 & univ$cond=="simple_complex"] <- 6#
+univ$region[univ$Wpos==14 & univ$cond=="simple_complex"] <- 7#
+univ$region[univ$Wpos==15 & univ$cond=="simple_complex"] <- 8#
+univ$region[univ$Wpos==16 & univ$cond=="simple_complex"] <- 9#
+univ$region[univ$Wpos==17 & univ$cond=="simple_complex"] <- 10#
+univ <- subset(univ,!is.na(univ$region))#
+#
+univ$f1[univ$cond=="complex_complex"] <- 1#
+univ$f1[univ$cond=="complex_simple"] <- 1#
+univ$f1[univ$cond=="simple_complex"] <- 0#
+univ$f1[univ$cond=="simple_simple"] <- 0#
+#
+univ$f2[univ$cond=="complex_complex"] <- 1#
+univ$f2[univ$cond=="complex_simple"] <- 0#
+univ$f2[univ$cond=="simple_complex"] <- 1#
+univ$f2[univ$cond=="simple_simple"] <- 0
+summary(e)
+e <- appendspill(e)
+appendspill
+summary(e$Wpos)
+summary(as.factor(e$Wpos))
+x <- subset(e,Wpos==0)
+x
+e <- subset(e,Wpos!=0)
+e <- subset(e,Wpos!=0)#
+e <- appendspill(e)
+univ <- subset(e,expt=="univ")#
+univ$expt <- univ$expt[drop=TRUE]#
+univ$cond <- univ$cond[drop=TRUE]#
+univ$Wpos <- univ$Wpos[drop=TRUE]#
+#
+univ$region <- NULL#
+#
+univ$region[univ$Wpos==7 & univ$cond=="complex_simple"] <- 0#
+univ$region[univ$Wpos==8 & univ$cond=="complex_simple"] <- 1#
+univ$region[univ$Wpos==9 & univ$cond=="complex_simple"] <- 2#
+univ$region[univ$Wpos==10 & univ$cond=="complex_simple"] <- 3#
+univ$region[univ$Wpos==11 & univ$cond=="complex_simple"] <- 4#
+univ$region[univ$Wpos==12 & univ$cond=="complex_simple"] <- 5#
+univ$region[univ$Wpos==13 & univ$cond=="complex_simple"] <- 6#
+univ$region[univ$Wpos==14 & univ$cond=="complex_simple"] <- 7#
+univ$region[univ$Wpos==15 & univ$cond=="complex_simple"] <- 8#
+univ$region[univ$Wpos==16 & univ$cond=="complex_simple"] <- 9#
+univ$region[univ$Wpos==17 & univ$cond=="complex_simple"] <- 10#
+#
+univ$region[univ$Wpos==5 & univ$cond=="simple_simple"] <- 0#
+univ$region[univ$Wpos==6 & univ$cond=="simple_simple"] <- 1#
+univ$region[univ$Wpos==7 & univ$cond=="simple_simple"] <- 2#
+univ$region[univ$Wpos==8 & univ$cond=="simple_simple"] <- 3#
+univ$region[univ$Wpos==9 & univ$cond=="simple_simple"] <- 4#
+univ$region[univ$Wpos==10 & univ$cond=="simple_simple"] <- 5#
+univ$region[univ$Wpos==11 & univ$cond=="simple_simple"] <- 6#
+univ$region[univ$Wpos==12 & univ$cond=="simple_simple"] <- 7#
+univ$region[univ$Wpos==13 & univ$cond=="simple_simple"] <- 8#
+univ$region[univ$Wpos==14 & univ$cond=="simple_simple"] <- 9#
+univ$region[univ$Wpos==15 & univ$cond=="simple_simple"] <- 10#
+#
+univ$region[univ$Wpos==9 & univ$cond=="complex_complex"] <- 0#
+univ$region[univ$Wpos==10 & univ$cond=="complex_complex"] <- 1#
+univ$region[univ$Wpos==11 & univ$cond=="complex_complex"] <- 2#
+univ$region[univ$Wpos==12 & univ$cond=="complex_complex"] <- 3#
+univ$region[univ$Wpos==13 & univ$cond=="complex_complex"] <- 4#
+univ$region[univ$Wpos==14 & univ$cond=="complex_complex"] <- 5#
+univ$region[univ$Wpos==15 & univ$cond=="complex_complex"] <- 6#
+univ$region[univ$Wpos==16 & univ$cond=="complex_complex"] <- 7#
+univ$region[univ$Wpos==17 & univ$cond=="complex_complex"] <- 8#
+univ$region[univ$Wpos==18 & univ$cond=="complex_complex"] <- 9#
+univ$region[univ$Wpos==19 & univ$cond=="complex_complex"] <- 10#
+univ$region[univ$Wpos==7 & univ$cond=="simple_complex"] <- 0#
+univ$region[univ$Wpos==8 & univ$cond=="simple_complex"] <- 1#
+univ$region[univ$Wpos==9 & univ$cond=="simple_complex"] <- 2#
+univ$region[univ$Wpos==10 & univ$cond=="simple_complex"] <- 3#
+univ$region[univ$Wpos==11 & univ$cond=="simple_complex"] <- 4#
+univ$region[univ$Wpos==12 & univ$cond=="simple_complex"] <- 5#
+univ$region[univ$Wpos==13 & univ$cond=="simple_complex"] <- 6#
+univ$region[univ$Wpos==14 & univ$cond=="simple_complex"] <- 7#
+univ$region[univ$Wpos==15 & univ$cond=="simple_complex"] <- 8#
+univ$region[univ$Wpos==16 & univ$cond=="simple_complex"] <- 9#
+univ$region[univ$Wpos==17 & univ$cond=="simple_complex"] <- 10#
+univ <- subset(univ,!is.na(univ$region))#
+#
+univ$f1[univ$cond=="complex_complex"] <- 1#
+univ$f1[univ$cond=="complex_simple"] <- 1#
+univ$f1[univ$cond=="simple_complex"] <- 0#
+univ$f1[univ$cond=="simple_simple"] <- 0#
+#
+univ$f2[univ$cond=="complex_complex"] <- 1#
+univ$f2[univ$cond=="complex_simple"] <- 0#
+univ$f2[univ$cond=="simple_complex"] <- 1#
+univ$f2[univ$cond=="simple_simple"] <- 0#
+univ$region <- as.factor(univ$region)#
+puniv <- univ
+tail(univ)
+which(univ$logRT==NA)
+which(univ$logRT=="NA")
+summary(univ)
+which(is.na(univ$logRT))
+internal function to get standard errors#
+se <- function(x,na.rm=F) {#
+    if(na.rm) x <- subset(x,! is.na(x))#
+    sqrt(var(x)/length(x))#
+}#
+#
+# plots rts/res.rts with error bars#
+plot.rts <- function(dat, rt.name='rt', region.name='region',#
+                     cond.name='joint.cond', lty.function=NULL, pch.function=NULL, col.function=NULL,bg.function=NULL,lty=1:6,col=1.657,pch=1:8,bg=col,...) {#
+    dat <- data.frame(region = dat[[region.name]], cond = dat[[cond.name]],#
+                      rt = dat[[rt.name]])#
+    # find appropriate range for graph with errors bars#
+    reg <- levels(dat$region)[1]#
+    con <- levels(dat$cond)[1]#
+    con.dat <- subset(dat, region==reg & cond==con)#
+    graph.min <- graph.max <- mean(con.dat$rt)#
+    for (reg in levels(dat$region)){#
+        for (con in levels(dat$cond)) {#
+            con.dat <- subset(dat, region==reg & cond==con)#
+            # only if this pair of condition and region has data#
+            if (length(con.dat[,1]) > 0) {#
+              word.mean <- mean(con.dat$rt)#
+              word.se <- se(con.dat$rt, na.rm=T)#
+              yplus<-word.mean+word.se#
+              yminus<-word.mean-word.se#
+              if(yplus>graph.max){graph.max <- yplus}#
+              if(yminus<graph.min){graph.min <- yminus}#
+            }#
+         }#
+    }	#
+    cat("### levels are",class(levels(dat$cond)), ":\n")#
+    print(levels(dat$cond))#
+	print(levels(dat$region))#
+#
+    if(! is.null(lty.function)) {#
+      lty <- sapply(levels(dat$cond), lty.function)#
+      cat("### Assigning special lty...\n")#
+    }#
+    if(! is.null(col.function)) {#
+      col <- sapply(levels(dat$cond), col.function)#
+      cat("### Assigning special col...\n")#
+    }#
+    if(! is.null(pch.function)) {#
+      pch <- sapply(levels(dat$cond), pch.function)#
+      cat("### Assigning special pch...\n")#
+    }#
+    if(! is.null(bg.function)) {#
+      bg <- sapply(levels(dat$cond), bg.function)#
+      cat("### Assigning special bg...\n")#
+    }#
+	colors <- rainbow(max(as.numeric(dat$cond)))#
+    # Plot graph#
+#
+    with(dat, interaction.plot(region,cond, rt, type='b',#
+                               ylim=c(graph.min, graph.max), xlab="Region",#
+                               col=col, lty=lty, pch=pch, bg=bg,fixed=TRUE,leg.bg="gray",bty='o', ...))#
+    # plot error bars#
+    i <- 1 # x value of current word#
+    for (reg in levels(dat$region)){#
+        for (con in levels(dat$cond)) {#
+          con.dat <- subset(dat, region==reg & cond==con)#
+            # only if this pair of condition and region has data#
+            if (length(con.dat[,1]) > 0) {          #
+              word.mean <- mean(con.dat$rt)#
+              word.se <- se(con.dat$rt, na.rm=T)#
+              yplus<-word.mean+word.se#
+              yminus<-word.mean-word.se#
+              arrows(x0=i, y0=word.mean, x1=i, y1=yplus, angle=90, length=0.1)#
+              arrows(x0=i, y0=word.mean, x1=i, y1=yminus, angle=90, length=0.1)#
+            }#
+        }#
+        i <- i + 1#
+    }                                 #
+}
+plot.rts(puniv,rt.name="RTraw",cond.name="cond",col=1:4,region.name="region")
+puniv <- subset(puniv,logRTresidual!="NA")
+summary(puniv)
+plot.rts(puniv,rt.name="RTraw",cond.name="cond",col=1:4,region.name="region")
+plot.rts(puniv,rt.name="rt",cond.name="cond",col=1:4,region.name="region")
+ls()
+univ <- transform(univ, subject.index=as.integer(as.factor(univ$subj)))#
+r7 <- subset(univ,region==7)#
+r7 <- r7[order(r7$subj,r7$item,r7$f1,r7$f2),]#
+r7$spill1c <- r7$SPILLOVER_1 - mean(r7$SPILLOVER_1)#
+r7$spill2c <- r7$SPILLOVER_1 - mean(r7$SPILLOVER_2)#
+#
+r8 <- subset(univ, region==8)#
+r8 <- r8[order(r8$subj,r8$item,r8$f1,r8$f2),]#
+r8$spill1c <- r8$SPILLOVER_1 - mean(r8$SPILLOVER_1)#
+r8$spill2c <- r8$SPILLOVER_2 - mean(r8$SPILLOVER_2)#
+#
+r9 <- subset(univ, region==9)#
+r9 <- r9[order(r9$subj,r9$item,r9$f1,r9$f2),]#
+r9$spill1c <- r9$SPILLOVER_1 - mean(r9$SPILLOVER_1)#
+r9$spill2c <- r9$SPILLOVER_2 - mean(r9$SPILLOVER_2)
+univ.stan <- 'data {#
+    int<lower=1> N;#
+    real logRTresidual[N];			// outcome#
+    real f1[N];					// predictor#
+    real f2[N];					// predictor#
+    real f1_X_f2[N];				// interaction#
+    real spill1[N];#
+    real spill2[N];#
+    real corr[N];					// predictor#
+    real f1_X_corr[N];					// predictor#
+    real f2_X_corr[N];				// interaction#
+    real f1_X_f2_X_corr[N];				// interaction#
+#
+    int<lower=1> I;   				// number of subjects#
+    int<lower=1> J;				// number of items#
+    int<lower=1,upper=I> subject_id[N];	// subjects#
+    int<lower=1,upper=J> item_id[N];	// items#
+    vector[10] subj_prior; 			//vector of zeros passed in from R#
+    vector[4] item_prior; 			//vector of zeros passed in from R#
+#
+}#
+#
+transformed data{#
+   real ZERO; // like #define ZERO 0 in C/C++   ZERO <- 0.0;#
+}#
+#
+parameters{#
+    real Intercept;#
+    real beta_f1;#
+    real beta_f2;#
+    real beta_f1_X_f2;#
+    real beta_spill1;#
+    real beta_spill2;#
+    real beta_corr;#
+    real beta_f1_X_corr;#
+    real beta_f2_X_corr;#
+    real beta_f1_X_f2_X_corr;#
+    real<lower=0,upper=10> sigma_e;						// residual sd#
+    vector[10] u[I];							// random intercept for subjs & 3 slopes for f1, f2, & f12#
+    vector<lower=0,upper=10>[10] sigma_u;						// subject sds #
+    corr_matrix[10] Omega_subj;					// corr matrix for subjs#
+    vector[4] w[J];							// random intercept for items & 3 slopes for f1, f2, & f12#
+    vector<lower=0,upper=10>[4] sigma_w;						// item sds#
+    corr_matrix[4] Omega_item;					// corr matrix for items#
+}#
+#
+transformed parameters {#
+	cov_matrix[10] Sigma_subj;	cov_matrix[4] Sigma_item;#
+#
+    	Sigma_subj <- diag_matrix(sigma_u) * Omega_subj * diag_matrix(sigma_u);#
+	Sigma_item <- diag_matrix(sigma_w) * Omega_item * diag_matrix(sigma_w);}#
+#
+model{#
+    	real mu[N];#
+	matrix[10,10] L;	matrix[10,10] DL;#
+	matrix[4,4] M;	matrix[4,4] DM;#
+#
+   	 // Priors#
+	Intercept ~ normal(0,10);#
+    	beta_f1 ~ normal( 0 , 10 );#
+	beta_f1 ~ normal( 0 , 10 );#
+    	beta_f1_X_f2 ~ normal( 0 , 10 );#
+	spill1 ~ normal(0, 10);#
+	spill2 ~ normal(0, 10);#
+	beta_corr ~ normal(0, 10); #
+    	beta_f1_X_corr ~ normal( 0 , 10 );#
+	beta_f2_X_corr ~ normal( 0 , 10 );#
+    	beta_f1_X_f2_X_corr ~ normal( 0 , 10 );#
+    	sigma_e ~ uniform( 0 , 10 );			// residuals#
+    	sigma_u ~ uniform( 0 , 10 );			// subj sd#
+    	sigma_w ~ uniform( 0 , 10 );			// item sd#
+#
+    	Omega_subj ~ lkj_corr(4.0);#
+    	Omega_item ~ lkj_corr(4.0);#
+#
+	L <- cholesky_decompose(Omega_subj);#
+	M <- cholesky_decompose(Omega_item);#
+	for (m in 1:10)		for (n in 1:m)			DL[m,n] <- L[m,n] * sigma_u[m];	for (m in 1:10)		for (n in (m+1):10)			DL[m,n] <- ZERO;#
+	for (m in 1:4)		for (n in 1:m)			DM[m,n] <- M[m,n] * sigma_w[m];	for (m in 1:4)		for (n in (m+1):4)			DM[m,n] <- ZERO;#
+#
+    // Varying effects#
+    for ( i in 1:I ) u[i] ~ multi_normal_cholesky( subj_prior, DL );#
+    for ( j in 1:J ) w[j] ~ multi_normal_cholesky( item_prior, DM );#
+#
+    // Fixed effects#
+    for ( i in 1:N ) {#
+        mu[i] <- 	Intercept + #
+			beta_f1*f1[i] + #
+			beta_f2*f2[i] + #
+			beta_f1_X_f2*f1_X_f2[i] + #
+			beta_spill1*spill1[i] + #
+			beta_spill2*spill2[i] + #
+			beta_corr*corr[i] +  #
+			beta_f1_X_corr*f1_X_corr[i] + #
+			beta_f2_X_corr*f2_X_corr[i] + #
+			beta_f1_X_f2_X_corr*f1_X_f2_X_corr[i] + #
+#
+			u[subject_id[i],1] + #
+			u[subject_id[i],2]*f1[i] + #
+			u[subject_id[i],3]*f2[i] + #
+			u[subject_id[i],4]*f1_X_f2[i] + #
+			u[subject_id[i],5]*spill1[i] + #
+			u[subject_id[i],6]*spill2[i] + #
+#
+			u[subject_id[i],7]*corr[i] + #
+			u[subject_id[i],8]*f1_X_corr[i] + #
+			u[subject_id[i],9]*f2_X_corr[i] + #
+			u[subject_id[i],10]*f1_X_f2_X_corr[i] + #
+			w[item_id[i],1] + #
+			w[item_id[i],2]*f1[i] + #
+			w[item_id[i],3]*f2[i] + #
+			w[item_id[i],4]*f1_X_f2[i];#
+    }#
+    logRTresidual ~ normal( mu , sigma_e );#
+}'
+save.image('univ3.base.R')

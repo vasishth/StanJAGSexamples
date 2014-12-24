@@ -1,0 +1,1063 @@
+# univ 1 simple_complex
++ The warden punished the condemned political prisoner who the guard at the old facility supplied with illegal goods like cigarettes.
+? Did the warden punish the guard? N
+
+# univ 1 simple_simple
++ The warden punished the prisoner who the guard at the old facility supplied with illegal goods like cigarettes.      
+? Did the warden punish the guard? N
+
+# univ 1 complex_simple
++ The federal prison warden punished the prisoner who the guard at the old facility supplied with illegal goods like cigarettes.
+? Did the warden punish the guard? N
+
+# univ 1 complex_complex
++ The federal prison warden punished the condemned political prisoner who the guard at the old facility supplied with illegal goods like cigarettes.      
+? Did the warden punish the guard? N
+
+# univ 2 simple_complex
++ The client harassed the attractive personal secretary who the co-worker at the giant firm accused of drinking on the job.
+? Did the secretary accuse a co-worker? N
+
+# univ 2 simple_simple
++ The client harassed the secretary who the co-worker at the giant firm accused of drinking on the job. 
+? Did the secretary accuse a co-worker? N
+
+# univ 2 complex_simple
++ The important, prospective client harassed the secretary who the co-worker at the giant firm accused of drinking on the job.
+? Did the secretary accuse a co-worker? N
+
+# univ 2 complex_complex
++ The important, prospective client harassed the attractive personal secretary who the co-worker at the giant firm accused of drinking on the job.
+? Did the secretary accuse a co-worker? N
+
+# univ 3 simple_complex
++ The customer trusted the sleazy car salesman who the mechanic at the auto shop helped to hide the engine problems.
+? Did the customer think the salesman was a crook? N
+
+# univ 3 simple_simple
++ The customer trusted the salesman who the mechanic at the auto shop helped to hide the engine problems.
+? Did the customer think the salesman was a crook? N
+
+# univ 3 complex_simple
++ The regular, valued customer trusted the salesman who the mechanic at the auto shop helped to hide the engine problems.
+? Did the customer think the salesman was a crook? N
+
+# univ 3 complex_complex
++ The regular, valued customer trusted the sleazy car salesman who the mechanic at the auto shop helped to hide the engine problems.
+? Did the customer think the salesman was a crook? N
+
+# univ 4 simple_complex
++ The choreographer embraced the graceful ballet dancer who an admirer in the front row begged for an autograph for his collection.
+? Was the admirer seeking an autograph from a singer? N
+
+# univ 4 simple_simple
++ The choreographer embraced the dancer who an admirer in the front row begged for an autograph for his collection.
+? Was the admirer seeking an autograph from a singer? N
+
+# univ 4 complex_simple
++ The experienced stage choreographer embraced the dancer who an admirer in the front row begged for an autograph for his collection.
+? Was the admirer seeking an autograph from a singer? N
+
+# univ 4 complex_complex
++ The experienced stage choreographer embraced the graceful ballet dancer who an admirer in the front row begged for an autograph for his collection.
+? Was the admirer seeking an autograph from a singer? N
+
+# univ 5 simple_complex
++ The sergeant dismissed the wounded American soldier who the commander at the army base ordered to search every car that approached the checkpoint. 
+? Was the soldier commanded to search every car? Y
+
+# univ 5 simple_simple
++ The sergeant dismissed the soldier who the commander at the army base ordered to search every car that approached the checkpoint. 
+? Was the soldier commanded to search every car? Y
+
+# univ 5 complex_simple
++ The Marine Corps sergeant dismissed the soldier who the commander at the army base ordered to search every car that approached the checkpoint. 
+? Was the soldier commanded to search every car? Y
+
+# univ 5 complex_complex
++ The Marine Corps sergeant dismissed the wounded American soldier who the commander at the army base ordered to search every car that approached the checkpoint. 
+? Was the soldier commanded to search every car? Y
+
+# univ 6 simple_complex
++ The drunk heckled the hilarious stand-up comedian who the bartender with a strong accent defended from the back of the room. 
+? Was the comedian heckled by the bartender? N
+
+# univ 6 simple_simple
++ The drunk heckled the comedian who the bartender with a strong accent defended from the back of the room. 
+? Was the comedian heckled by the bartender? N
+
+# univ 6 complex_simple
++ The noisy, obnoxious drunk heckled the comedian who the bartender with a strong accent defended from the back of the room. 
+? Was the comedian heckled by the bartender? N
+
+# univ 6 complex_complex
++ The noisy, obnoxious drunk heckled the hilarious stand-up comedian who the bartender with a strong accent defended from the back of the room. 
+? Was the comedian heckled by the bartender? N
+
+# univ 7 simple_complex
++ The investigator questioned the emotional crash survivor who the pilot with a broken arm pulled from the wreckage of the plane. 
+? Did anyone live through the plane crash? Y
+
+# univ 7 simple_simple
++ The investigator questioned the survivor who the pilot with a broken arm pulled from the wreckage of the plane.
+? Did anyone live through the plane crash? Y
+
+# univ 7 complex_simple
++ The accident insurance investigator questioned the survivor who the pilot with a broken arm pulled from the wreckage of the plane.
+? Did anyone live through the plane crash? Y
+
+# univ 7 complex_complex
++ The accident insurance investigator questioned the emotional crash survivor who the pilot with a broken arm pulled from the wreckage of the plane.
+? Did anyone live through the plane crash? Y
+
+# univ 8 simple_complex
++ The policeman arrested the peaceful Buddhist monk who a councillor in the capital city saved from being imprisoned and tortured.
+? Was the monk tortured? N
+
+# univ 8 simple_simple
++ The policeman arrested the monk who a councillor in the capital city saved from being imprisoned and tortured.
+? Was the monk tortured? N
+
+# univ 8 complex_simple
++ The brutal military policeman arrested the monk who a councillor in the capital city saved from being imprisoned and tortured.
+? Was the monk tortured? N
+
+# univ 8 complex_complex
++ The brutal military policeman arrested the peaceful Buddhist monk who a councillor in the capital city saved from being imprisoned and tortured.
+? Was the monk tortured? N
+
+# univ 9 simple_complex
++ The congressman interrogated the victorious four-star general who a lawyer for the White House advised to not comment on the prisoners.
+? Was the general advised not to comment on the prisoners? Y
+
+# univ 9 simple_simple
++ The congressman interrogated the general who a lawyer for the White House advised to not comment on the prisoners.
+? Was the general advised not to comment on the prisoners? Y
+
+# univ 9 complex_simple
++ The conservative US congressman interrogated the general who a lawyer for the White House advised to not comment on the prisoners.
+? Was the general advised not to comment on the prisoners? Y
+
+# univ 9 complex_complex
++ The conservative US congressman interrogated the victorious four-star general who a lawyer for the White House advised to not comment on the prisoners.
+? Was the general advised not to comment on the prisoners? Y
+
+# univ 10 simple_complex
++ The teenager hated the struggling rock musician who a scout for a record company discovered several years ago in Paris.
+? Did the teenager dislike the musician? Y
+
+# univ 10 simple_simple
++ The teenager hated the musician who a scout for a record company discovered several years ago in Paris.
+? Did the teenager dislike the musician? Y
+
+# univ 10 complex_simple
++ The young, rebellious teenager hated the musician who a scout for a record company discovered several years ago in Paris.
+? Did the teenager dislike the musician? Y
+
+# univ 10 complex_complex
++ The young, rebellious teenager hated the struggling rock musician who a scout for a record company discovered several years ago in Paris.
+? Did the teenanger dislike the musician? Y
+
+# univ 11 simple_complex
++ The accomplice misled the undercover federal agent who a witness in the terrorism trial notified of suspicious activity outside the Parliament building. 
+? Was the federal agent misled? Y
+
+# univ 11 simple_simple
++ The accomplice misled the agent who a witness in the terrorism trial notified of suspicious activity outside the Parliament building.
+? Was the federal agent misled? Y
+
+# univ 11 complex_simple
++ The alleged bombing accomplice misled the agent who a witness in the terrorism trial notified of suspicious activity outside the Parliament building.
+? Was the federal agent misled? Y
+
+# univ 11 complex_complex
++ The alleged bombing accomplice misled the undercover federal agent who a witness in the terrorism trial notified of suspicious activity outside the Parliament building.
+? Was the federal agent misled? Y
+
+# univ 12 simple_complex
++ The stylist offended the renowned fashion designer who a journalist at the spring exhibition asked about the likely trends for next year. 
+? Did the journalist ask the stylist about the new trends? N
+
+# univ 12 simple_simple
++ The stylist offended the designer who a journalist at the spring exhibition asked about the likely trends for next year. 
+? Did the journalist ask the stylist about the new trends? N
+
+# univ 12 complex_simple
++ The celebrity hair stylist offended the designer who a journalist at the spring exhibition asked about the likely trends for next year. 
+? Did the journalist ask the stylist about the new trends? N
+
+# univ 12 complex_complex
++ The celebrity hair stylist offended the renowned fashion designer who a journalist at the spring exhibition asked about the likely trends for next year. 
+? Did the journalist ask the stylist about the new trends? N
+
+# univ 13 simple_complex
++ The engineer disliked the nerdy computer programmer who a hacker on the company network ridiculed for having pathetic security safeguards.
+? Was the programmer ridiculed by the hacker? Y
+
+# univ 13 simple_simple
++ The engineer disliked the programmer who a hacker on the company network ridiculed for having pathetic security safeguards.
+? Was the programmer ridiculed by the hacker? Y
+
+# univ 13 complex_simple
++ The senior electrical engineer disliked the programmer who a hacker on the company network ridiculed for having pathetic security safeguards.
+? Was the programmer ridiculed by the hacker? Y
+
+# univ 13 complex_complex
++ The senior electrical engineer disliked the nerdy computer programmer who a hacker on the company network ridiculed for having pathetic security safeguards.
+? Was the programmer ridiculed by the hacker? Y
+
+# univ 14 simple_complex
++ The reviewer applauded the famous young actor who the director of the art film ignored during the opening night festivities.
+? Did the director ignore the actor? Y
+
+# univ 14 simple_simple
++ The reviewer applauded the actor who the director of the art film ignored during the opening night festivities.
+? Did the director ignore the actor? Y
+
+# univ 14 complex_simple
++ The critical newspaper reviewer applauded the actor who the director of the art film ignored during the opening night festivities.
+? Did the director ignore the actor? Y
+
+# univ 14 complex_complex
++ The critical newspaper reviewer applauded the famous young actor who the director of the art film ignored during the opening night festivities.
+? Did the director ignore the actor? Y
+
+# univ 15 simple_complex
++ The diplomat contacted the ruthless military dictator who the activist from the United Kingdom encouraged to preserve natural habitats and resources.
+? Did the diplomat communicate with the activist? N
+
+# univ 15 simple_simple
++ The diplomat contacted the dictator who the activist from the United Kingdom encouraged to preserve natural habitats and resources.
+? Did the diplomat communicate with the activist?  N
+
+# univ 15 complex_simple
++ The senior foreign diplomat contacted the dictator who the activist from the United Kingdom encouraged to preserve natural habitats and resources.
+? Did the diplomat communicate with the activist?  N
+
+# univ 15 complex_complex
++ The senior foreign diplomat contacted the ruthless military dictator who the activist from the United Kingdom encouraged to preserve natural habitats and resources.
+? Did the diplomat communicate with the activist? N
+
+# univ 16 simple_complex
++ The reporter interviewed the wealthy teen celebrity who the photographer for the tabloid magazine embarrassed last week at a charity dinner.
+? Did the photographer embarrass the celebrity? Y
+
+# univ 16 simple_simple
++ The reporter interviewed the celebrity who the photographer for the tabloid magazine embarrassed last week at a charity dinner.
+? Did the photographer embarrass the celebrity? Y
+
+# univ 16 complex_simple
++ The hard-nosed newspaper reporter interviewed the celebrity who the photographer for the tabloid magazine embarrassed last week at a charity dinner.
+? Did the photographer embarrass the celebrity? Y
+
+# univ 16 complex_complex
++ The hard-nosed newspaper reporter interviewed the wealthy teen celebrity who the photographer for the tabloid magazine embarrassed last week at a charity dinner.
+? Did the photographer embarrass the celebrity? Y
+
+# univ 17 simple_complex
++ The defendant feared the corrupt homicide detective who the judge in the court case silenced after a disturbing courtroom outburst.
+? Was the judge afraid of the cop? N
+
+# univ 17 simple_simple
++ The defendant feared the detective who the judge in the court case silenced after a disturbing courtroom outburst.
+? Was the judge afraid of the cop? N
+
+# univ 17 complex_simple
++ The capital murder defendant feared the detective who the judge in the court case silenced after a disturbing courtroom outburst.
+? Was the judge afraid of the cop? N 
+
+# univ 17 complex_complex
++ The capital murder defendant feared the corrupt homicide detective who the judge in the court case silenced after a disturbing courtroom outburst.
+? Was the judge afraid of the cop? N 
+
+# univ 18 simple_complex
++ The employee obeyed the professional shift supervisor who an inspector from the county government cautioned about the poor work conditions.
+? Did the employee follow the orders of the supervisor? Y
+
+# univ 18 simple_simple
++ The employee obeyed the supervisor who an inspector from the county government cautioned about the poor work conditions.
+? Did the employee follow the orders of the supervisor? Y
+
+# univ 18 complex_simple
++ The hard-working factory employee obeyed the supervisor who an inspector from the county government cautioned about the poor work conditions.
+? Did the employee follow the orders of the supervisor? Y
+
+# univ 18 complex_complex
++ The hard-working factory employee obeyed the professional shift supervisor who an inspector from the county government cautioned about the poor work conditions.
+? Did the employee follow the orders of the supervisor? Y
+
+# univ 19 simple_complex
++ The analyst ridiculed the Labour mayoral candidate who the leader of the political party supported despite the anxiety of other members.
+? Did the leader decide to not support the candidate? N
+
+# univ 19 simple_simple
++ The analyst ridiculed the candidate who the leader of the political party supported despite the anxiety of other members.
+? Did the leader decide to not support the candidate? N
+
+# univ 19 complex_simple
++ The cable news analyst ridiculed the candidate who the leader of the political party supported despite the anxiety of other members.
+? Did the leader decide to not support the candidate? N    
+
+# univ 19 complex_complex
++ The cable news analyst ridiculed the Labour mayoral candidate who the leader of the political party supported despite the anxiety of other members.
+? Did the leader decide to not support the candidate? N
+
+# univ 20 simple_complex
++ The interrogator questioned the heartless former mercenary who the commander of the armed rebellion shot in the foot without any explanation.
+? Did the commander explain why he shot the mercenary? N
+
+# univ 20 simple_simple
++ The interrogator questioned the mercenary who the commander of the armed rebellion shot in the foot without any explanation.
+? Did the commander explain why he shot the mercenary? N 
+
+# univ 20 complex_simple
++ The chief CIA interrogator questioned the mercenary who the commander of the armed rebellion shot in the foot without any explanation.
+? Did the commander explain why he shot the mercenary? N 
+
+# univ 20 complex_complex
++ The chief CIA interrogator questioned the heartless former mercenary who the commander of the armed rebellion shot in the foot without any explanation.
+? Did the commander explain why he shot the mercenary? N
+
+# univ 21 simple_complex
++ The fugitive robbed the lost American tourist who the guide for the London tour warned about straying too far from the group.
+? Did the guide steal from the tourist? N
+
+# univ 21 simple_simple
++ The fugitive robbed the tourist who the guide for the London tour warned about straying too far from the group.
+? Did the guide steal from the tourist? N   
+
+# univ 21 complex_simple
++ The wanted, dangerous fugitive robbed the tourist who the guide for the London tour warned about straying too far from the group.
+? Did the guide steal from the tourist? N   
+
+# univ 21 complex_complex
++ The wanted, dangerous fugitive robbed the rich American tourist who the guide for the London tour warned about straying too far from the group.
+? Did the guide steal from the tourist? N
+
+# univ 22 simple_complex
++ The industrialist threatened the poor Russian peasant who the investor from a foreign land protected without the least bit of hesitation.
+? Did the industrialist protect the peasant? N
+
+# univ 22 simple_simple
++ The industrialist threatened the peasant who the investor from a foreign land protected without the least bit of hesitation.
+? Did the industrialist protect the peasant? N
+
+# univ 22 complex_simple
++ The wealthy German industrialist threatened the peasant who the investor from a foreign land protected without the least bit of hesitation.
+? Did the industrialist protect the peasant? N
+
+# univ 22 complex_complex
++ The wealthy German industrialist threatened the poor Russian peasant who the investor from a foreign land protected without the least bit of hesitation.
+? Did the industrialist protect the peasant? N
+
+# univ 23 simple_complex
++ The executive infuriated the liberal socialist politician who a lobbyist for the oil company bribed to vote for the upcoming bill.
+? Was the politician bribed by the leader? Y
+
+# univ 23 simple_simple
++ The executive infuriated the politician who a lobbyist for the oil company bribed to vote for the upcoming bill.
+? Was the politician bribed by the leader? Y
+
+# univ 23 complex_simple
++ The powerful business executive infuriated the politician who a lobbyist for the oil company bribed to vote for the upcoming bill.
+? Was the politician bribed by the leader? Y
+
+# univ 23 complex_complex
++ The powerful business executive infuriated the liberal socialist politician who a lobbyist for the oil company bribed to vote for the upcoming bill.
+? Was the politician bribed by the leader? Y
+
+# univ 24 simple_complex
++ The advisor lectured the handsome blonde prince who the official learning to speak English thanked at the end of the ceremony. 
+? Did the official snub the prince at the end of the ceremony? N
+
+# univ 24 simple_simple
++ The advisor lectured the prince who the official learning to speak English thanked at the end of the ceremony. 
+? Did the official snub the prince at the end of the ceremony? N
+
+# univ 24 complex_simple
++ The influential legal advisor lectured the prince who the official learning to speak English thanked at the end of the ceremony. 
+? Did the official snub the prince at the end of the ceremony? N
+
+# univ 24 complex_complex
++ The influential legal advisor lectured the handsome blonde prince who the official learning to speak English thanked at the end of the ceremony. 
+? Did the official snub the prince at the end of the ceremony? N
+
+# univ 25 simple_complex
++ The pedestrian dodged the angry taxi driver who a bystander near the bus stop identified later on at the police station.
+? Did the pedestrian avoid being hit? Y
+
+# univ 25 simple_simple
++ The pedestrian dodged the driver who a bystander near the bus stop identified later on at the police station.
+? Did the pedestrian avoid being hit? Y
+
+# univ 25 complex_simple
++ The elderly passing pedestrian dodged the driver who a bystander near the bus stop identified later on at the police station.
+? Did the pedestrian avoid being hit? Y
+
+# univ 25 complex_complex
++ The elderly passing pedestrian dodged the angry taxi driver who a bystander near the bus stop identified later on at the police station.
+? Did the pedestrian avoid being hit? Y
+
+# univ 26 simple_complex
++ The housewife offended the helpful new assistant who the manager on a lunch break called into his office after the incident.
+? Was the assistant offended by what the housewife said? Y
+
+# univ 26 simple_simple
++ The housewife offended the assistant who the manager of the department store on a lunch break called into his office after the incident.
+? Was the assistant offended by what the housewife said? Y
+
+# univ 26 complex_simple
++ The happy, suburban housewife offended the assistant who the manager on a lunch break called into his office after the incident.
+? Was the assistant offended by what the housewife said? Y
+
+# univ 26 complex_complex
++ The happy, suburban housewife offended the helpful new assistant who the manager on a lunch break called into his office after the incident.
+? Was the assistant offended by what the housewife said? Y
+
+# univ 27 simple_complex
++ The nurse consoled the dying elderly patient who the doctor on a double shift forgot due to a lack of sleep.
+? Did the nurse try and make the elderly patient feel better? Y
+
+# univ 27 simple_simple
++ The nurse consoled the patient who the doctor on a double shift forgot due to a lack of sleep.
+? Did the nurse try and make the elderly patient feel better? Y
+
+# univ 27 complex_simple
++ The trained hospice nurse consoled the patient who the doctor on a double shift forgot due to a lack of sleep.
+? Did the nurse try and make the elderly patient feel better? Y
+
+# univ 27 complex_complex
++ The trained hospice nurse consoled the dying elderly patient who the doctor on a double shift forgot due to a lack of sleep.
+? Did the nurse try and make the elderly patient feel better? Y
+
+# univ 28 simple_complex
++ The secretary aggravated the young female intern who a partner at the law firm hired less than three weeks ago.
+? Was the intern hired within the last month? Y
+
+# univ 28 simple_simple
++ The secretary aggravated the intern who a partner at the law firm hired less than three weeks ago.
+? Was the intern hired within the last month? Y
+
+# univ 28 complex_simple
++ The private office secretary aggravated the intern who a partner at the law firm hired less than three weeks ago.
+? Was the intern hired within the last month? Y
+
+# univ 28 complex_complex
++ The private office secretary aggravated the young female intern who a partner at the law firm hired less than three weeks ago.
+? Was the intern hired within the last month? Y
+
+# resumpisl 1 isl_gap
++ I somehow forgot which friends Margaret told me when we will have over for dinner at our house. 
+? Were some employees coming over for dinner? N 
+
+# resumpisl 1 isl_res
++ I somehow forgot which friends Margaret told me when we will have them over for dinner at our house. 
+? Were some employees coming over for dinner? N 
+
+# resumpisl 1 that_gap
++ I somehow forgot which friends Margaret told me that we will have over for dinner at our house. 
+? Were some employees coming over for dinner? N 
+
+# resumpisl 1 that_res
++ I somehow forgot which friends Margaret told me that we will have them over for dinner at our house. 
+? Were some employees coming over for dinner? N 
+
+# resumpisl 2 isl_gap
++ A cable news network discussed the budget cuts that the governor detested how Congress passed in a secretive and unorthodox way.
+? Were the budget cuts passed secretly? Y 
+
+# resumpisl 2 isl_res
++ A cable news network discussed the budget cuts that the governor detested how Congress passed them in a secretive and unorthodox way.
+? Were the budget cuts passed secretly? Y 
+
+# resumpisl 2 that_gap
++ A cable news network discussed the budget cuts that the governor detested that Congress passed in a secretive and unorthodox way.
+? Were the budget cuts passed secretly? Y 
+
+# resumpisl 2 that_res
++ A cable news network discussed the budget cuts that the governor detested that Congress passed them in a secretive and unorthodox way.
+? Were the budget cuts passed secretly? Y 
+
+# resumpisl 3 isl_gap
++ The medical chart listed the injuries that the doctor guessed whether the patient sustained prior to the car accident.
+? Did the doctor sustain the injuries? N 
+
+# resumpisl 3 isl_res
++ The medical chart listed the injuries that the doctor guessed whether the patient sustained them prior to the car accident.
+? Did the doctor sustain the injuries? N 
+
+# resumpisl 3 that_gap
++ The medical chart listed the injuries that the doctor guessed that the patient sustained prior to the car accident.
+? Did the doctor sustain the injuries? N 
+
+# resumpisl 3 that_res
++ The medical chart listed the injuries that the doctor guessed that the patient sustained them prior to the car accident.
+? Did the doctor sustain the injuries? N 
+
+# resumpisl 4 isl_gap
++ The newspaper specified which leads the police explained how they would follow up in the murder investigation.
+? Were the police going to follow some leads? Y 
+
+# resumpisl 4 isl_res
++ The newspaper specified which leads the police explained how they would follow them up in the murder investigation.
+? Were the police going to follow some leads? Y 
+
+# resumpisl 4 that_gap
++ The newspaper specified which leads the police explained that they would follow up in the murder investigation.
+? Were the police going to follow some leads? Y 
+
+# resumpisl 4 that_res
++ The newspaper specified which leads the police explained that they would follow them up in the murder investigation.
+? Were the police going to follow some leads? Y 
+
+# resumpisl 5 isl_gap
++ It was time to admit which methods the government knew when the CIA used during the interrogation of terrorists.
+? Did the government deny that the CIA ever interrogated terrorists? N 
+
+# resumpisl 5 isl_res
++ It was time to admit which methods the government knew when the CIA used them during the interrogation of terrorists.
+? Did the government deny that the CIA ever interrogated terrorists? N 
+
+# resumpisl 5 that_gap
++ It was time to admit which methods the government knew that the CIA used during the interrogation of terrorists.
+? Did the government deny that the CIA ever interrogated terrorists? N 
+
+# resumpisl 5 that_res
++ It was time to admit which methods the government knew that the CIA used them during the interrogation of terrorists.
+? Did the government deny that the CIA ever interrogated terrorists? N 
+
+# resumpisl 6 isl_gap
++ The document did not say which areas the dictator worried whether protestors might take over if security was not tight enough.
+? Was the dictator worried about the protestors? Y 
+
+# resumpisl 6 isl_res
++ The document did not say which areas the dictator worried whether protestors might take them over if security was not tight enough.
+? Was the dictator worried about the protestors? Y 
+
+# resumpisl 6 that_gap
++ The document did not say which areas the dictator worried that protestors might take over if security was not tight enough.
+? Was the dictator worried about the protestors? Y 
+
+# resumpisl 6 that_res
++ The document did not say which areas the dictator worried that protestors might take them over if security was not tight enough.
+? Was the dictator worried about the protestors? Y 
+
+# resumpisl 7 isl_gap
++ It was impossible to say which flammable liquids the passenger really forgot whether he packed into his carry-on suitcase.
+? Had the passenger packed a box cutter by mistake? N 
+
+# resumpisl 7 isl_res
++ It was impossible to say which flammable liquids the passenger really forgot whether he packed them into his carry-on suitcase.
+? Had the passenger packed a box cutter by mistake? N 
+
+# resumpisl 7 that_gap
++ It was impossible to say which flammable liquids the passenger really forgot that he packed into his carry-on suitcase.
+? Had the passenger packed a box cutter by mistake? N 
+
+# resumpisl 7 that_res
++ It was impossible to say which flammable liquids the passenger really forgot that he packed them into his carry-on suitcase.
+? Had the passenger packed a box cutter by mistake? N 
+
+# resumpisl 8 isl_gap
++ The map showed which buildings rescuers found out whether the earthquake reduced to rubble last week.
+? Did rescuers make a determination about the integrity of some buildings? Y 
+
+# resumpisl 8 isl_res
++ The map showed which buildings rescuers found out whether the earthquake reduced them to rubble last week.
+? Did rescuers make a determination about the integrity of some buildings? Y 
+
+# resumpisl 8 that_gap
++ The map showed which buildings rescuers found out that the earthquake reduced to rubble last week.
+? Did rescuers make a determination about the integrity of some buildings? Y 
+
+# resumpisl 8 that_res
++ The map showed which buildings rescuers found out that the earthquake reduced them to rubble last week.
+? Did rescuers make a determination about the integrity of some buildings? Y 
+
+# resumpisl 9 isl_gap
++ A scientific journal described the fish species that a scientist established whether the poison harmed severely in Lake Michigan.
+? Were the fish in Lake Superior? N 
+
+# resumpisl 9 isl_res
++ A scientific journal described the fish species that a scientist established whether the poison harmed it severely in Lake Michigan.
+? Were the fish in Lake Superior? N 
+
+# resumpisl 9 that_gap
++ A scientific journal described the fish species that a scientist established that the poison harmed severely in Lake Michigan.
+? Were the fish in Lake Superior? N 
+
+# resumpisl 9 that_res
++ A scientific journal described the fish species that a scientist established that the poison harmed it severely in Lake Michigan.
+? Were the fish in Lake Superior? N 
+
+# resumpisl 10 isl_gap
++ It would be known soon which symptoms a researcher discovered whether the cancer treatment could reduce with only a small dosage.
+? Was the researcher investigating a way to treat cancer symptoms? Y 
+
+# resumpisl 10 isl_res
++ It would be known soon which symptoms a researcher discovered whether the cancer treatment could reduce them with only a small dosage.
+? Was the researcher investigating a way to treat cancer symptoms? Y 
+
+# resumpisl 10 that_gap
++ It would be known soon which symptoms a researcher discovered that the cancer treatment could reduce with only a small dosage.
+? Was the researcher investigating a way to treat cancer symptoms? Y 
+
+# resumpisl 10 that_res
++ It would be known soon which symptoms a researcher discovered that the cancer treatment could reduce them with only a small dosage.
+? Was the researcher investigating a way to treat cancer symptoms? Y 
+
+# resumpisl 11 isl_gap
++ There was one dish that we heard the waiter indicate how the chef prepared using a classic French technique. 
+? Was the dish dropped by the waiter? N 
+
+# resumpisl 11 isl_res
++ There was one dish that we heard the waiter indicate how the chef prepared it using a classic French technique. 
+? Was the dish dropped by the waiter? N 
+
+# resumpisl 11 that_gap
++ There was one dish that we heard the waiter indicate that the chef prepared using a classic French technique. 
+? Was the dish dropped by the waiter? N 
+
+# resumpisl 11 that_res
++ There was one dish that we heard the waiter indicate that the chef prepared it using a classic French technique. 
+? Was the dish dropped by the waiter? N 
+
+# resumpisl 12 isl_gap
++ It was a dangerous prisoner that the prison officials knew why the guard helped to make a daring escape. 
+? Did the guard aid the prisoner? Y 
+
+# resumpisl 12 isl_res
++ It was a dangerous prisoner that the prison officials knew why the guard helped him to make a daring escape. 
+? Did the guard aid the prisoner? Y 
+
+# resumpisl 12 that_gap
++ It was a dangerous prisoner that the prison officials knew that the guard helped to make a daring escape. 
+? Did the guard aid the prisoner? Y 
+
+# resumpisl 12 that_res
++ It was a dangerous prisoner that the prison officials knew that the guard helped him to make a daring escape. 
+? Did the guard aid the prisoner? Y 
+
+# resumpisl 13 isl_gap
++ The government representatives investigated the broker that nobody understood how the developer tricked into selling the prime real estate.
+? Did the developer investigate the broker? N 
+
+# resumpisl 13 isl_res
++ The government representatives investigated the broker that nobody understood how the developer tricked him into selling the prime real estate.
+? Did the developer investigate the broker? N 
+
+# resumpisl 13 that_gap
++ The government representatives investigated the broker that nobody understood that the developer tricked into selling the prime real estate.
+? Did the developer investigate the broker? N 
+
+# resumpisl 13 that_res
++ The government representatives investigated the broker that nobody understood that the developer tricked him into selling the prime real estate.
+? Did the developer investigate the broker? N 
+
+# resumpisl 14 isl_gap
++ We tried to contact the diplomat that the villagers saw how the rebels threatened after their demands weren't met.
+? Was the diplomat threatened by the rebels? Y 
+
+# resumpisl 14 isl_res
++ We tried to contact the diplomat that the villagers saw how the rebels threatened him after their demands weren't met.
+? Was the diplomat threatened by the rebels? Y 
+
+# resumpisl 14 that_gap
++ We tried to contact the diplomat that the villagers saw that the rebels threatened after their demands weren't met.
+? Was the diplomat threatened by the rebels? Y 
+
+# resumpisl 14 that_res
++ We tried to contact the diplomat that the villagers saw that the rebels threatened him after their demands weren't met.
+? Was the diplomat threatened by the rebels? Y 
+
+# resumpisl 15 isl_gap
++ The company compensated a secretary who several people remembered how a client harassed during a weekend company retreat.
+? Did the company compensate the client? N 
+
+# resumpisl 15 isl_res
++ The company compensated a secretary who several people remembered how a client harassed her during a weekend company retreat.
+? Did the company compensate the client? N 
+
+# resumpisl 15 that_gap
++ The company compensated a secretary who several people remembered that a client harassed during a weekend company retreat.
+? Did the company compensate the client? N 
+
+# resumpisl 15 that_res
++ The company compensated a secretary who several people remembered that a client harassed her during a weekend company retreat.
+? Did the company compensate the client? N 
+
+# resumpisl 16 isl_gap
++ There was one very difficult quiz that the professor couldn't fathom how the student completed without help from someone else.
+? Was the quiz challenging? Y 
+
+# resumpisl 16 isl_res
++ There was one very difficult quiz that the professor couldn't fathom how the student completed it without help from someone else.
+? Was the quiz challenging? Y 
+
+# resumpisl 16 that_gap
++ There was one very difficult quiz that the professor couldn't fathom that the student completed without help from someone else.
+? Was the quiz challenging? Y 
+
+# resumpisl 16 that_res
++ There was one very difficult quiz that the professor couldn't fathom that the student completed it without help from someone else.
+? Was the quiz challenging? Y 
+
+# resumpisl 17 isl_gap
++ There were numerous victims who the spokesperson wasn't sure whether the coroner examined due to the high number of fatalities.
+? Was the spokesperson confident that all the bodies had been examined? N 
+
+# resumpisl 17 isl_res
++ There were numerous victims who the spokesperson wasn't sure whether the coroner examined them due to the high number of fatalities.
+? Was the spokesperson confident that all the bodies had been examined? N 
+
+# resumpisl 17 that_gap
++ There were numerous victims who the spokesperson wasn't sure that the coroner examined due to the high number of fatalities.
+? Was the spokesperson confident that all the bodies had been examined? N 
+
+# resumpisl 17 that_res
++ There were numerous victims who the spokesperson wasn't sure that the coroner examined them due to the high number of fatalities.
+? Was the spokesperson confident that all the bodies had been examined? N 
+
+# resumpisl 18 isl_gap
++ There were some expense reports that the accountant informed me when the boss wanted for the presentation in Miami. 
+? Did the boss need some expense reports for the presentation? Y 
+
+# resumpisl 18 isl_res
++ There were some expense reports that the accountant informed me when the boss wanted them for the presentation in Miami. 
+? Did the boss need some expense reports for the presentation? Y 
+
+# resumpisl 18 that_gap
++ There were some expense reports that the accountant informed me that the boss wanted for the presentation in Miami. 
+? Did the boss need some expense reports for the presentation? Y 
+
+# resumpisl 18 that_res
++ There were some expense reports that the accountant informed that the boss wanted them for the presentation in Miami. 
+? Did the boss need some expense reports for the presentation? Y 
+
+# resumpisl 19 isl_gap
++ There was one nuclear power plant that the workers determined how the tsunami damaged when water entered the building.
+? Was the power plant damaged by a fire? N 
+
+# resumpisl 19 isl_res
++ There was one nuclear power plant that the workers determined how the tsunami damaged it when water entered the building.
+? Was the power plant damaged by a fire? N 
+
+# resumpisl 19 that_gap
++ There was one nuclear power plant that the workers determined that the tsunami damaged when water entered the building.
+? Was the power plant damaged by a fire? N 
+
+# resumpisl 19 that_res
++ There was one nuclear power plant that the workers determined that the tsunami damaged it when water entered the building.
+? Was the power plant damaged by a fire? N 
+
+# resumpisl 20 isl_gap
++ A secret report documented which locations the US was confident whether terrorists used for training camps and weapons depots. 
+? Did the report identify suspected terrorist training camps? Y 
+
+# resumpisl 20 isl_res
++ A secret report documented which locations the US was confident whether terrorists used them for training camps and weapons depots. 
+? Did the report identify suspected terrorist training camps? Y 
+
+# resumpisl 20 that_gap
++ A secret report documented which locations the US was confident that terrorists used for training camps and weapons depots. 
+? Did the report identify suspected terrorist training camps? Y 
+
+# resumpisl 20 that_res
++ A secret report documented which locations the US was confident that terrorists used them for training camps and weapons depots. 
+? Did the report identify suspected terrorist training camps? Y 
+
+# resumpisl 21 isl_gap
++ There were multiple drug cartels that the Guatemalan government didn't appreciate why corrupt officials protected by revealing government plans.
+? Were drug cartels being shielded by some corrupt officials? Y 
+
+# resumpisl 21 isl_res
++ There were multiple drug cartels that the Guatemalan government didn't appreciate why corrupt officials protected them by revealing government plans.
+? Were drug cartels being shielded by some corrupt officials? Y 
+
+# resumpisl 21 that_gap
++ There were multiple drug cartels that the Guatemalan government didn't appreciate that corrupt officials protected by revealing government plans.
+? Were drug cartels being shielded by some corrupt officials? Y 
+
+# resumpisl 21 that_res
++ There were multiple drug cartels that the Guatemalan government didn't appreciate that corrupt officials protected them by revealing government plans.
+? Were drug cartels being shielded by some corrupt officials? Y 
+
+# resumpisl 22 isl_gap
++ There was a dam in Hungary that some villagers recalled how the flood destroyed and covered their homes in sludge.
+? Was the dam destroyed by the flood? Y 
+
+# resumpisl 22 isl_res
++ There was a dam in Hungary that some villagers recalled how the flood destroyed it and covered their homes in sludge.
+? Was the dam destroyed by the flood? Y 
+
+# resumpisl 22 that_gap
++ There was a dam in Hungary that some villagers recalled that the flood destroyed and covered their homes in sludge.
+? Was the dam destroyed by the flood? Y 
+
+# resumpisl 22 that_res
++ There was a dam in Hungary that some villagers recalled that the flood destroyed it and covered their homes in sludge.
+? Was the dam destroyed by the flood? Y 
+
+# resumpisl 23 isl_gap
++ Here is the play in the game that the sportscasters clarified why the referee revisited on the instant replay monitor. 
+? Did the referee refuse to look at the replay? N 
+
+# resumpisl 23 isl_res
++ Here is the play in the game that the sportscasters clarified why the referee revisited it on the instant replay monitor. 
+? Did the referee refuse to look at the replay? N 
+
+# resumpisl 23 that_gap
++ Here is the play in the game that the sportscasters clarified that the referee revisited on the instant replay monitor.
+? Did the referee refuse to look at the replay? N 
+
+# resumpisl 23 that_res
++ Here is the play in the game that the sportscasters clarified that the referee revisited it on the instant replay monitor.
+? Did the referee refuse to look at the replay? N 
+  
+# resumpisl 24 isl_gap
++ It was a famous lawyer who all parties agreed how the defendant fooled into believing in his innocence.
+? Did the defendant deceive the judge? N 
+
+# resumpisl 24 isl_res
++ It was a famous lawyer who all parties agreed how the defendant fooled him into believing in his innocence.
+? Did the defendant deceive the judge? N 
+
+# resumpisl 24 that_gap
++ It was a famous lawyer who all parties agreed that the defendant fooled into believing in his innocence.
+? Did the defendant deceive the judge? N 
+
+# resumpisl 24 that_res
++ It was a famous lawyer who all parties agreed that the defendant fooled him into believing in his innocence.
+? Did the defendant deceive the judge? N 
+
+# resumpisl 25 isl_gap
++ The newspaper identified the missing girl that the police were unsure why someone abducted after the party was over.
+? Was the girl named in the newspaper? Y 
+
+# resumpisl 25 isl_res
++ The newspaper identified the missing girl that the police were unsure why someone abducted her after the party was over.
+? Was the girl named in the newspaper? Y 
+
+# resumpisl 25 that_gap
++ The newspaper identified the missing girl that the police were unsure that someone abducted after the party was over.
+? Was the girl named in the newspaper? Y 
+
+# resumpisl 25 that_res
++ The newspaper identified the missing girl that the police were unsure that someone abducted her after the party was over.
+? Was the girl named in the newspaper? Y 
+
+# resumpisl 26 isl_gap
++ We enjoyed the expensive red wine that we heard how a wine critic selected as one of the best of the year.
+? Was it a white wine that was selected as one of the best of the year? N 
+
+# resumpisl 26 isl_res
++ We enjoyed the expensive red wine that we heard how a wine critic selected it as one of the best of the year.
+? Was it a white wine that was selected as one of the best of the year? N 
+
+# resumpisl 26 that_gap
++ We enjoyed the expensive red wine that we heard that a wine critic selected as one of the best of the year.
+? Was it a white wine that was selected as one of the best of the year? N 
+
+# resumpisl 26 that_res
++ We enjoyed the expensive red wine that we heard that a wine critic selected it as one of the best of the year.
+? Was it a white wine that was selected as one of the best of the year? N 
+
+# resumpisl 27 isl_gap
++ Everyone used the website that we learned how a pair of Harvard students designed with the help of the current owner.
+? Did some Harvard students design the website? Y 
+
+# resumpisl 27 isl_res
++ Everyone used the website that we learned how a pair of Harvard students designed it with the help of the current owner.
+? Did some Harvard students design the website? Y 
+
+# resumpisl 27 that_gap
++ Everyone used the website that we learned that a pair of Harvard students designed with the help of the current owner.
+? Did some Harvard students design the website? Y 
+
+# resumpisl 27 that_res
++ Everyone used the website that we learned that a pair of Harvard students designed it with the help of the current owner.
+? Did some Harvard students design the website? Y 
+
+# resumpisl 28 isl_gap
++ No one is likely to remember the fanatical, religious leader that the documentary reported how the government ruined by seizing assets and land.
+? Was the religious leader assisted by the government? N 
+
+# resumpisl 28 isl_res
++ No one is likely to remember the fanatical, religious leader that the documentary reported how the government ruined him by seizing assets and land.
+? Was the religious leader assisted by the government? N 
+
+# resumpisl 28 that_gap
++ No one is likely to remember the fanatical, religious leader that the documentary reported that the government ruined by seizing assets and land.
+? Was the religious leader assisted by the government? N 
+
+# resumpisl 28 that_res
++ No one is likely to remember the fanatical, religious leader that the documentary reported that the government ruined him by seizing assets and land.
+? Was the religious leader assisted by the government? N
+
+# filler 1 x
++ The judges ruled that the stunt performer broke the record in the motorbike jump.
+? Was the record broken by a cabaret performer? N
+
+# filler 2 x
++ The council concluded that the competitor in the martial arts event violated the rules of the game.
+? Was it concluded that the competitor broke the rules? Y
+
+# filler 3 x
++ The passenger on the train alerted the attendant to some suspicious activity.
+? Did the conductor alert the attendant on the train? N
+
+# filler 4 x
++ The demonstrator assaulted the annoying reporter from Washington DC after the anti war rally.
+? Was there a riot before the rally? N
+
+# filler 5 x
++ The playwright coached the actress with stage fright on how to deliver the lines.
+? Did the actress have a fear of spiders? N
+
+# filler 6 x
++ An auditor called the attorney and complained about the missing documents. 
+? Was the auditor complaining about something missing? Y
+
+# filler 7 x
++ A robot that was malfunctioning protected the wailing infant from the falling rafters. 
+? Was the child crying when the robot saved it? Y
+
+# filler 8 x
++ The coroner studied the unidentified murder victim who was lying in the morgue without coming to any conclusions.
+? Was the murder victim unidentified? Y
+
+# filler 9 x
++ A small boy laughed at the mannequin who the employee cleaning up a mess arranged at the front of the store.
+? Did the boy set up the mannequin? N
+
+# filler 10 x
++ An essayist wrote that the egomaniacal Venezuelan president was going to destroy the country.
+? Did the essayist think the Venezuelan president posed a danger to the country? Y
+
+# filler 11 x
++ After denouncing the second crusade, the pope who followed Pius XII advocated the third Christian crusade fervently.
+? Did Pius XIII advocate the second crusade? N
+
+# filler 12 x
++ The prom queen asked which necklace her mom thought suited the dress as she got ready for the parade.
+? Was the prom queen getting dressed for a parade? Y
+
+# filler 13 x
++ A cameraman captured which individual the policeman that was on horseback beat. 
+? Did the cameraman record the identity of the person who was beat? Y 
+
+# filler 14 x
++ Kenneth was shocked to see the test showed that the chemical substance termed PCH was not harmful to humans.
+? Was HD40 found to be harmful to humans? N
+
+# filler 15 x
++ Many veterans from the Desert Storm conflict who witnessed traumatic events in the service complain of feeling like old men. 
+? Do veterans who witnessed traumatic events complain of memory loss? N 
+
+# filler 16 x
++ It was determined that the nominee for the cabinet position cheated for the past couple of years on his taxes.
+? Was the nominee found to be cheating on his wife? N
+
+# filler 17 x
++ Step by step, Iran's leaders are pushing back threats to their authority by crushing street protests. 
+? Are Iran's leaders preventing protests? Y
+
+# filler 18 x
++ Republicans and Democrats in the State Senate appeared close to a power-sharing deal that would let legislative business resume.
+? Were the parties in the Senate headed towards a deal? Y
+
+# filler 19 x
++ The bombings were widespread, making targets of civilians and Iraqi security forces.
+? Were the bombings targeting only businessmen? N
+
+# filler 20 x
++ The outcome of the proposed legislation could be difficult for illegal workers who could face deportation.
+? Will the legislation have potentially harmful effects on illegal workers? Y
+
+# filler 21 x
++ The U.S. military hopes the operation will mark the turning point of a war that some have admitted they are not winning.
+? Do some believe the U.S. is not winning the war? Y
+
+# filler 22 x
++ A jury decided which criminal the kidnapper that was already sentenced corrupted too much to let go. 
+? Was the kidnapper going to go to prison? Y
+
+# filler 23 x
++ The couple followed the animal trail despite not knowing where it led.
+? Was the trail man-made? N
+
+# filler 24 x
++ The sedan that bumped the minivan was not moving fast enough to damage the rubber that protected the bumper.
+? Was the bumper knocked off the sedan? N
+
+# filler 25 x
++ The substance that mixed with the oil turned into a thick, viscous liquid inside the capsule that the incubator encloses.
+? Did the substance that mixed with the oil dissolve the lining of the capsule? N
+
+# filler 26 x
++ A park ranger who contacted Yasmin suggested that her party look out for the campers that lost their group.
+? Was Yasmin in touch with the ranger? Y
+
+# filler 27 x
++ Discoveries are being made every day that can help to prolong life. 
+? Are discoveries being made every day? Y
+
+# filler 28 x
++ Charities are in desperate need of financial support right now. 
+? Do charities need money? Y
+
+# filler 29 x
++ Scientists at NASA were extremely pleased by the success of the Mars rovers. 
+? Were the scientists disappointed? N
+
+# filler 30 x
++ The recently released medicine increased the energy of the patients who took it.
+? Did the medicine have negative effects? N
+
+# filler 31 x
++ Withdrawing an ambassador is a very serious gesture in diplomatic circles.
+? Is it serious to withdraw an ambassador? Y
+
+# filler 32 x
++ Police have released no information on what they may have found at the scene.
+? Have the police been witholding information? Y
+
+# filler 33 x
++ Journalistic plagiarism may not harm anybody physically but it destroys trust.
+? Does journalistic plagiarism lead to creativity? N
+
+# filler 34 x
++ After all this time, it's hard to believe that the house where I grew up is still standing. 
+? Has the house been destroyed? N
+
+# filler 35 x
++ The firemen from company 8 believed the warehouse on 6th St. had suffered too much structural damage. 
+? Did the firemen think the warehouse could be saved? N
+
+# filler 36 x
++ Carrying a shotgun, the rancher confronted a scared and confused trespasser who was sleeping on the property.
+? Was the trespasser scared? Y 
+
+# filler 37 x
++ The physicist assisted the technician who was trying to turn the machine on. 
+? Did a surgeon help the technician out? N
+
+# filler 38 x
++ The ranger followed the girlish crocodile hunter who the landowner building a new house despised for trespassing on his land.
+? Was the crocodile hunter very masculine? N
+
+# filler 39 x
++ The scientist avoided the enraged academic observer who one of the lab technicians kindly escorted around the premises.
+? Was the observer enraged? Y
+
+# filler 40 x
++ There were several times during the movie that the film came off the reel because of its poor quality. 
+? Was the film interrupted at any point? Y
+
+# filler 41 x
++ Two explorers managed to endure the Antarctic winter in 1876 without any modern day conveniences.
+? Did the two explorers die during the winter in Antarctica? N
+
+# filler 42 x
++ The childish poet that an official for the national government commissioned lectured on the topic of meter. 
+? Was the poet childish? Y

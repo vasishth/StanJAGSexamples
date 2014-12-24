@@ -1,0 +1,15 @@
+# 2objverbs 1 a
+Mary | gave | a book | to a young child | who was very grateful for the present and read it quickly. 
+? Did the child not read the book? N
+# 2objverbs 1 b
+Mary | gave | a book | which had impressed some critics | to a young child | who was grateful for the present. 
+? Was a book given to Mary? N
+# 2objverbs 1 c
+Mary | gave | a book | which had impressed some critics | who worked for a magazine | to a young child. 
+? Was a book given to Mary? N
+# 2objverbs 1 d
+Mary | read | a book | which had impressed some critics | who worked for a magazine | to a young child.
+? Did Mary work for a magazine? N
+# 2objverbs 1 e
+Mary | published | a book | which had impressed some critics | who worked for a magazine.
+? Did Mary work for a magazine? N

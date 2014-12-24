@@ -1,0 +1,93 @@
+instruct {Welcome.  In this experiment that investigates memory during reading, you'll be reading some sentences on the computer screen.  The words in the sentence will show up one at a time. At the beginning of each new sentence, press the the SPACE BAR to reveal a '+' sign that will show you where the sentence begins.
+
+When you press the space bar again, the first word will appear.  With every press of the space bar, a new word will appear and the last word will disappear.
+
+You should try to read as naturally as possible, making sure that you understand what you read.
+
+When you finish reading the last word, press the space bar again.  The dashes will go away and you will see a question about the sentence you just read. To answer the question, press the "Y" key for YES or the "N" key for NO.  You will be reminded which key is yes and which is no.  Try to answer as quickly and accurately as possible.
+
+If you are unsure of the answer (or if you think that both answers are right), try to pick the better answer.
+
+To be able to read and answer quickly, you should keep your fingers resting on the space bar and the "Y" and "N" keys, so that you don't have to look down at the keys to answer. You can use whichever hand is most comfortable for you to press the keys, or use both hands if you like.}
+
+instruct {You can take breaks as you need them, but please try to do so before you've started reading a new item, when the screen is blank.
+
+That's all there is to it.  Just to review, this is how the experiment goes:
+
+1. On each trial, you'll see a blank screen to start. Press the space bar to reveal a plus sign which will tell you where the sentence begins. Press the space bar to see each new word of the sentence. 
+
+2. Read at a natural rate, comprehending what you read.  Don't read out loud unless that's the way you normally read.
+
+3. You'll see a question about the sentence and should answer by pressing the "Y" key for YES or the "N" key for NO.  You will be told if your answer was incorrect.  You should take this as an indication to read more slowly and carefully.
+
+4. After the question, the computer will automatically go on to the next sentence.
+
+When the experiment is over, a screen will appear telling you to stop.  At that point, you should let the experimenter know you are finished.
+
+If you have any questions about the procedure, ask the experimenter now.
+}
+
+command {Let's try some practice...}
+
+createItem {# practice 1 -
++ This sentence is a practice sentence to help you get used to a moving window display.
+}
+presentItem practice:1:-
+
+command {Here comes another sentence...}
+
+createItem {# practice 2 -
++ This sentence is also for practice, and is followed by a question.
+? Are you following this so far? Y
+}
+presentItem practice:2:-
+
+createItem {# practice 3 -
++ Now you will get to see what happens if you answer a question incorrectly.
+? Press the "N" key now, ok? Y
+}
+presentItem practice:3:-
+
+instruct {The next few practice items will be more like real experimental sentences.}
+
+command {Here we go...}
+
+createItem {# practice 4 -
++ The Washington Post described what kind of matter astronomers had found compelling evidence for using powerful telescopes. 
+? Did reporters for the Post find dark matter? N
+}
+presentItem practice:4:-
+
+createItem {# practice 5 -
+
++ We observed what my roommate said he was happy after purchasing to decorate his room.
+? Did we know what he had bought? Y
+}
+presentItem practice:5:-
+
+createItem {# practice 6 -
+
++ Theo theorized that the writer made a disclaimer that he had written the poem while he was still young. 
+? Did the writer talk about his favorite author? N 
+}
+presentItem practice:6:-
+
+createItem {# practice 7 -
++ My friend made known which research it was unclear that the argument over had actually done any good.
+? Did the argument have to do with politics? N
+}
+presentItem practice:7:-
+
+createItem {# practice 8 -
++ Hugh pointed out which of the inmates was unruly.
+? Did Hugh identify an inmate? Y  
+}
+presentItem practice:8:-
+
+instruct {That's it for the practice.
+
+If you have any questions, ask the experimenter now.
+
+Otherwise, you may begin the experiment.}
+
+command {Here we go...}
