@@ -23,7 +23,6 @@ Example code using Stan and JAGS for psycholinguistic data. The published paper 
       title = {Distinctiveness and encoding effects in online sentence comprehension},
       year = {2014},
       pages = {1--13},
-      abstract = {In explicit memory recall and recognition tasks, elaboration and contextual isolation both facilitate memory performance. Here, we investigate these effects in the context of sentence processing: targets for retrieval during online sentence processing of English object relative clause constructions differ in the amount of elaboration associated with the target noun phrase, or the homogeneity of superficial features (text color). Experiment 1 shows that greater elaboration for targets during the encoding phase reduces reading times at retrieval sites, but elaboration of non-targets has considerably weaker effects. Experiment 2 illustrates that processing isolated superficial features of target noun phrases—here, a green word in a sentence with words colored white—does not lead to enhanced memory performance, despite triggering longer encoding times. These results are interpreted in the light of the memory models of Nairne, 1990, 2001, 2006, which state that encoding remnants contribute to the set of retrieval cues that provide the basis for similarity-based interference effects.},
       doi = {doi: 10.3389/fpsyg.2014.01237},
       pdf = {http://journal.frontiersin.org/Journal/10.3389/fpsyg.2014.01237/abstract},
       volume = {5},
